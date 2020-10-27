@@ -2,8 +2,8 @@ import React from 'react'
 import './App.css'
 
 import { Send,
-  // ThumbUp,
-  // ThumbDown 
+  ThumbUp,
+  ThumbDown 
 } from '@material-ui/icons'
 
 import * as showdown from 'showdown' 
@@ -18,14 +18,12 @@ class App extends React.Component{
     this.state = {
       query:"",
       msgs: [
-          { user_type: 'bot', msg: 'Hi', ...this.currentTime(), nudges: []},
+          { user_type: 'bot', msg: 'Hi !', ...this.currentTime(), nudges: []},
           // { user_type: 'bot1', msg: 'Welcome to CarsQA chatbot1.', ...this.currentTime() },
-          { user_type: 'bot', msg: 'How can I help you?', ...this.currentTime(), nudges: [
-            // "Not getting any matches",
-            // "How to increase matches",
-            // "Matches are not as per my preference",
-            // "Repeating Matches"
-        ]}
+          { user_type: 'bot', msg: `I am 'BmBot' , your assistant.<br/> I am here to answer any questions
+                                     you may have about the Bharat Matrimony service.<br/> What would you like 
+                                     to know?`,
+             ...this.currentTime(), nudges: []}
       ],
       suggested:['i am having match problems', 'What is profile validation?'],
       answers:[],
@@ -42,7 +40,7 @@ class App extends React.Component{
     const date = new Date()
     const hours = date.getHours()
     const min = date.getMinutes()
-    const time = `${hours === 0 ? 12 : hours}:${min}${hours > 12 ? ' PM' : ' AM' }`
+    const time = `${hours === 0 ? 12 : hours > 12 ? Math.floor( hours/12 ) : hours }:${min}${hours > 12 ? ' PM' : ' AM' }`
     return { time, date }
   }
 
@@ -69,7 +67,7 @@ class App extends React.Component{
 
           let answerElement = converter.makeHtml( json2md( answer_element.answer_json.answer ) )
           answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
-          msgs.push( { user_type: 'bot', msg: answerElement, ...this.currentTime(), nudges: answer_element.answer_json.nudges } )
+          msgs.push( { user_type: 'bot', msg: answerElement, ...this.currentTime(), nudges: answer_element.answer_json.nudges === undefined ? [] : answer_element.answer_json.nudges } )
           // suggested = answer_element.answer_json.nudges
           this.setState({ msgs, suggested })
         }
@@ -94,14 +92,13 @@ class App extends React.Component{
 
   handleQuery(e, question= ""){
     if ( ( e.keyCode === 13 && this.state.query.length > 0 ) || question.length > 0 ){
-      this.setState({show_dots: true})
-      let {query, msgs} = this.state
+      let { msgs} = this.state
+      document.getElementById('user_input').innerText = null
       const user_query = { user_type: 'user', msg: question.length > 0 ? question : this.state.query, ...this.currentTime(), nudges: [] }
       msgs.push(user_query)
-
+      this.setState({show_dots: true, query: ''})
       this.servercall( user_query.msg ) 
-      query = ''
-      this.setState({ query, msgs})
+      this.setState({ msgs})
     }
   }
 
@@ -154,16 +151,16 @@ class App extends React.Component{
           )
       }
       else {
-        messages.push( <> 
-            <div key={ `_${index}`} className="block "  >{ messages_block }</div>  
-            {/* { msg_data.user_type === 'user' ?
-              <div className="feedback">
-                    <ThumbUp   className="ThumbUp" />
-                    <ThumbDown className="ThumbDown" />
-              </div>
-            : null } */}
-          </>
-        )
+        messages.push( <div key={ `*${index}`}> 
+                          <div className="block "  >{ messages_block }</div>  
+                          { msg_data.user_type === 'user' ?
+                            <div className="feedback">
+                                  <ThumbUp   className="ThumbUp" />
+                                  <ThumbDown className="ThumbDown" />
+                            </div>
+                          : null }
+                        </div>
+                      )
 
         messages_block = []
         // if( this.state.msgs[index + 1] !== undefined )
@@ -196,28 +193,29 @@ class App extends React.Component{
       }
 
       if( index === this.state.msgs.length -1 ){
-        messages.push( <> 
-            <div key={ `_${index}`} className="block "  >{ messages_block }</div>  
-            {/* { msg_data.user_type === 'user' ? */}
-              {/* <div className="feedback">
-                    <ThumbUp   className="ThumbUp" />
-                    <ThumbDown className="ThumbDown" />
-              </div> */}
-            {/* : null } */}
-          </>
-        )
+        messages.push( <div key={ `_${index}`}> 
+                          <div className="block "  >{ messages_block }</div>  
+                          {/* { msg_data.user_type === 'user' ? */}
+                            <div className="feedback">
+                                  <ThumbUp   className="ThumbUp" />
+                                  <ThumbDown className="ThumbDown" />
+                            </div>
+                          {/* : null }  */}
+                        </div>
+                      )
       }
 
       prev_type = msg_data.user_type
     })
 
-    document.title = 'BMFAQ-QA | CogniQA Framebot'
+    document.title = 'Bharat Matrimony Chatbot | CogniQA Framebot'
+    
 
     return (
       <div className="App ">
         <div className="App-header">
-          <div className="title">CogniQA Framebot</div>
-          <div className="tagline">BM FAQ QA</div>
+          <div className="title">Bharat Matrimony Chatbot</div>
+          <div className="tagline">powered by CogniQA platform</div>
         </div>
         <div className="separater"></div>
 
