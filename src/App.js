@@ -1,13 +1,15 @@
 import React from 'react'
 import './App.css'
 
-import { Send } from '@material-ui/icons'
+import { Send,
+  // ThumbUp,
+  // ThumbDown 
+} from '@material-ui/icons'
 
 import * as showdown from 'showdown' 
 import * as json2md from 'json2md'
 
 var converter = new showdown.Converter({'noHeaderId':'true'})
-
 
 class App extends React.Component{
   constructor(props){
@@ -16,53 +18,17 @@ class App extends React.Component{
     this.state = {
       query:"",
       msgs: [
-          { user_type: 'bot', msg: 'Hi', ...this.currentTime()},
+          { user_type: 'bot', msg: 'Hi', ...this.currentTime(), nudges: []},
           // { user_type: 'bot1', msg: 'Welcome to CarsQA chatbot1.', ...this.currentTime() },
-          { user_type: 'bot', msg: 'How can I help you?', ...this.currentTime()}
+          { user_type: 'bot', msg: 'How can I help you?', ...this.currentTime(), nudges: [
+            // "Not getting any matches",
+            // "How to increase matches",
+            // "Matches are not as per my preference",
+            // "Repeating Matches"
+        ]}
       ],
-      suggested:[
-        "what are the variants of alto?",
-        "what is the mileage of alto?",
-        "list of new cars",
-        "most sold car"
-      ],
-      answers:[
-        [
-          [
-              [
-                  {
-                      "p": "Alto has following variants :"
-                  },
-                  {
-                      "ul": [
-                          {
-                              "p": "Maruti Suzuki Alto LXi (O) CNG. It's fuel type - CNG"
-                          },
-                          {
-                              "p": "Maruti Suzuki Alto LXi CNG. It's fuel type - CNG"
-                          },
-                          {
-                              "p": "Maruti Suzuki Alto STD. It's fuel type - Petrol"
-                          },
-                          {
-                              "p": "Maruti Suzuki Alto LXi (O). It's fuel type - Petrol"
-                          },
-                          {
-                              "p": "Maruti Suzuki Alto VXi. It's fuel type - Petrol"
-                          },
-                          {
-                              "p": "Maruti Suzuki Alto VXi Plus. It's fuel type - Petrol"
-                          },
-                          {
-                              "p": "Maruti Suzuki Alto STD (O). It's fuel type - Petrol"
-                          }
-                      ]
-                  }
-              ]
-          ]
-        ],
-        [{"p": "which variant are you interested in?"}],
-      ],
+      suggested:['i am having match problems', 'What is profile validation?'],
+      answers:[],
       suggested_visible: 0,
       showSuggestions: true,
       show_dots: false
@@ -81,70 +47,72 @@ class App extends React.Component{
   }
 
 
+  async servercall( question ){
+    await fetch('/api/106',
+      {
+        method: 'POST',
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({ question })
+      }
+    )
+    .then( res => res.json())
+    .then( responseJson => {
+      this.setState({ show_dots: false })
+      // console.log( responseJson )
+
+      responseJson.forEach( answer_element => {
+        if( answer_element.type === 'TEXT' ){
+
+          let { msgs, suggested } = this.state
+
+          let answerElement = converter.makeHtml( json2md( answer_element.answer_json.answer ) )
+          answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
+          msgs.push( { user_type: 'bot', msg: answerElement, ...this.currentTime(), nudges: answer_element.answer_json.nudges } )
+          // suggested = answer_element.answer_json.nudges
+          this.setState({ msgs, suggested })
+        }
+      })
+
+      document.getElementById('user_input').innerText = null
+
+      try{
+        const { clientHeight, scrollHeight } = document.getElementsByClassName('messages')[0]
+        if( clientHeight !== scrollHeight )
+          document.getElementsByClassName('messages')[0].scrollTop = scrollHeight
+      }
+      catch(err){}
+
+    })
+    .catch(err => {
+      console.log( err )
+    })
+
+  }
+
 
   handleQuery(e, question= ""){
     if ( ( e.keyCode === 13 && this.state.query.length > 0 ) || question.length > 0 ){
       this.setState({show_dots: true})
       let {query, msgs} = this.state
-      const user_query = { user_type: 'user', msg: question.length > 0 ? question : this.state.query, ...this.currentTime() }
+      const user_query = { user_type: 'user', msg: question.length > 0 ? question : this.state.query, ...this.currentTime(), nudges: [] }
       msgs.push(user_query)
-      
-      setTimeout( () => {
-        try{
 
-          setTimeout(()=>{
-            let answerElement = converter.makeHtml( json2md( this.state.answers[0] ) )
-            answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
-            msgs.push( { user_type: 'bot', msg: answerElement, ...this.currentTime() } )
-            this.setState({ msgs, show_dots: true })
-           
-            try{
-              const { clientHeight, scrollHeight } = document.getElementsByClassName('messages')[0]
-              if( clientHeight !== scrollHeight )
-                document.getElementsByClassName('messages')[0].scrollTop = scrollHeight
-            }
-            catch(err){}
-
-            setTimeout(() => {
-              let answerElement = converter.makeHtml( json2md( this.state.answers[1] ) )
-              answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
-              msgs.push( { user_type: 'bot', msg: answerElement, ...this.currentTime() } )
-              this.setState({ msgs, show_dots: false })
-
-              try{
-                const { clientHeight, scrollHeight } = document.getElementsByClassName('messages')[0]
-                if( clientHeight !== scrollHeight )
-                  document.getElementsByClassName('messages')[0].scrollTop = scrollHeight
-              }
-              catch(err){}
-              
-            }, 800)
-          }, 200)
-
-          this.setState({ show_dots: false })
-          query = ''
-          document.getElementById('user_input').innerText = null
-
-          const { clientHeight, scrollHeight } = document.getElementsByClassName('messages')[0]
-          if( clientHeight !== scrollHeight )
-            document.getElementsByClassName('messages')[0].scrollTop = scrollHeight
-        }
-        catch(err){}
-
-      }, 250) 
-
+      this.servercall( user_query.msg ) 
+      query = ''
       this.setState({ query, msgs})
     }
   }
 
   move_left(e){
-    const ScrollElement = document.getElementsByClassName('suggested_ques_list1')[0]
+    const ScrollElement = document.getElementsByClassName('suggested_ques_list')[0]
     const { scrollLeft } = ScrollElement
     ScrollElement.scrollLeft = 0 >= scrollLeft - 20 ? 0 : scrollLeft - 20
   }
 
   move_right(e){
-    const ScrollElement = document.getElementsByClassName('suggested_ques_list1')[0]
+    const ScrollElement = document.getElementsByClassName('suggested_ques_list')[0]
     const { scrollWidth, scrollLeft } = ScrollElement
     ScrollElement.scrollLeft = scrollWidth <= scrollLeft + 20 ? scrollWidth : scrollLeft + 20
   }
@@ -161,19 +129,42 @@ class App extends React.Component{
         //   console.log( msg_data.msg, this.state.msgs[index + 1].time, msg_data.time, prev_type, this.state.msgs[index + 1].user_type  )
 
         messages_block.push(  <div key={index}>
-                                  <div key={index} className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` } > 
-                                    <div className={`${msg_data.user_type}`} suppressContentEditableWarning dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
-                                  </div>  
-                                  { this.state.msgs[index + 1] === undefined 
-                                    || ( this.state.msgs[index + 1] !== undefined && this.state.msgs[index + 1].time !== msg_data.time ) 
-                                      || ( this.state.msgs[index + 1] !== undefined && msg_data.user_type !== this.state.msgs[index + 1].user_type )?  
-                                      <div className="time">{msg_data.time}</div> 
+                                <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` } > 
+                                  <div className={`${msg_data.user_type}`} suppressContentEditableWarning dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
+                                  
+                                  {  msg_data.nudges.length > 0 ?
+                                    <ul className="nudges">
+                                      { msg_data.nudges.map( ( nudge, index) => {
+                                          return  <li key={ index } onClick={e => { this.setState({showSuggestions: true}); this.handleQuery({...e, keyCode: 13}, nudge) } } >
+                                                    {nudge}
+                                                  </li>
+                                        }) 
+                                      }
+                                    </ul>
                                   : null }
+
+                                </div>  
+                                { this.state.msgs[index + 1] === undefined 
+                                  || ( this.state.msgs[index + 1] !== undefined && this.state.msgs[index + 1].time !== msg_data.time ) 
+                                    || ( this.state.msgs[index + 1] !== undefined && msg_data.user_type !== this.state.msgs[index + 1].user_type )?  
+                                    <div className="time">{msg_data.time}</div> 
+                                : null }
+
                             </div>
           )
       }
       else {
-        messages.push(<div key={ `_${index}`} className="block "  >{ messages_block }</div> )
+        messages.push( <> 
+            <div key={ `_${index}`} className="block "  >{ messages_block }</div>  
+            {/* { msg_data.user_type === 'user' ?
+              <div className="feedback">
+                    <ThumbUp   className="ThumbUp" />
+                    <ThumbDown className="ThumbDown" />
+              </div>
+            : null } */}
+          </>
+        )
+
         messages_block = []
         // if( this.state.msgs[index + 1] !== undefined )
         // console.log( msg_data.msg, this.state.msgs[index + 1].time, msg_data.time, prev_type, this.state.msgs[index + 1].user_type  )
@@ -181,28 +172,52 @@ class App extends React.Component{
         messages_block.push( <div key={ index }>
                               <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` } > 
                                 <div className={`${msg_data.user_type}`} suppressContentEditableWarning dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
+
+                                {  msg_data.nudges.length > 0 ?
+                                  <ul className="nudges">
+                                    { msg_data.nudges.map( ( nudge, index) => {
+                                        return  <li key={ index } onClick={e => { this.setState({showSuggestions: true}); this.handleQuery({...e, keyCode: 13}, nudge) } } >
+                                                  {nudge}
+                                                </li>
+                                      }) 
+                                    }
+                                  </ul>
+                                : null }
                               </div>
+                              
                               { this.state.msgs[index + 1] === undefined 
-                                    || ( this.state.msgs[index + 1] !== undefined && this.state.msgs[index + 1].time !== msg_data.time ) 
-                                      || ( this.state.msgs[index + 1] !== undefined && msg_data.user_type !== this.state.msgs[index + 1].user_type )?  
-                                      <div className="time">{msg_data.time}</div> 
-                                  : null }
+                                  || ( this.state.msgs[index + 1] !== undefined && this.state.msgs[index + 1].time !== msg_data.time ) 
+                                    || ( this.state.msgs[index + 1] !== undefined && msg_data.user_type !== this.state.msgs[index + 1].user_type )?  
+                                    <div className="time">{msg_data.time}</div> 
+                              : null }
+
                             </div>
           )
       }
 
       if( index === this.state.msgs.length -1 ){
-        messages.push(<div key={ index } className="block"  >{ messages_block }</div> )
+        messages.push( <> 
+            <div key={ `_${index}`} className="block "  >{ messages_block }</div>  
+            {/* { msg_data.user_type === 'user' ? */}
+              {/* <div className="feedback">
+                    <ThumbUp   className="ThumbUp" />
+                    <ThumbDown className="ThumbDown" />
+              </div> */}
+            {/* : null } */}
+          </>
+        )
       }
 
       prev_type = msg_data.user_type
     })
 
+    document.title = 'BMFAQ-QA | CogniQA Framebot'
 
     return (
       <div className="App ">
         <div className="App-header">
-          <div className="title">CarsQA</div>
+          <div className="title">CogniQA Framebot</div>
+          <div className="tagline">BM FAQ QA</div>
         </div>
         <div className="separater"></div>
 
@@ -212,25 +227,27 @@ class App extends React.Component{
               { messages }
             </div>
 
-            { this.state.showSuggestions ?
-              <div className="suggestion_ques_box">
-                <div className="lt-arrow" onClick={this.move_left}>&#10094;</div>
-                <div className="suggested_ques_list">
-                  {
-                    this.state.suggested.map(( question, index) => {
-                        return <div key={index} className="suggested_que" onClick={e => { this.setState({showSuggestions: false}); this.handleQuery({...e, keyCode: 13}, question) } }>{question}</div>
-                    })
-                  }
-                </div>
-                <div className="rt-arrow" onClick={this.move_right} >&#10095;</div>
-              </div>
-            : null }
-
             { this.state.show_dots ?
               <div  className="dots">
                 <div className="dot1"></div>
                 <div className="dot2"></div>
                 <div className="dot3"></div>
+              </div>
+            : null }
+
+            { this.state.showSuggestions ?
+              <div className="suggestion_ques_box">
+                { this.state.suggested.length > 2 ? <div className="lt-arrow" onClick={this.move_left}>&#10094;</div> : null }
+                <div className="suggested_ques_list">
+                  {
+                    this.state.suggested.map(( question, index) => {
+                        return <div key={index} className="suggested_que" 
+                                  onClick={e => { this.setState({showSuggestions: true}); this.handleQuery({...e, keyCode: 13}, question) } }
+                                >{question}</div>
+                    })
+                  }
+                </div>
+                { this.state.suggested.length > 2 ? <div className="rt-arrow" onClick={this.move_right} >&#10095;</div> : null }
               </div>
             : null }
 

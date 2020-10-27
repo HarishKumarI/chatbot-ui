@@ -21,7 +21,7 @@
 }
 
 .title{
-  font-size: 40px;
+  font-size: 35px;
 }
 
 .tag_line{
@@ -208,7 +208,7 @@
 
 
 .messages .msg{
-  display: flex;
+  display: table-cell;
   align-items: center;
   width: 100%;
   transition: all 2s;
@@ -237,6 +237,7 @@
   width: 100%;
   flex-direction: row-reverse;
   text-align: end;
+  float: right;
 }
 
 .time{
@@ -244,12 +245,12 @@
   margin: 2px 0;
 }
 
-.bot{
+.bot, .nudges{
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  max-width: 90%;
-  padding: 10px;
+  /* max-width: 90%; */
+  padding: 8px;
   background-color: var(--bot_bg1);
   border: 1px solid rgb(235, 234, 234);
   border-bottom-left-radius: 0px;
@@ -261,17 +262,68 @@
   align-items: center;
   transition: all 0.5s;
   border-radius: 10px;
-  max-width: 90%;
+  /* max-width: 90%; */
   padding: 8px;
   background-color: var(--user_bg1);
   border: 1px solid rgb(235, 234, 234);
   color: white;
   border-bottom-right-radius: 0px;
-  /* box-shadow: 0px 0px 10px rgb(165, 164, 164); */
+  float: right;
+}
+
+
+.msg .bot:nth-child(n), .msg .user:nth-child(n){
+  border-radius: 0px;
+  margin: 0;
+}
+
+.msg .bot:first-child, .msg .user:first-child{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+
+.msg .bot:last-child{
+  border-bottom-right-radius: 10px !important;
+}
+
+.msg .user:last-child{
+  border-bottom-left-radius: 10px !important;
+}
+
+.nudges{
+  margin: 0;
+  padding: 0 !important;
+  background-color: transparent;
+  width: 99%;
+  border-radius: 0 !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+.nudges li{
+  border-radius: 0 !important;
+  margin: 0;
+  list-style-type: none;
+  padding: 8px 3px;
+  text-align: center;
+  border: 1px solid rgb(235, 234, 234);
+}
+
+.nudges li:last-child{
+  border-bottom-right-radius: 10px !important;
+}
+
+.nudges li:hover{
+  background-color: rgb(235, 234, 234);
+  cursor: pointer;
 }
 
 .block{
   margin: 8px 0;
+}
+
+.block div{
+  margin: 4px 0;
 }
 
 .suggestion_ques_box{
@@ -288,21 +340,8 @@
   /* border: 1px solid lightgrey; */
   padding: 0px;
   color: var( --user_bg1 );
+  min-width: 91.5%;
 }
-/* 
-.lt-arrow, .rt-arrow{
-  display: inline-block;
-  border: 1px solid var(--user_bg1);
-  padding: 4px;
-  margin: 2px 4px;
-  font-size: 16px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  user-select: none;
-  border-radius: 50%;
-} */
-
 
 .lt-arrow, .rt-arrow{
   display: inline-block;
@@ -357,4 +396,37 @@
 /* Handle on hover */
 .suggested_ques_list::-webkit-scrollbar-thumb:hover {
   display: block; 
+}
+
+
+.feedback{
+  text-align: end;
+}
+
+.ThumbUp{
+  border-radius: 50%;
+  margin: 0 5px;
+  color: green;
+  cursor: pointer;
+}
+
+.ThumbDown{
+  border-radius: 50%;
+  margin: 0 5px;
+  color: red;
+  cursor: pointer;
+}
+
+.ThumbDown_review{
+  padding: 4px;
+  margin: 0;
+  color: whitesmoke;
+  background-color: red;
+}
+
+.ThumbUp_review{
+  padding: 4px;
+  margin: 0;
+  color: whitesmoke;
+  background-color: green;
 }
