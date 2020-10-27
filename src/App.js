@@ -153,12 +153,12 @@ class App extends React.Component{
       else {
         messages.push( <div key={ `*${index}`}> 
                           <div className="block "  >{ messages_block }</div>  
-                          { msg_data.user_type === 'user' ?
+                          {/* { msg_data.user_type === 'user' ?
                             <div className="feedback">
                                   <ThumbUp   className="ThumbUp" />
                                   <ThumbDown className="ThumbDown" />
                             </div>
-                          : null }
+                          : null } */}
                         </div>
                       )
 
@@ -196,10 +196,10 @@ class App extends React.Component{
         messages.push( <div key={ `_${index}`}> 
                           <div className="block "  >{ messages_block }</div>  
                           {/* { msg_data.user_type === 'user' ? */}
-                            <div className="feedback">
+                            {/* <div className="feedback">
                                   <ThumbUp   className="ThumbUp" />
                                   <ThumbDown className="ThumbDown" />
-                            </div>
+                            </div> */}
                           {/* : null }  */}
                         </div>
                       )
