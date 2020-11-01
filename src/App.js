@@ -1,12 +1,11 @@
 import React from 'react'
 import './App.css'
 import ChatInterface from './components/ChatInterface'
+import FormFeilds from './components/FormFeilds'
 
-class App extends React.Component{
-  
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-  render(){    
-
+function MainApp(){
     return (
       <div className="App ">
         <div className="App-header">
@@ -22,7 +21,14 @@ class App extends React.Component{
         </div>
       </div>
     );
-  }
+}
+
+
+function App(){
+  return  <Router>
+            <Route exact path="/" component={ MainApp } />
+            <Route exact path="/formElements" component={ FormFeilds } />
+          </Router>
 }
 
 export default App
