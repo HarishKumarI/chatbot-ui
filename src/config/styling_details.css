@@ -1,0 +1,17 @@
+
+:root{
+  --user_background: #0d64bb;
+  --bot_background : #f3f3f3;
+  --text-color: #183950;
+
+
+  --dots_container_border: transparent;
+  --dots_container_bg: transparent;
+  --dots_color: #0d64bb;
+  --dots_width: 8px;
+
+  --thumbs_size: 34px;
+  --thumbs_up_color: rgb(28, 92, 28);
+  --thumbs_down_color: rgb(236, 51, 51);
+}
+  

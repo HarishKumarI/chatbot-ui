@@ -1,0 +1,15 @@
+{
+    "title": "Carwale Chatbot",
+    "tagline": "powered by CogniQA platform",
+    "bot_image": "https://www.carwale.com/apple-touch-icon.png",
+    "bot_name": "carwale.com - Virtual Assistant",
+    "welcome_msgs": [   { "msg" : "Hi  !", "suggestions": [], "show_feedback": false },
+                        { "msg" : "I am 'Carwale-Bot' , your assistant.<br/> I am here to answer any questions you may have about the Carwale service.<br/> What would you like  to know?", 
+                            "suggestions":  [ ],
+                            "show_feedback": false
+                        }
+                    ],
+    
+    "positive_feedback": "Thanks for the feedback! what did you like about it?",
+    "negative_feedback": "What's went wrong with the answer?"
+}
