@@ -54,3 +54,34 @@
 
 
 component arrangement in such a way to extend and use in chatbot etc.
+
+
+
+#### **comments**
+- bottom nudges to be placed along messages as scrollable. - done
+- the input text is not going immediately. - done
+- for bigger answers, use expand button and then show the while text.
+- link's not displaying. 
+- use form for getting user feedback.
+
+
+### components for chatbot
+
+- [x] text
+- [x] dots
+- [x] msg
+- [x] time
+- [ ] image
+- [x] nudges
+- [ ] hyperlinks
+- [ ] form fields
+- [x] feedback
+- [ ] image carousel
+- [ ] confirm msgs
+- [x] suggested questions
+
+
+#### Conversational AL Design Discussion
+- UI need to clear the chat history when the session terminates.
+- use of cookies for session management. ( handling of loged in user and guest user )
+- demo 1 : QA, transactions, working mem handling, with UI
