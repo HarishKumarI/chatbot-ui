@@ -103,7 +103,6 @@ function FormfromJSON(props){
                         // var e = form.elements[i];
                         // kvpairs.push(encodeURIComponent(e.name) + "=" + encodeURIComponent(e.value));
                         // }
-                        // var queryString = kvpairs
                         console.log( e.target.elements )
                         }
                     }>
