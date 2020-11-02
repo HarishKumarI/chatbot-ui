@@ -125,6 +125,7 @@
   
 .msg *{
     margin: 2px 0;
+    text-align: start;
 }
   
 .msg ul{

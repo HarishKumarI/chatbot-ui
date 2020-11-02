@@ -1,5 +1,5 @@
 import React from 'react'
-import $ from 'jquery'
+import $, { type } from 'jquery'
 
 import { 
     Send, 
@@ -241,8 +241,7 @@ class ChatInterface extends React.Component{
 
 
     handleQuery(e){
-        const { value } = e.target
-
+        let { value } = e.target
         if( value.length > 0 && !$('.send_icon').hasClass('query_available') )
             $('.send_icon').addClass('query_available')
         else if( value.length === 0 ) 
@@ -251,7 +250,11 @@ class ChatInterface extends React.Component{
         if ( e.keyCode === 13 && value.length > 0 ){
             e.target.value = ''
             let { msgs} = this.state
-            msgs.push( { user_type:'user', msg: value, ...currentTime(), type: 'TEXT', suggested: [], show_feedback: false } )
+            
+            var json2str = ( json ) => { return json.map( feild => { return "**" + feild.key + "**:" + feild.value } ).join('<br/>') }
+
+            msgs.push( { user_type:'user', msg: typeof( value ) === "object" ? this.markdown2HTML( json2str( value ) ) : value ,
+                                 ...currentTime(), type: 'TEXT', suggested: [], show_feedback: false } )
             this.setState({show_dots: true, msgs})
 
             this.scrollBottom()
@@ -302,7 +305,12 @@ class ChatInterface extends React.Component{
                                 : null } */}
 
                                 {   msg_data.type === 'FORM' ?
-                                    <div className="msg_form" ><FormfromJSON json={ msg_data.msg } /></div>
+                                    <div className="msg_form" >
+                                        <FormfromJSON 
+                                            json={ msg_data.msg } 
+                                            onSubmit={data =>  this.handleQuery({ target: { value: data}, keyCode: 13 }) }
+                                        />
+                                    </div>
                                 : null}
 
 

@@ -72,6 +72,7 @@ button:disabled{
     border-radius: 3px;
     color: rgb(240, 240, 240);
     font-weight: bolder;
+    cursor: pointer;
 }
 
 .form_row{
