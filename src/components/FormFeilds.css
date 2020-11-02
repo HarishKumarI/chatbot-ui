@@ -70,10 +70,10 @@ input:read-only, select:disabled, button:disabled{
 }
 
 .FormfromJSON button[type='submit']{
-    background-color: blue;
-    box-shadow: inset 0 0 3px 2px rgb(55, 55, 243);
+    background-color: #318CE7;
+    box-shadow: inset 0 0 3px 2px #4c9ff1;
     padding: 4px 5px;
-    border: 1px solid rgb(102, 102, 102);
+    border: 1px solid #318CE7;
     border-radius: 3px;
     color: rgb(240, 240, 240);
     font-weight: bolder;

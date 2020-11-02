@@ -11,7 +11,7 @@
   --dots_width: 8px;
 
   --thumbs_size: 34px;
-  --thumbs_up_color: rgb(99, 202, 99);
-  --thumbs_down_color: rgb(252, 109, 109);
+  --thumbs_up_color: #50ad74;
+  --thumbs_down_color: tomato;
 }
   

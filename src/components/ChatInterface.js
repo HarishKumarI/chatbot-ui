@@ -186,7 +186,16 @@ class ChatInterface extends React.Component{
         })
     }
 
-    async servercall( question, type ){
+    async servercall( question, type, isnudge ){
+        let body = { 'query': 'none', form: 'none',  timestamp : new Date(), channel : "cognichat" }
+
+        if( isnudge )
+            body.nudge = true
+        else 
+            body.nudge = false
+
+        body[ type ] = question
+    
         await fetch('/api/test-user-query',
           {
             method: 'POST',
@@ -194,7 +203,7 @@ class ChatInterface extends React.Component{
               "content-type": "application/json",
               "session": this.state.session_id
             },
-            body: JSON.stringify({ [type]: question , Timestamp : new Date(), Channel : "cognichat" })
+            body: JSON.stringify(body)
           }
         )
         .then( res => res.json())
@@ -258,7 +267,7 @@ class ChatInterface extends React.Component{
             this.setState({show_dots: true, msgs})
 
             this.scrollBottom()
-            this.servercall( value, type ) 
+            this.servercall( value, type === 'nudge' ? 'query' : type, type === 'nudge' ? true : false ) 
             this.scrollBottom()
         } 
     }
@@ -305,18 +314,16 @@ class ChatInterface extends React.Component{
                                 : null } */}
 
                                 {   msg_data.type === 'FORM' ?
-                                    <div className={`${msg_data.user_type}`}>
-                                        <div className="msg_form" >
-                                            <FormfromJSON 
-                                                json={ msg_data.msg } 
-                                                readOnly = { msg_data.readOnly }
-                                                onSubmit={data =>  {
-                                                    this.handleQuery({ target: { value: data}, keyCode: 13 }, "form");
-                                                    msgs[ index ].readOnly = true
-                                                    this.setState({msgs})
-                                                }}
-                                            />
-                                        </div>
+                                    <div className="msg_form" >
+                                        <FormfromJSON 
+                                            json={ msg_data.msg } 
+                                            readOnly = { msg_data.readOnly }
+                                            onSubmit={data =>  {
+                                                this.handleQuery({ target: { value: data}, keyCode: 13 }, "form");
+                                                msgs[ index ].readOnly = true
+                                                this.setState({msgs})
+                                            }}
+                                        />
                                     </div>
                                 : null}
 
