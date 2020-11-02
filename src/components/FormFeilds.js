@@ -6,7 +6,8 @@ import locale    from 'react-json-editor-ajrm/locale/en';
 import './FormFeilds.css'
 
 function FormfromJSON(props){
-    let { json, onSubmit } = props
+    let { json, onSubmit, readOnly } = props
+
     const feilds = json.content === undefined ? [] 
                         : json.content.map( ( feild, idx) => {
                         let tag = null
@@ -14,9 +15,9 @@ function FormfromJSON(props){
                             case 'text': 
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.key.replace(/_/g, ' ') } </label>
-                                            <br/>
-                                            <input type="text" placeholder={ `${ feild.title }` } 
-                                                name={ feild.key }
+                                            {/* <br/> */}
+                                            <input type="text" placeholder={ `${ feild.description }` } 
+                                                name={ feild.label } readOnly={ readOnly }
                                                 defaultValue={ feild.value }
                                                 required={ feild.required } /> 
                                         </div> 
@@ -24,9 +25,9 @@ function FormfromJSON(props){
                             case 'dropdown':
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.key.replace(/_/g, ' ') } </label>
-                                            <br/>
-                                            <select name={ feild.key }  >
-                                                <option> { feild.title }</option>
+                                            {/* <br/> */}
+                                            <select name={ feild.label } disabled={ readOnly } >
+                                                <option> { feild.description }</option>
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
                                                         return  <option key={option_idx} >
@@ -40,12 +41,12 @@ function FormfromJSON(props){
                             case 'radio':
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.key.replace(/_/g, ' ') } </label>
-                                            <br/>
+                                            {/* <br/> */}
                                             <div className="radio_options">
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
                                                         return  <div key={option_idx} > 
-                                                                    <input type="radio" name={feild.key} defaultValue={option} />
+                                                                    <input type="radio" name={feild.label} defaultValue={option} readOnly={ readOnly } />
                                                                     <label className="field_labels">{ option }</label>
                                                                 </div>
                                                     })
@@ -56,12 +57,12 @@ function FormfromJSON(props){
                             case 'checkbox':
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.key.replace(/_/g, ' ') } </label>
-                                            <br/>
+                                            {/* <br/> */}
                                             <div className="radio_options">
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
                                                         return  <div key={option_idx} > 
-                                                                    <input type="checkbox" name={feild.key} defaultValue={option} />
+                                                                    <input type="checkbox" name={feild.label} defaultValue={option} readOnly={ readOnly } />
                                                                     <label className="field_labels">{ option }</label>
                                                                 </div>
                                                     })
@@ -72,8 +73,8 @@ function FormfromJSON(props){
                             case 'date':
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.key.replace(/_/g, ' ') } </label>
-                                            <br/>
-                                            <input type="date" name={feild.name} defaultValue={feild.value}  />
+                                            {/* <br/> */}
+                                            <input type="date" name={feild.label} defaultValue={feild.value} readOnly={ readOnly } />
                                         </div>
                                 break
                             default: return null
@@ -82,7 +83,7 @@ function FormfromJSON(props){
                         return tag
                     })
 
-    let { title, desc } =  json 
+    let { title, description } =  json 
     
     // json.forEach( formElement => {
     //     if( formElement.type === 'title' ){
@@ -95,7 +96,7 @@ function FormfromJSON(props){
 
     return  <div className="FormfromJSON">
                 <form onSubmit={e => {
-                        e.preventDefault(); 
+                        e.preventDefault();
                         let keyValPair = {}
                         const elements = e.target.elements
                         Array.from(elements).forEach( elementValue => {
@@ -103,45 +104,49 @@ function FormfromJSON(props){
                         })
 
                         json.content.forEach( feild => {
-                            feild.value = feild.title === keyValPair[ feild.key ] ? feild.value : keyValPair[ feild.key ]
+                            feild.value = feild.description === keyValPair[ feild.label ] ? feild.value : keyValPair[ feild.label ]
                         } )
+                        console.log( json.content )
                         onSubmit( json.content )
                     }
                     }>
                     <div className="form_title">{ title }</div>
-                    <div className="form_desc" >{ desc }</div>
+                    <div className="form_desc" >{ description }</div>
                     { feilds }
-                    <button type="submit">Submit</button>
+                    <button disabled={ readOnly } type="submit">Submit</button>
                 </form>
             </div>
 }
 
 
 const sampleFormObj = {
-        "content": [
-          {
-            "key": "car_version",
-            "options": [
-              "ertiga lxi",
-              "ertiga vxi",
-              "ertiga zxi"
-            ],
-            "required": true,
-            "title": "Which car version are you interested in ?",
-            "type": "dropdown",
-            "value": null
-          },
-          {
-            "key": "city",
-            "required": true,
-            "title": "Which city are you looking at?",
-            "type": "text",
-            "value": null
-          }
+    "content": [
+      {
+        "description": "Which car version are you interested in ?",
+        "key": "car_version",
+        "label": "Car Version",
+        "options": [
+          "ertiga lxi",
+          "ertiga vxi",
+          "ertiga zxi"
         ],
-        "title": "Please fill below for car price :",
-        "type": "FORM"
+        "required": true,
+        "type": "dropdown",
+        "value": null
+      },
+      {
+        "description": "Which city are you looking at?",
+        "key": "city",
+        "label": "City",
+        "required": true,
+        "type": "text",
+        "value": null
       }
+    ],
+    "description": "Please fill below for car price :",
+    "title": "",
+    "type": "FORM"
+  }
 
 
 
@@ -153,7 +158,8 @@ class FormFeilds extends React.Component{
             formJson: {},
             jsonChanged: false,
             differentType: [],
-            submittedContent: null
+            submittedContent: null,
+            readOnly: false
         }
 
         this.onJsonChange = this.onJsonChange.bind( this )
@@ -182,7 +188,7 @@ class FormFeilds extends React.Component{
                         <div className="editor_title" > 
                             HTML JSON Editor 
                             <button disabled={ !this.state.jsonChanged }
-                                onClick={e => this.setState({ jsonChanged: false, formJson: this.state.sampleJson })}
+                                onClick={e => this.setState({ jsonChanged: false, formJson: this.state.sampleJson, readOnly: false })}
                             > Go </button>
                         </div>
                         <JSONInput 
@@ -209,7 +215,8 @@ class FormFeilds extends React.Component{
                             <div className="form_div">
                                 <FormfromJSON 
                                     json={ this.state.formJson } 
-                                    onSubmit={data => this.setState({ submittedContent: data }) }
+                                    readOnly = { this.state.readOnly }
+                                    onSubmit={data => this.setState({ submittedContent: data, readOnly: true }) }
                                 />
                             </div>
                         : null }

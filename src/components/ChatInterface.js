@@ -149,7 +149,7 @@ class ChatInterface extends React.Component{
             headers: {
               "content-type": "application/json"
             },
-            body: {}
+            body: JSON.stringify({ context : "None", timestamp : new Date(), channel : "cognichat" })
           }
         )
         .then( res => res.json())
@@ -186,7 +186,7 @@ class ChatInterface extends React.Component{
         })
     }
 
-    async servercall( question ){
+    async servercall( question, type ){
         await fetch('/api/test-user-query',
           {
             method: 'POST',
@@ -194,7 +194,7 @@ class ChatInterface extends React.Component{
               "content-type": "application/json",
               "session": this.state.session_id
             },
-            body: JSON.stringify({ query: question })
+            body: JSON.stringify({ [type]: question , Timestamp : new Date(), Channel : "cognichat" })
           }
         )
         .then( res => res.json())
@@ -240,7 +240,7 @@ class ChatInterface extends React.Component{
     }
 
 
-    handleQuery(e){
+    handleQuery(e, type){
         let { value } = e.target
         if( value.length > 0 && !$('.send_icon').hasClass('query_available') )
             $('.send_icon').addClass('query_available')
@@ -251,14 +251,14 @@ class ChatInterface extends React.Component{
             e.target.value = ''
             let { msgs} = this.state
             
-            var json2str = ( json ) => { return json.map( feild => { return "**" + feild.key + "**:" + feild.value } ).join('<br/>') }
+            var json2str = ( json ) => { return json.map( feild => { return "**" + feild.key + "** : " + feild.value } ).join('<br/>') }
 
             msgs.push( { user_type:'user', msg: typeof( value ) === "object" ? this.markdown2HTML( json2str( value ) ) : value ,
                                  ...currentTime(), type: 'TEXT', suggested: [], show_feedback: false } )
             this.setState({show_dots: true, msgs})
 
             this.scrollBottom()
-            this.servercall( value ) 
+            this.servercall( value, type ) 
             this.scrollBottom()
         } 
     }
@@ -276,7 +276,7 @@ class ChatInterface extends React.Component{
 
     getMessages( msgs ){
         return msgs.map( ( msg_data, index ) => {            
-
+                console.log( msg_data.msg )
                 return  <div key={ index } style={{ display: 'flex', marginLeft: msg_data.user_type === 'bot' ? '20px' : 'auto' }}>
                         <div style={{ width: '30px', height: '30px' }}>
                             { index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) ?  
@@ -296,7 +296,7 @@ class ChatInterface extends React.Component{
                                 {/* {  msg_data.nudges.length > 0 ?
                                     <ul className="nudges">
                                         { msg_data.nudges.map( ( nudge, index) => {
-                                            return  <li key={ index } onClick={e => this.handleQuery({...e, keyCode: 13, target: { value: nudge} }) } >
+                                            return  <li key={ index } onClick={e => this.handleQuery({...e, keyCode: 13, target: { value: nudge} }, "nudge") } >
                                                     {nudge}
                                                     </li>
                                         }) 
@@ -305,11 +305,18 @@ class ChatInterface extends React.Component{
                                 : null } */}
 
                                 {   msg_data.type === 'FORM' ?
-                                    <div className="msg_form" >
-                                        <FormfromJSON 
-                                            json={ msg_data.msg } 
-                                            onSubmit={data =>  this.handleQuery({ target: { value: data}, keyCode: 13 }) }
-                                        />
+                                    <div className={`${msg_data.user_type}`}>
+                                        <div className="msg_form" >
+                                            <FormfromJSON 
+                                                json={ msg_data.msg } 
+                                                readOnly = { msg_data.readOnly }
+                                                onSubmit={data =>  {
+                                                    this.handleQuery({ target: { value: data}, keyCode: 13 }, "form");
+                                                    msgs[ index ].readOnly = true
+                                                    this.setState({msgs})
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                 : null}
 
@@ -332,7 +339,7 @@ class ChatInterface extends React.Component{
                                         { 
                                             msg_data.suggested.map( ( suggested, idx ) => {
                                                 return  <div key={ idx } className="suggested_que" 
-                                                            onClick={e => this.handleQuery( { ...e, keyCode: 13, target: {value: suggested }})} > 
+                                                            onClick={e => this.handleQuery( { ...e, keyCode: 13, target: {value: suggested }}, "nudge")} > 
                                                             { suggested } 
                                                         </div>
                                             })
@@ -401,7 +408,7 @@ class ChatInterface extends React.Component{
 
                     <div className="chat_text_handler" >
                         <input type="text" id="user_input"  className="msg_input" placeholder="Ask Something..." 
-                            onKeyUp={ this.handleQuery }
+                            onKeyUp={e => this.handleQuery(e, "query") }
                         />
                         <Send className={ `send_icon` }  />
                     </div>

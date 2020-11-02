@@ -1,6 +1,6 @@
 
 :root{
-  --user_background: #0d64bb;
+  --user_background: #44a1fd;
   --bot_background : #f3f3f3;
   --text-color: #183950;
 
@@ -11,7 +11,7 @@
   --dots_width: 8px;
 
   --thumbs_size: 34px;
-  --thumbs_up_color: rgb(28, 92, 28);
-  --thumbs_down_color: rgb(236, 51, 51);
+  --thumbs_up_color: rgb(99, 202, 99);
+  --thumbs_down_color: rgb(252, 109, 109);
 }
   
