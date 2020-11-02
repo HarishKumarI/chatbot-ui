@@ -99,11 +99,11 @@ function FormfromJSON(props){
                         let keyValPair = {}
                         const elements = e.target.elements
                         Array.from(elements).forEach( elementValue => {
-                            keyValPair[ elementValue.name ] = elementValue.value
+                            keyValPair[ elementValue.name ] =  elementValue.value
                         })
 
                         json.content.forEach( feild => {
-                            feild.value = keyValPair[ feild.key ]
+                            feild.value = feild.title === keyValPair[ feild.key ] ? feild.value : keyValPair[ feild.key ]
                         } )
                         onSubmit( json.content )
                     }
