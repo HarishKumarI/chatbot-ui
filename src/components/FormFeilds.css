@@ -42,15 +42,15 @@ button:disabled{
 }
 
 .FormfromJSON form{
-    padding: 3px;
-    display: flow-root;    
+    padding: 6px;
+    display: flow-root;   
+    min-width: 250px; 
 }
 
 .FormfromJSON .form_title{
     text-align: center;
     font-weight: bolder;
-    font-size: 20px;
-    margin-top: 10px;
+    font-size: 16px;
     color: rgb(62, 4, 117);
 }
 
@@ -103,6 +103,7 @@ button:disabled{
 
 .field_labels{
     font-weight: 400 !important;
+    margin: auto 2px;
 }
 
 .form_row select{
@@ -116,6 +117,6 @@ button:disabled{
 
 
 .radio_options{
-    margin: 10px 0;
+    margin: 10px 1px;
 }
 

@@ -14,6 +14,7 @@ import * as json2md from 'json2md'
 
 import './chat_interface.css'
 import configJson from '../config/UI_configuration.json'
+import { FormfromJSON } from './FormFeilds'
 
 
 var converter = new showdown.Converter({'noHeaderId':'true'})
@@ -87,8 +88,8 @@ class ChatInterface extends React.Component{
     }
 
     getMsgStructure( user_type, msg, nudges = [], suggested = [], 
-                        show_feedback = false, feedback_value = null, feedback_String = null,
-                        hyperlinks= [], form_feilds= {}, Images= [], Image_carousel= [], confirm_msgs=[]
+                        show_feedback = false, feedback_value = null, feedback_String = null, formJson= null,
+                        hyperlinks= [], Images= [], Image_carousel= [], confirm_msgs=[], card_info= null
                     ){
 
         /*
@@ -105,14 +106,22 @@ class ChatInterface extends React.Component{
         return  {   
                     user_type, msg, ...currentTime(), 
                     nudges, suggested, show_suggested: true, 
-                    show_feedback, feedback_value, feedback_String, 
-                    hyperlinks, form_feilds, Images, Image_carousel, confirm_msgs
+                    show_feedback, feedback_value, feedback_String, formJson,
+                    hyperlinks, Images, Image_carousel, confirm_msgs, card_info
                 }
+    }
+
+    markdown2HTML( markdown ) {
+        let answerElement = converter.makeHtml( json2md( markdown ) )
+        answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
+        return answerElement
     }
 
     componentDidMount(){
         const welcome_msgs = configJson.welcome_msgs.map( msg_data => {
-                                return {...this.getMsgStructure( 'bot', msg_data.msg, [], msg_data.suggestions, msg_data.show_feedback ) , question: '', answerJson: {} }
+                                return {...this.getMsgStructure( msg_data.user_type, this.markdown2HTML(msg_data.msg), msg_data.nudges, msg_data.suggestions, 
+                                                                    msg_data.show_feedback, null, null, msg_data.formJson, [], [], [], [], msg_data.card_info)
+                                                     , question: '', answerJson: {} }
                             })
 
         this.setState({ msgs : welcome_msgs })
@@ -137,49 +146,49 @@ class ChatInterface extends React.Component{
     }
 
     async servercall( question ){
-        await fetch('/api/106',
-          {
-            method: 'POST',
-            headers: {
-              "content-type": "application/json"
-            },
-            body: JSON.stringify({ question })
-          }
-        )
-        .then( res => res.json())
-        .then( responseJson => {
+        // await fetch('/api/106',
+        //   {
+        //     method: 'POST',
+        //     headers: {
+        //       "content-type": "application/json"
+        //     },
+        //     body: JSON.stringify({ question })
+        //   }
+        // )
+        // .then( res => res.json())
+        // .then( responseJson => {
           this.setState({ show_dots: false })
-          // console.log( responseJson )
+        //   // console.log( responseJson )
     
-          responseJson.forEach( answer_element => {
-            if( answer_element.type === 'TEXT' ){
+        //   responseJson.forEach( answer_element => {
+        //     if( answer_element.type === 'TEXT' ){
     
-                let { msgs } = this.state
+        //         let { msgs } = this.state
         
-                let answerElement = converter.makeHtml( json2md( answer_element.answer_json.answer ) )
-                answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
+        //         let answerElement = converter.makeHtml( json2md( answer_element.answer_json.answer ) )
+        //         answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
                 
 
-                // user_type, msg, nudges = [], suggested = [], 
-                //         show_feedback = false, feedback_value = null, feedback_String = '',
-                //         hyperlinks= [], form_feilds= {}, Images= [], Image_carousel= [], confirm_msgs=[]
+        //         // user_type, msg, nudges = [], suggested = [], 
+        //         //         show_feedback = false, feedback_value = null, feedback_String = '',
+        //         //         hyperlinks= [], form_feilds= {}, Images= [], Image_carousel= [], confirm_msgs=[]
 
-                msgs.push( {...this.getMsgStructure( 'bot', answerElement, 
-                                                        answer_element.answer_json.nudges === undefined ? [] : answer_element.answer_json.nudges, [], 
-                                                        true, null, null, this.getHyperlinksfromHTML( answerElement ) ) , question, answerJson: answer_element.answer_json } )
+        //         msgs.push( {...this.getMsgStructure( 'bot', answerElement, 
+        //                                                 answer_element.answer_json.nudges === undefined ? [] : answer_element.answer_json.nudges, [], 
+        //                                                 true, null, null, this.getHyperlinksfromHTML( answerElement ) ) , question, answerJson: answer_element.answer_json } )
                 
-                this.setState({ msgs })
-            }
-          })
+        //         this.setState({ msgs })
+        //     }
+        //   })
     
           document.getElementById('user_input').innerText = null
     
-          this.scrollBottom()
+        //   this.scrollBottom()
     
-        })
-        .catch(err => {
-          console.log( err )
-        })
+        // })
+        // .catch(err => {
+        //   console.log( err )
+        // })
     
     }
     
@@ -228,8 +237,9 @@ class ChatInterface extends React.Component{
     }
 
     getMessages( msgs ){
-        return msgs.map( ( msg_data, index ) => {
-            return  <div key={ index } style={{ display: 'flex' }}>
+        return msgs.map( ( msg_data, index ) => {            
+
+            return  <div key={ index } style={{ display: 'flex', marginLeft: msg_data.user_type === 'bot' ? '20px' : 'auto' }}>
                         <div style={{ width: '30px', height: '30px' }}>
                             { index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) ?  
                                 <img src={ configJson.bot_image } alt="bot_image" className="bot_image" />  
@@ -241,7 +251,9 @@ class ChatInterface extends React.Component{
                             : null }
 
                             <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` }> 
-                                <div className={`${msg_data.user_type}`} suppressContentEditableWarning dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
+                                { msg_data.msg.length > 0 ?
+                                    <div className={`${msg_data.user_type}`} suppressContentEditableWarning dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
+                                : null }
 
                                 {  msg_data.nudges.length > 0 ?
                                     <ul className="nudges">
@@ -253,7 +265,20 @@ class ChatInterface extends React.Component{
                                         }
                                     </ul>
                                 : null }
+
+                                {   msg_data.formJson !== undefined && msg_data.formJson !== null ?
+                                    <div className="msg_form" ><FormfromJSON json={ msg_data.formJson } /></div>
+                                : null}
+
+
+                                {   msg_data.card_info !== undefined && msg_data.card_info !== null ? 
+                                    <div className="chat_card">
+                                        <div><img src={ msg_data.card_info.img_url } alt="card_image" /></div>
+                                        <div className="chat-text" dangerouslySetInnerHTML={{__html: this.markdown2HTML( msg_data.card_info.text ) }} />
+                                    </div>
+                                : null }
                             </div>
+
 
                             {  msgs.length - 1 === index || ( msgs[index + 1] !== undefined && msg_data.user_type !== msgs[index + 1].user_type ) ?
                                 <div className="time">{ msg_data.time }</div> 
@@ -291,7 +316,6 @@ class ChatInterface extends React.Component{
 
 
     render(){
-
         const messages = this.getMessages( this.state.msgs )
 
         return  <>

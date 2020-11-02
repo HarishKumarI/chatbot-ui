@@ -3,10 +3,60 @@
     "tagline": "powered by CogniQA platform",
     "bot_image": "https://www.carwale.com/apple-touch-icon.png",
     "bot_name": "carwale.com - Virtual Assistant",
-    "welcome_msgs": [   { "msg" : "Hi  !", "suggestions": [], "show_feedback": false },
+    "welcome_msgs": [   { "msg" : "Hi  !", "user_type": "bot", "suggestions": [], "nudges": [], "show_feedback": false },
                         { "msg" : "I am 'Carwale-Bot' , your assistant.<br/> I am here to answer any questions you may have about the Carwale service.<br/> What would you like  to know?", 
-                            "suggestions":  [ ],
-                            "show_feedback": false
+                            "user_type": "bot",
+                            "suggestions":  [ "Hyundai venue price?", "Hyundai venue mileage?"],
+                            "show_feedback": true, "nudges": []
+                        },
+                        { "msg": "different variants of Hyundai venue", "user_type": "user" },
+                        { "msg": "Available Varaints of Hyundai venue are:", "user_type": "bot", "nudges": [ "Venue E 1.2 Petrol", "Venue S 1.2 Petrol",
+                                                                                                        "Venue E 1.5 CRDi", "Venue S Plus 1.2 Petrol", "Venue S 1.0 Turbo", 
+                                                                                                        "Venue S 1.0 Turbo DCT","Venue SX 1.0 Turbo",
+                                                                                                        "Venue SX 1.0 Turbo iMT","Venue SX 1.5 CRDi","Venue Sport SX 1.0 Turbo iMT",
+                                                                                                        "Venue Sport SX Plus 1.0 Turbo DCT","Venue Sport SX (O) 1.5 CRDi" ] 
+                        },
+                        { "msg": "help me get car","user_type": "user" },
+                        { "msg": "", "user_type": "bot",
+                            "formJson" : [
+                                {
+                                    "value": "Please fill in the form below",
+                                    "type" : "title"
+                                },
+                                {
+                                    "title": "select budget",
+                                    "key": "budget",
+                                    "type": "dropdown",
+                                    "options": [
+                                      "2-3 Lakhs",
+                                      "3-5 Lakhs"
+                                    ],
+                                    "value": null
+                                  },
+                                  {
+                                    "key": "Body Type",
+                                    "type": "checkbox",
+                                    "options": [
+                                      "SUV / MUV",
+                                      "Hatchback",
+                                      "Sedan",
+                                      "Compact Sedan",
+                                      "Truck",
+                                      "Convertible",
+                                      "Coupe",
+                                      "Station Wagon",
+                                      "Minivan"
+                                    ],
+                                    "value": null
+                                  }
+                            ]
+                        },
+                        { "msg": "details of Kia Sonet","user_type": "user" },
+                        { "msg": "", "user_type": "bot", 
+                            "card_info" : {
+                                "img_url": "https://imgd.aeplcdn.com/310x174/n/cw/ec/41523/sonet-exterior-right-front-three-quarter-108.jpeg?q=85",
+                                "text": "**Name:** Kia Sonet <br/>**Price:** Starting at ₹ 7.86 Laks<br/>**Variants**:Sonet HTE 1.2, Sonet HTK 1.2, Sonet HTE 1.5,Sonet HTK Plus 1.2 etc<br/>**MILEAGE**: 18.2 to 24.1 kmpl"
+                            }
                         }
                     ],
     

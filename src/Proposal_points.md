@@ -9,6 +9,9 @@
   - showing differences between two or more cars ( can be a table or image carousel )
 
 
+when detail comparison is how to point to detail comparison.
+how to highlight the details given by the user.
+
 
 Questions:
 - showing differences of two or more cars

@@ -16,7 +16,7 @@ function FormfromJSON(props){
                 tag =   <div className="form_row" key={idx}>
                             <label > { feild.key } </label>
                             <br/>
-                            <input type="text" placeholder={ `Enter ${ feild.key }` } 
+                            <input type="text" placeholder={ `${ feild.title }` } 
                                 name={ feild.key }
                                 defaultValue={ feild.value }
                                 required={ feild.required } /> 
@@ -26,8 +26,8 @@ function FormfromJSON(props){
                 tag =   <div className="form_row" key={idx}>
                             <label > { feild.key } </label>
                             <br/>
-                            <select name={ feild.key } >
-                                <option>select { feild.key }</option>
+                            <select name={ feild.key }  >
+                                <option> { feild.title }</option>
                                 {
                                     feild.options.map( ( option, option_idx ) => {
                                         return  <option key={option_idx} >
@@ -125,12 +125,14 @@ const sampleFormObj = [
       value: 'form description'
     },
     {
+      title: "Please enter Name",
       key: 'Name',
       type: 'text',
       required: true,
       value: null
     },
     {
+      title: 'select budget',
       key: 'budget',
       type: 'dropdown',
       options: [
@@ -247,4 +249,4 @@ class FormFeilds extends React.Component{
     }
 }
 
-export default FormFeilds
+export { FormFeilds, FormfromJSON}
