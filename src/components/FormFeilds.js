@@ -6,11 +6,10 @@ import locale    from 'react-json-editor-ajrm/locale/en';
 import './FormFeilds.css'
 
 function FormfromJSON(props){
-    const { json } = props
+    let { json, onSubmit } = props
     const feilds = json.content === undefined ? [] 
                         : json.content.map( ( feild, idx) => {
                         let tag = null
-                        console.log( feild )
                         switch( feild.type ){
                             case 'text': 
                                 tag =   <div className="form_row" key={idx}>
@@ -97,14 +96,17 @@ function FormfromJSON(props){
     return  <div className="FormfromJSON">
                 <form onSubmit={e => {
                         e.preventDefault(); 
-                        // var form = e.target
-                        // let kvpairs = []
-                        // for ( var i = 0; i < form.elements.length; i++ ) {
-                        // var e = form.elements[i];
-                        // kvpairs.push(encodeURIComponent(e.name) + "=" + encodeURIComponent(e.value));
-                        // }
-                        console.log( e.target.elements )
-                        }
+                        let keyValPair = {}
+                        const elements = e.target.elements
+                        Array.from(elements).forEach( elementValue => {
+                            keyValPair[ elementValue.name ] = elementValue.value
+                        })
+
+                        json.content.forEach( feild => {
+                            feild.value = keyValPair[ feild.key ]
+                        } )
+                        onSubmit( json.content )
+                    }
                     }>
                     <div className="form_title">{ title }</div>
                     <div className="form_desc" >{ desc }</div>
@@ -150,7 +152,8 @@ class FormFeilds extends React.Component{
             sampleJson: {},
             formJson: {},
             jsonChanged: false,
-            differentType: []
+            differentType: [],
+            submittedContent: null
         }
 
         this.onJsonChange = this.onJsonChange.bind( this )
@@ -204,9 +207,27 @@ class FormFeilds extends React.Component{
                         
                         { this.state.formJson.content !== undefined ?
                             <div className="form_div">
-                                <FormfromJSON json={ this.state.formJson } />
+                                <FormfromJSON 
+                                    json={ this.state.formJson } 
+                                    onSubmit={data => this.setState({ submittedContent: data }) }
+                                />
                             </div>
                         : null }
+
+
+                        {   this.state.submittedContent !== null ?
+                            <>
+                                <div className="editor_title" style={{ marginTop: '15px' }}> Submitted Data </div>
+                                <JSONInput 
+                                    id          = "editor"
+                                    placeholder = { this.state.submittedContent }
+                                    colors      = { darken }
+                                    locale      = { locale }
+                                    width       = '33vw'
+                                    viewOnly    = { true }
+                                />
+                            </>
+                        : null}
                     </div>
                 </div>
     }
