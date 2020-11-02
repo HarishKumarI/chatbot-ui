@@ -60,3 +60,33 @@
       feedback_reply: ''
     }
   ```
+
+
+
+### Dummy APIs for testing (you can ignore the cookies for now):
+- /test-create-session
+  ```
+  curl --location --request POST 'http://95.217.239.6:7009/api/test-create-session' \
+  --header 'Cookie: session=3e74bfc8-c52b-4788-8922-e45795ef613d'
+  ```
+
+- /test-user-query   (form 1)
+  ```
+  curl --location --request POST 'http://95.217.239.6:7009/api/test-user-query' \
+  --header 'Content-Type: text/plain' \
+  --header 'Cookie: session=3e74bfc8-c52b-4788-8922-e45795ef613d' \
+  --data-raw '{
+      "query" : "form 1"
+  }
+  ```
+
+- /test-user-query    (form 2)
+
+  ```
+  curl --location --request POST 'http://95.217.239.6:7009/api/test-user-query' \
+  --header 'Content-Type: text/plain' \
+  --header 'Cookie: session=3e74bfc8-c52b-4788-8922-e45795ef613d' \
+  --data-raw '{
+      "query" : "form 2"
+  }'
+  ```

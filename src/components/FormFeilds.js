@@ -7,92 +7,92 @@ import './FormFeilds.css'
 
 function FormfromJSON(props){
     const { json } = props
+    const feilds = json.content === undefined ? [] 
+                        : json.content.map( ( feild, idx) => {
+                        let tag = null
+                        console.log( feild )
+                        switch( feild.type ){
+                            case 'text': 
+                                tag =   <div className="form_row" key={idx}>
+                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <br/>
+                                            <input type="text" placeholder={ `${ feild.title }` } 
+                                                name={ feild.key }
+                                                defaultValue={ feild.value }
+                                                required={ feild.required } /> 
+                                        </div> 
+                                break;
+                            case 'dropdown':
+                                tag =   <div className="form_row" key={idx}>
+                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <br/>
+                                            <select name={ feild.key }  >
+                                                <option> { feild.title }</option>
+                                                {
+                                                    feild.options.map( ( option, option_idx ) => {
+                                                        return  <option key={option_idx} >
+                                                                    { option }
+                                                                </option>
+                                                    })
+                                                }
+                                            </select>
+                                        </div>
+                                break
+                            case 'radio':
+                                tag =   <div className="form_row" key={idx}>
+                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <br/>
+                                            <div className="radio_options">
+                                                {
+                                                    feild.options.map( ( option, option_idx ) => {
+                                                        return  <div key={option_idx} > 
+                                                                    <input type="radio" name={feild.key} defaultValue={option} />
+                                                                    <label className="field_labels">{ option }</label>
+                                                                </div>
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                break
+                            case 'checkbox':
+                                tag =   <div className="form_row" key={idx}>
+                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <br/>
+                                            <div className="radio_options">
+                                                {
+                                                    feild.options.map( ( option, option_idx ) => {
+                                                        return  <div key={option_idx} > 
+                                                                    <input type="checkbox" name={feild.key} defaultValue={option} />
+                                                                    <label className="field_labels">{ option }</label>
+                                                                </div>
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                break
+                            case 'date':
+                                tag =   <div className="form_row" key={idx}>
+                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <br/>
+                                            <input type="date" name={feild.name} defaultValue={feild.value}  />
+                                        </div>
+                                break
+                            default: return null
+                        }
 
-    const feilds = json.map( ( feild, idx) => {
-        let tag = null
+                        return tag
+                    })
 
-        switch( feild.type ){
-            case 'text': 
-                tag =   <div className="form_row" key={idx}>
-                            <label > { feild.key } </label>
-                            <br/>
-                            <input type="text" placeholder={ `${ feild.title }` } 
-                                name={ feild.key }
-                                defaultValue={ feild.value }
-                                required={ feild.required } /> 
-                        </div> 
-                break;
-            case 'dropdown':
-                tag =   <div className="form_row" key={idx}>
-                            <label > { feild.key } </label>
-                            <br/>
-                            <select name={ feild.key }  >
-                                <option> { feild.title }</option>
-                                {
-                                    feild.options.map( ( option, option_idx ) => {
-                                        return  <option key={option_idx} >
-                                                    { option }
-                                                </option>
-                                    })
-                                }
-                            </select>
-                        </div>
-                break
-            case 'radio':
-                tag =   <div className="form_row" key={idx}>
-                            <label > { feild.key } </label>
-                            <br/>
-                            <div className="radio_options">
-                                {
-                                    feild.options.map( ( option, option_idx ) => {
-                                        return  <div key={option_idx} > 
-                                                    <input type="radio" name={feild.key} defaultValue={option} />
-                                                    <label className="field_labels">{ option }</label>
-                                                </div>
-                                    })
-                                }
-                            </div>
-                        </div>
-                break
-            case 'checkbox':
-                tag =   <div className="form_row" key={idx}>
-                            <label > { feild.key } </label>
-                            <br/>
-                            <div className="radio_options">
-                                {
-                                    feild.options.map( ( option, option_idx ) => {
-                                        return  <div key={option_idx} > 
-                                                    <input type="checkbox" name={feild.key} defaultValue={option} />
-                                                    <label className="field_labels">{ option }</label>
-                                                </div>
-                                    })
-                                }
-                            </div>
-                        </div>
-                break
-            case 'date':
-                tag =   <div className="form_row" key={idx}>
-                            <label > { feild.key } </label>
-                            <br/>
-                            <input type="date" name={feild.name} defaultValue={feild.value}  />
-                        </div>
-                break
-            default: return null
-        }
-        
-        return tag
-    })
-
-    let form_title, form_desc = ''
-
-    json.forEach( formElement => {
-        if( formElement.type === 'title' ){
-            form_title = formElement.value
-        }
-        if( formElement.type === 'desc' ){
-            form_desc = formElement.value
-        }
-    })
+    let { title, desc } =  json 
+    
+    // json.forEach( formElement => {
+    //     if( formElement.type === 'title' ){
+    //         form_title = formElement.value
+    //     }
+    //     if( formElement.type === 'desc' ){
+    //         form_desc = formElement.value
+    //     }
+    // })   
 
     return  <div className="FormfromJSON">
                 <form onSubmit={e => {
@@ -106,8 +106,8 @@ function FormfromJSON(props){
                         console.log( e.target.elements )
                         }
                     }>
-                    <div className="form_title">{ form_title }</div>
-                    <div className="form_desc" >{ form_desc }</div>
+                    <div className="form_title">{ title }</div>
+                    <div className="form_desc" >{ desc }</div>
                     { feilds }
                     <button type="submit">Submit</button>
                 </form>
@@ -115,69 +115,31 @@ function FormfromJSON(props){
 }
 
 
-const sampleFormObj = [
-    {
-      type: 'title',
-      value: 'Form Title'
-    },
-    {
-      type: 'desc',
-      value: 'form description'
-    },
-    {
-      title: "Please enter Name",
-      key: 'Name',
-      type: 'text',
-      required: true,
-      value: null
-    },
-    {
-      title: 'select budget',
-      key: 'budget',
-      type: 'dropdown',
-      options: [
-        '2-3 Lakhs',
-        '3-5 Lakhs'
-      ],
-      value: null
-    },
-    {
-      key: 'body type',
-      type: 'radio',
-      options: [
-        'SUV / MUV',
-        'Hatchback',
-        'Sedan',
-        'Compact Sedan',
-        'Truck',
-        'Convertible',
-        'Coupe',
-        'Station Wagon',
-        'Minivan'
-      ],
-      value: null
-    },
-    {
-      key: 'Body Type',
-      type: 'checkbox',
-      options: [
-        'SUV / MUV',
-        'Hatchback',
-        'Sedan',
-        'Compact Sedan',
-        'Truck',
-        'Convertible',
-        'Coupe',
-        'Station Wagon',
-        'Minivan'
-      ],
-      value: null
-    },
-    { key: 'date picker',
-      type: 'date',
-      value: '2020-10-31'
-    }
-  ]
+const sampleFormObj = {
+        "content": [
+          {
+            "key": "car_version",
+            "options": [
+              "ertiga lxi",
+              "ertiga vxi",
+              "ertiga zxi"
+            ],
+            "required": true,
+            "title": "Which car version are you interested in ?",
+            "type": "dropdown",
+            "value": null
+          },
+          {
+            "key": "city",
+            "required": true,
+            "title": "Which city are you looking at?",
+            "type": "text",
+            "value": null
+          }
+        ],
+        "title": "Please fill below for car price :",
+        "type": "FORM"
+      }
 
 
 
@@ -185,8 +147,8 @@ class FormFeilds extends React.Component{
     constructor(props){
         super(props)
         this.state = { 
-            sampleJson: [],
-            formJson: [],
+            sampleJson: {},
+            formJson: {},
             jsonChanged: false,
             differentType: []
         }
@@ -203,16 +165,15 @@ class FormFeilds extends React.Component{
         let { sampleJson, differentType } = this.state
         differentType = []
         sampleJson = e === undefined ? this.state.sampleJson : e.jsObject
-        let covered_list = sampleJson.map( formElement => {
-            return differentType.includes(formElement.type) ? null : formElement.type
+        sampleJson.content.forEach( formElement => {
+            if( !differentType.includes(formElement.type) )
+                differentType.push( formElement.type )
         })
-
-        covered_list = Array.from( new Set( covered_list ) )
-        this.setState({ differentType: covered_list, sampleJson })
+        
+        this.setState({ differentType, sampleJson })
     }
 
     render(){
-
         return  <div className="formFeilds">
                     <div className="editor_container" >
                         <div className="editor_title" > 
@@ -240,10 +201,12 @@ class FormFeilds extends React.Component{
                             <input type="checkbox" disabled checked={ this.state.differentType.includes( 'checkbox' ) } />  checkbox
                             <input type="checkbox" disabled checked={ this.state.differentType.includes( 'date' ) } />  date
                         </div>
-
-                        <div className="form_div">
-                            <FormfromJSON json={ this.state.formJson } />
-                        </div>
+                        
+                        { this.state.formJson.content !== undefined ?
+                            <div className="form_div">
+                                <FormfromJSON json={ this.state.formJson } />
+                            </div>
+                        : null }
                     </div>
                 </div>
     }

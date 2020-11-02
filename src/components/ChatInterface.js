@@ -79,7 +79,8 @@ class ChatInterface extends React.Component{
             show_dots: false,
             msgs: [],
             feedback_data: null,
-            show_feedback_form: false
+            show_feedback_form: false,
+            session_id: null
         }
 
         this.handleQuery = this.handleQuery.bind(this)
@@ -111,20 +112,60 @@ class ChatInterface extends React.Component{
                 }
     }
 
+    getMsgs( serverResponse , show_feedback=false){
+
+        let welcome_msgs = serverResponse.bot_response.map( msg_data => {
+            const answerElement = msg_data.markdown && msg_data.markdown !== undefined ? this.markdown2HTML(msg_data.content) : msg_data
+
+            return { user_type: 'bot', type: msg_data.type, msg: answerElement, ...currentTime(), show_feedback, feedback_value: null, feedback_String: null,
+                    hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? 
+                        this.getHyperlinksfromHTML( answerElement ): [] , question: '', answerJson: msg_data }
+        })
+
+        welcome_msgs[ welcome_msgs.length -1 ].suggested = serverResponse.footer_options
+
+        return welcome_msgs
+    }
+
+
     markdown2HTML( markdown ) {
         let answerElement = converter.makeHtml( json2md( markdown ) )
         answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
         return answerElement
     }
 
-    componentDidMount(){
-        const welcome_msgs = configJson.welcome_msgs.map( msg_data => {
-                                return {...this.getMsgStructure( msg_data.user_type, this.markdown2HTML(msg_data.msg), msg_data.nudges, msg_data.suggestions, 
-                                                                    msg_data.show_feedback, null, null, msg_data.formJson, [], [], [], [], msg_data.card_info)
-                                                     , question: '', answerJson: {} }
-                            })
+    async componentDidMount(){
+        // const welcome_msgs = configJson.welcome_msgs.map( msg_data => {
+        //                         return {...this.getMsgStructure( msg_data.user_type, this.markdown2HTML(msg_data.msg), msg_data.nudges, msg_data.suggestions, 
+        //                                                             msg_data.show_feedback, null, null, msg_data.formJson, [], [], [], [], msg_data.card_info)
+        //                                              , question: '', answerJson: {} }
+        //                     })
 
-        this.setState({ msgs : welcome_msgs })
+        // this.setState({ msgs : welcome_msgs })
+
+        await fetch('/api/test-create-session',
+          {
+            method: 'POST',
+            headers: {
+              "content-type": "application/json"
+            },
+            body: {}
+          }
+        )
+        .then( res => res.json())
+        .then( responseJson => { 
+            // console.log( responseJson ) 
+
+            // let welcome_msgs = responseJson.bot_response.map( msg_data => {
+            //     return {...this.getMsgStructure( 'bot', this.markdown2HTML(msg_data.content)), type: msg_data.type
+            //                                                                 , question: '', answerJson: {} }
+            // })
+
+            // welcome_msgs[ welcome_msgs.length -1 ].suggested = responseJson.footer_options
+
+            this.setState({ session_id: responseJson.session_id, msgs: this.getMsgs( responseJson ) })
+        })
+
     }
 
     getHyperlinksfromHTML( html ){
@@ -146,32 +187,27 @@ class ChatInterface extends React.Component{
     }
 
     async servercall( question ){
-        // await fetch('/api/106',
-        //   {
-        //     method: 'POST',
-        //     headers: {
-        //       "content-type": "application/json"
-        //     },
-        //     body: JSON.stringify({ question })
-        //   }
-        // )
-        // .then( res => res.json())
-        // .then( responseJson => {
+        await fetch('/api/test-user-query',
+          {
+            method: 'POST',
+            headers: {
+              "content-type": "application/json",
+              "session": this.state.session_id
+            },
+            body: JSON.stringify({ query: question })
+          }
+        )
+        .then( res => res.json())
+        .then( responseJson => {
           this.setState({ show_dots: false })
-        //   // console.log( responseJson )
-    
+          // console.log( responseJson )
+            
+          this.setState({ msgs: [ ...this.state.msgs, ...this.getMsgs( responseJson, true )] })
         //   responseJson.forEach( answer_element => {
         //     if( answer_element.type === 'TEXT' ){
     
         //         let { msgs } = this.state
-        
-        //         let answerElement = converter.makeHtml( json2md( answer_element.answer_json.answer ) )
-        //         answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
-                
-
-        //         // user_type, msg, nudges = [], suggested = [], 
-        //         //         show_feedback = false, feedback_value = null, feedback_String = '',
-        //         //         hyperlinks= [], form_feilds= {}, Images= [], Image_carousel= [], confirm_msgs=[]
+        //         const answerElement = this.markdown2HTML( answer_element.answer_json.answer )
 
         //         msgs.push( {...this.getMsgStructure( 'bot', answerElement, 
         //                                                 answer_element.answer_json.nudges === undefined ? [] : answer_element.answer_json.nudges, [], 
@@ -183,24 +219,23 @@ class ChatInterface extends React.Component{
     
           document.getElementById('user_input').innerText = null
     
-        //   this.scrollBottom()
+          this.scrollBottom()
     
-        // })
-        // .catch(err => {
-        //   console.log( err )
-        // })
+        })
+        .catch(err => {
+          console.log( err )
+        })
     
     }
     
 
     scrollBottom(){
-
         try{
             setTimeout( () => {
-            const { clientHeight, scrollHeight } = document.getElementsByClassName('messages')[0]
-            if( clientHeight !== scrollHeight )
-            document.getElementsByClassName('messages')[0].scrollTop = scrollHeight
-            }, 20)
+                const { clientHeight, scrollHeight } = document.getElementsByClassName('messages')[0]
+                if( clientHeight !== scrollHeight )
+                document.getElementsByClassName('messages')[0].scrollTop = scrollHeight
+            }, 50)
         }  catch(err){}
     }
 
@@ -216,7 +251,7 @@ class ChatInterface extends React.Component{
         if ( e.keyCode === 13 && value.length > 0 ){
             e.target.value = ''
             let { msgs} = this.state
-            msgs.push( this.getMsgStructure( 'user', value  ) )
+            msgs.push( { user_type:'user', msg: value, ...currentTime(), type: 'TEXT', suggested: [], show_feedback: false } )
             this.setState({show_dots: true, msgs})
 
             this.scrollBottom()
@@ -239,7 +274,7 @@ class ChatInterface extends React.Component{
     getMessages( msgs ){
         return msgs.map( ( msg_data, index ) => {            
 
-            return  <div key={ index } style={{ display: 'flex', marginLeft: msg_data.user_type === 'bot' ? '20px' : 'auto' }}>
+                return  <div key={ index } style={{ display: 'flex', marginLeft: msg_data.user_type === 'bot' ? '20px' : 'auto' }}>
                         <div style={{ width: '30px', height: '30px' }}>
                             { index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) ?  
                                 <img src={ configJson.bot_image } alt="bot_image" className="bot_image" />  
@@ -251,11 +286,11 @@ class ChatInterface extends React.Component{
                             : null }
 
                             <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` }> 
-                                { msg_data.msg.length > 0 ?
+                                { msg_data.type === 'TEXT' ?
                                     <div className={`${msg_data.user_type}`} suppressContentEditableWarning dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
                                 : null }
 
-                                {  msg_data.nudges.length > 0 ?
+                                {/* {  msg_data.nudges.length > 0 ?
                                     <ul className="nudges">
                                         { msg_data.nudges.map( ( nudge, index) => {
                                             return  <li key={ index } onClick={e => this.handleQuery({...e, keyCode: 13, target: { value: nudge} }) } >
@@ -264,19 +299,19 @@ class ChatInterface extends React.Component{
                                         }) 
                                         }
                                     </ul>
-                                : null }
+                                : null } */}
 
-                                {   msg_data.formJson !== undefined && msg_data.formJson !== null ?
-                                    <div className="msg_form" ><FormfromJSON json={ msg_data.formJson } /></div>
+                                {   msg_data.type === 'FORM' ?
+                                    <div className="msg_form" ><FormfromJSON json={ msg_data.msg } /></div>
                                 : null}
 
 
-                                {   msg_data.card_info !== undefined && msg_data.card_info !== null ? 
+                                {/* {   msg_data.card_info !== undefined && msg_data.card_info !== null ? 
                                     <div className="chat_card">
                                         <div><img src={ msg_data.card_info.img_url } alt="card_image" /></div>
                                         <div className="chat-text" dangerouslySetInnerHTML={{__html: this.markdown2HTML( msg_data.card_info.text ) }} />
                                     </div>
-                                : null }
+                                : null } */}
                             </div>
 
 
@@ -284,8 +319,7 @@ class ChatInterface extends React.Component{
                                 <div className="time">{ msg_data.time }</div> 
                             : null }
 
-                            {
-                                msg_data.suggested.length > 0 ?
+                            {   msg_data.suggested.length > 0 ?
                                     <div className="suggested_container">
                                         { 
                                             msg_data.suggested.map( ( suggested, idx ) => {
@@ -296,8 +330,7 @@ class ChatInterface extends React.Component{
                                             })
                                         }
                                     </div>
-                                : null 
-                            }
+                                : null }
 
                             { msg_data.show_feedback ?
                                 <MsgFeedback  

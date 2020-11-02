@@ -198,6 +198,7 @@
 
 .msg_form{
     background-color: transparent;
+    padding: 4px;
 }
 
 .nudges{
@@ -232,6 +233,7 @@
 
 .suggested_container{
     text-align: end;
+    margin: 5px 0 !important;
 }
 
 .suggested_que{
@@ -378,16 +380,7 @@
     cursor: default;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 480px){
-    .feedback_form{
-        height: 380px;
-    }
 
-    #feedback_note{
-        width: 84.5% ;
-        height: 130px;
-    }        
-}
 
 .chat_card{
     border: 1px solid rgb(236, 236, 236);
@@ -406,4 +399,24 @@
 
 .chat-text{
     padding: 5px;
+}
+
+
+@media only screen and (min-width: 320px) and (max-width: 480px){
+    .feedback_form{
+        height: 380px;
+    }
+
+    #feedback_note{
+        width: 84.5% ;
+        height: 130px;
+    }        
+
+    .chat_card{
+        max-width: 260px;
+    }
+
+    .chat_card img{
+        max-width: 240px;
+    }
 }
