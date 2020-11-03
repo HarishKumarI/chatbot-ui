@@ -54,3 +54,5 @@
 
 
 component arrangement in such a way to extend and use in chatbot etc.
+
+**should the values be shown after user fills the form? - confirm with komal**

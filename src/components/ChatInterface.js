@@ -149,7 +149,7 @@ class ChatInterface extends React.Component{
             headers: {
               "content-type": "application/json"
             },
-            body: JSON.stringify({ context : "None", timestamp : new Date(), channel : "cognichat" })
+            body: JSON.stringify({ context : null, timestamp : new Date(), channel : "cognichat" })
           }
         )
         .then( res => res.json())
@@ -187,7 +187,7 @@ class ChatInterface extends React.Component{
     }
 
     async servercall( question, type, isnudge ){
-        let body = { 'query': 'none', form: 'none',  timestamp : new Date(), channel : "cognichat" }
+        let body = { 'query': null, form: null,  timestamp : new Date(), channel : "cognichat" }
 
         if( isnudge )
             body.nudge = true
