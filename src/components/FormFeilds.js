@@ -14,7 +14,7 @@ function FormfromJSON(props){
                         switch( feild.type ){
                             case 'text': 
                                 tag =   <div className="form_row" key={idx}>
-                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
                                             <input type="text" placeholder={ `${ feild.description }` } 
                                                 name={ feild.label } readOnly={ readOnly }
@@ -24,7 +24,7 @@ function FormfromJSON(props){
                                 break;
                             case 'dropdown':
                                 tag =   <div className="form_row" key={idx}>
-                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
                                             <select name={ feild.label } disabled={ readOnly } >
                                                 <option> { feild.description }</option>
@@ -40,7 +40,7 @@ function FormfromJSON(props){
                                 break
                             case 'radio':
                                 tag =   <div className="form_row" key={idx}>
-                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
                                             <div className="radio_options">
                                                 {
@@ -56,7 +56,7 @@ function FormfromJSON(props){
                                 break
                             case 'checkbox':
                                 tag =   <div className="form_row" key={idx}>
-                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
                                             <div className="radio_options">
                                                 {
@@ -72,7 +72,7 @@ function FormfromJSON(props){
                                 break
                             case 'date':
                                 tag =   <div className="form_row" key={idx}>
-                                            <label > { feild.key.replace(/_/g, ' ') } </label>
+                                            <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
                                             <input type="date" name={feild.label} defaultValue={feild.value} readOnly={ readOnly } />
                                         </div>

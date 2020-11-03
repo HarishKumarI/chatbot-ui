@@ -1,3 +1,4 @@
+@import '../config/styling_details.css';
 
 .formFeilds{
     min-height: 100vh;
@@ -47,20 +48,20 @@ input:read-only, select:disabled, button:disabled{
 }
 
 .FormfromJSON form{
-    padding: 6px;
+    padding: 4px;
     display: flow-root;   
     min-width: 250px; 
+    margin: 0;
 }
 
 .FormfromJSON .form_title{
-    text-align: center;
     font-weight: bolder;
     font-size: 16px;
-    color: rgb(62, 4, 117);
+    color: #3d4e63cc;
 }
 
 .FormfromJSON .form_desc{
-    color: rgb(50, 3, 95);
+    color: #3d4e63cc;
     font-size: 15px;
     margin: 3px;
 }
@@ -72,7 +73,7 @@ input:read-only, select:disabled, button:disabled{
 .FormfromJSON button[type='submit']{
     background-color: #318CE7;
     box-shadow: inset 0 0 3px 2px #4c9ff1;
-    padding: 4px 5px;
+    padding: 5px 6px;
     border: 1px solid #318CE7;
     border-radius: 3px;
     color: rgb(240, 240, 240);
@@ -94,6 +95,7 @@ input:read-only, select:disabled, button:disabled{
     border: 1px solid lightgrey;
     border-radius: 2px;
     margin-top: 5px;
+    background-color: white;
 }
 
 .form_row select:hover, .form_row select:active,
@@ -105,7 +107,7 @@ input:read-only, select:disabled, button:disabled{
 .form_row label{
     font-size: 14px;
     font-weight: bolder;
-    display: none;
+    margin: 0;
 }
 
 .field_labels{
@@ -115,7 +117,7 @@ input:read-only, select:disabled, button:disabled{
 
 .form_row select{
     width: 100%;
-    background-color: transparent;
+    color: #3d4e63cc !important;
 }
 
 .form_row option{

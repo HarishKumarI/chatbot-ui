@@ -3,11 +3,11 @@
   --user_background: #44a1fd;
   --bot_background : #f3f3f3;
   --text-color: #183950;
-
+  --nudges-color: #6CB4EE;
 
   --dots_container_border: transparent;
   --dots_container_bg: transparent;
-  --dots_color: #0d64bb;
+  --dots_color: #44a1fd;
   --dots_width: 8px;
 
   --thumbs_size: 34px;

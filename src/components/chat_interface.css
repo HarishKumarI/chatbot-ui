@@ -93,11 +93,12 @@
     border-radius: 50%;
     margin-top:  10px;
     margin-left: -15px;
+    opacity: 0.755;
 }
 
 .bot_name{
     font-weight: bolder;
-    color: rgb(92, 91, 91);
+    color: rgb(161, 154, 154);
 }
 
 .messages {
@@ -242,15 +243,15 @@
 .suggested_que{
     display: inline-flex;
     padding: 5px;
-    border: 2px solid var( --user_background );
+    border: 2px solid var( --nudges-color );
     margin: 2px 5px !important;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
-    color: var( --user_background );
+    color: var( --nudges-color );
 }
 
 .suggested_que:hover{
-    background-color: var( --user_background );
+    background-color: var( --nudges-color );
     color: whitesmoke;
 }
 
@@ -258,6 +259,8 @@
     display: flex;
     flex-direction: row;
     float: right;
+    justify-content: center;
+    align-items: center;
 }
 
 .feedback div{
@@ -273,6 +276,7 @@
 
 .feedback svg{
     cursor: pointer;
+    font-size: larger;
 }
 
 .ThumbUp{
@@ -288,12 +292,14 @@
 .ThumbDown_review, .ThumbDown:hover{
     color: whitesmoke;
     background-color: var( --thumbs_down_color );
+    border-width: 0px;
     cursor: default !important;
 }
 
 .ThumbUp_review, .ThumbUp:hover{
     color: whitesmoke;
     background-color: var( --thumbs_up_color );
+    border-width: 0px;
     cursor: default !important;
 }
 
