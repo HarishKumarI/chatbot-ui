@@ -124,6 +124,7 @@ class ChatInterface extends React.Component{
 
         welcome_msgs[ welcome_msgs.length -1 ].suggested = serverResponse.footer_options
         welcome_msgs[ welcome_msgs.length -1 ].show_feedback = show_feedback
+        welcome_msgs[ welcome_msgs.length -1 ].answerJson = serverResponse.bot_response
 
         return welcome_msgs
     }
@@ -227,7 +228,7 @@ class ChatInterface extends React.Component{
         //     }
         //   })
     
-          document.getElementById('user_input').innerText = null
+          document.getElementById('user_input').value = null
     
           this.scrollBottom()
     
@@ -258,7 +259,10 @@ class ChatInterface extends React.Component{
                 $('.send_icon').removeClass('query_available')
 
         if ( e.keyCode === 13 && value.length > 0 ){
+            $('.send_icon').removeClass('query_available')
             e.target.value = ''
+            document.getElementById('user_input').value = null
+            
             let { msgs} = this.state
             
             var json2str = ( json ) => { return json.map( feild => { return "**" + feild.key + "** : " + feild.value } ).join('<br/>') }
@@ -418,7 +422,9 @@ class ChatInterface extends React.Component{
                         <input type="text" id="user_input"  className="msg_input" placeholder="Ask Something..." 
                             onKeyUp={e => this.handleQuery(e, "query") }
                         />
-                        <Send className={ `send_icon` }  />
+                        <Send className={ `send_icon` } 
+                            onClick={e => this.handleQuery({...e, keyCode: 13, target: { value: $('#user_input').val()} }, "query")} 
+                        />
                     </div>
 
                 </>
