@@ -63,3 +63,19 @@ if single feild form then form title and form descr to null
 persona image and text to be placed on the bot message. - done
 
 table and image corousel decide based on the output
+
+work on showing the form response to user on submit.
+
+
+
+pointers from form handling demo
+- In general : Many Chatbots send multiple message fragments in response to one user query. We should allow the same. 
+- Working memory mapping using instance of concept, and compute method variables
+Config od compute node - which UI and in what way?
+- Declrative way for 'Form - desc, field title, field placeholder, field type, validation required' etc. 
+- In form mode - out of context question : How ill it work?
+- What module in the design will handle - Getting into task mode and getting out of task mode. 
+- Task mode flexibility : Validate against the FrameBot paper, Rasa form design, external method integration aspects that we know about - univ calendar, IR retrieval for Quaratine, Price calculator, Car suggester task, dealer lead task.
+
+
+assets of cars while listing

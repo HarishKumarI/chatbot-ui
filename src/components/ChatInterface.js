@@ -1,5 +1,5 @@
 import React from 'react'
-import $, { type } from 'jquery'
+import $ from 'jquery'
 
 import { 
     Send, 
@@ -117,12 +117,13 @@ class ChatInterface extends React.Component{
         let welcome_msgs = serverResponse.bot_response.map( msg_data => {
             const answerElement = msg_data.markdown && msg_data.markdown !== undefined ? this.markdown2HTML(msg_data.content) : msg_data
 
-            return { user_type: 'bot', type: msg_data.type, msg: answerElement, ...currentTime(), show_feedback, feedback_value: null, feedback_String: null,
+            return { user_type: 'bot', type: msg_data.type, msg: answerElement, ...currentTime(), show_feedback: false, feedback_value: null, feedback_String: null,
                     hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? 
-                        this.getHyperlinksfromHTML( answerElement ): [] , question: '', answerJson: msg_data }
+                        this.getHyperlinksfromHTML( answerElement ): [] , suggested: [], question: '', answerJson: msg_data }
         })
 
         welcome_msgs[ welcome_msgs.length -1 ].suggested = serverResponse.footer_options
+        welcome_msgs[ welcome_msgs.length -1 ].show_feedback = show_feedback
 
         return welcome_msgs
     }
@@ -285,7 +286,6 @@ class ChatInterface extends React.Component{
 
     getMessages( msgs ){
         return msgs.map( ( msg_data, index ) => {            
-                console.log( msg_data.msg )
                 return  <div key={ index } style={{ display: 'flex', marginLeft: msg_data.user_type === 'bot' ? '20px' : 'auto' }}>
                         <div style={{ width: '30px', height: '30px' }}>
                             { index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) ?  
@@ -371,6 +371,7 @@ class ChatInterface extends React.Component{
 
 
     render(){
+        console.log( this.state.msgs )
         const messages = this.getMessages( this.state.msgs )
 
         return  <>
