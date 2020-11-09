@@ -1,0 +1,118 @@
+{
+    "title": "Carwale Chatbot",
+    "tagline": "powered by CogniQA platform",
+    "bot_image": "https://www.carwale.com/apple-touch-icon.png",
+    "bot_name": "carwale.com - Virtual Assistant",
+    "input_placeholder":"Ask Something...",
+    "positive_feedback": "Thanks for the feedback! what did you like about it?",
+    "negative_feedback": "What's went wrong with the answer?",
+
+    "msgs":[
+        {
+            "session_id" : "",
+            "bot_response" : [
+                {
+                    "type" : "TEXT",
+                    "markdown" : true,
+                    "content" : { "p": "Welcome to Carwale. I can help you with car information. What would you like to know ?"}
+                }
+            ],
+            "footer_options" : [
+                "card1","card2", "form", "table", "carousel", "what is the price of ertiga lxi"
+            ],
+            "time_taken" : ""
+        },        
+        {
+            "bot_response": [
+                {
+                    "content": [
+                        {
+                            "description": "Which car version are you interested in ?",
+                            "disabled": false,
+                            "key": "car_version",
+                            "label": "Car Version",
+                            "options": [
+                                "ertiga lxi",
+                                "ertiga vxi",
+                                "ertiga zxi"
+                            ],
+                            "required": true,
+                            "type": "dropdown",
+                            "value": null
+                        },
+                        {
+                            "description": "Which city are you looking at?",
+                            "disabled": false,
+                            "key": "city",
+                            "label": "City",
+                            "required": true,
+                            "type": "text",
+                            "value": null
+                        }
+                    ],
+                    "description": "Please fill below for car price :",
+                    "title": "",
+                    "type": "FORM"
+                }
+            ],
+            "footer_options": [],
+            "session_id": "kfdof okd ",
+            "time_taken": "3 sec"
+        },
+        {
+            "bot_response": [
+                {
+                    "content": "This is card description. Please take care of image ratio. Should we preprocess and save them beforehand ? ",
+                    "image": "https://imgd.aeplcdn.com/664x374/n/cw/ec/40530/i20-exterior-right-front-three-quarter-5.jpeg?q=85",
+                    "markdown": true,
+                    "title": "card title",
+                    "type": "CARD"
+                }
+            ],
+            "footer_options": [],
+            "session_id": "kfdof okd ",
+            "time_taken": "3 sec"
+        },
+        {
+            "bot_response": [
+                {
+                    "content": [
+                        {
+                            "content": "This car is good.\n\n* Engine Type - engine_1\n* Colors - c1, c2, c3\n* Key 3 - val3\n[Read More...](https://www.carwale.com/hyundai-cars/elite-i20/)",
+                            "image": "https://imgd.aeplcdn.com/664x374/n/cw/ec/40530/i20-exterior-right-front-three-quarter-5.jpeg?q=85",
+                            "markdown": true,
+                            "title": "card title 1",
+                            "type": "CARD"
+                        },
+                        {
+                            "content": "This car is good.\n\n* Engine Type - engine_1\n* Colors - c1, c2, c3\n* Key 3 - val3\n[Read More...](https://www.carwale.com/hyundai-cars/elite-i20/)",
+                            "image": "https://imgd.aeplcdn.com/664x374/n/cw/ec/40530/i20-exterior-right-front-three-quarter-5.jpeg?q=85",
+                            "markdown": true,
+                            "title": "card title 2",
+                            "type": "CARD"
+                        }
+                    ],
+                    "title": "carousel title - required?",
+                    "type": "CAROUSEL"
+                }
+            ],
+            "footer_options": [],
+            "session_id": "kfdof okd ",
+            "time_taken": "3 sec"
+        },
+        {
+            "bot_response": [
+                {
+                    "content": " <table>\n  <tr>\n    <th>Firstname</th>\n    <th>Lastname</th>\n    <th>Age</th>\n  </tr>\n  <tr>\n    <td>Jill</td>\n    <td>Smith</td>\n    <td>50</td>\n  </tr>\n  <tr>\n    <td>Eve</td>\n    <td>Jackson</td>\n    <td>94</td>\n  </tr>\n</table> ",
+                    "markdown": true,
+                    "title": "table title",
+                    "type": "TEXT"
+                }
+            ],
+            "footer_options": [],
+            "session_id": "kfdof okd ",
+            "time_taken": "3 sec"
+        }
+
+    ]
+}

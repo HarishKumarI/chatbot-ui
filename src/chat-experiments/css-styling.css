@@ -1,0 +1,51 @@
+:root{
+        --nudges-color: #6CB4EE;
+
+    /* user message */
+    --user_background: #44a1fd;  /* also for the send icon when user enters something. */
+    --user-color: white;
+    --user-border: 1px solid rgb(153, 153, 153);
+
+    /* bot messages */
+    --bot_background : #f3f3f3;
+    --bot-color: rgb(82, 81, 81);
+    --bot-border: 1px solid rgb(196, 193, 193);
+  
+    /* dots */
+    --dots_container_border: transparent;
+    --dots_container_bg: transparent;
+    --dots_color: #44a1fd;
+    --dots_width: 8px;
+
+    /* user input */
+    --input_color: black;
+    --shadow-color: #9b9999;
+    --send_icon_color: rgb(153, 153, 153);
+
+    /* bot persona */
+    --img-width: 30px;
+    --bot-name-color: rgb(80, 79, 79);
+
+
+    /* cards */
+    --single-card-width: 70%;
+    --card-title-font-weight: 600;
+    --card-border: 1px solid rgb(202, 202, 202);
+    --card-box-shadow: 0 0 3px 4px rgb(216, 216, 216);
+    --card-border-radius: 8px;
+    --card-image-border-bottom: 1px solid rgb(228, 227, 227);
+    --card-carousel-scroll-bg: transparent;
+    --carousel-card-max-width: 350px;
+    --carousel-btns-bg: rgb(235, 234, 234);
+    --carousel-btns-box-shadow: 0 0 3px 3px rgb(192, 192, 192);
+    --carousel-btns-width: 34px;
+    --carousel-btns-border: 1px solid rgb(167, 167, 167);
+    --carousel-btns-color: rgb(90, 89, 89);
+
+
+    /* feedback */
+
+    --thumbs_size: 34px;
+    --thumbs_up_color: #50ad74;
+    --thumbs_down_color: tomato;
+}

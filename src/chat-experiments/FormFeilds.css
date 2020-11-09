@@ -1,0 +1,131 @@
+@import '../config/styling_details.css';
+
+.formFeilds{
+    min-height: 100vh;
+    display: flex;
+    background-color: rgb(32, 30, 30);
+}
+
+.editor_container{
+    padding: 20px;
+    width: 50vw;
+    border-right: 2px solid rgb(50, 50, 51);
+}
+
+.editor_title{
+    font-size: 24px;
+    color: rgb(162, 124, 197);
+    margin-bottom: 25px;
+}
+
+.editor_title button{
+    float: right;
+    padding: 5px 10px;
+    background-color: rgb(4, 163, 4);
+    border: 1px solid green;
+    border-radius: 3px;
+    color: white;
+    font-weight: bolder;
+    font-size: 14px;
+    box-shadow: inset 0 0 3px 2px green;
+    cursor: pointer;
+}
+
+button:disabled{
+    cursor: not-allowed;
+    background-color: rgb(80, 145, 80);
+}
+
+input:read-only, select:disabled, button:disabled{
+    cursor: not-allowed !important;
+    opacity: 0.7;
+}
+
+.form_div{
+    background-color: #fff;
+    margin-top: 20px;
+    border-radius: 3px;
+}
+
+.FormfromJSON form{
+    padding: 4px;
+    display: flow-root;   
+    min-width: 250px; 
+    margin: 0;
+}
+
+.FormfromJSON .form_title{
+    font-weight: bolder;
+    font-size: 16px;
+    color: #3d4e63cc;
+}
+
+.FormfromJSON .form_desc{
+    color: #3d4e63cc;
+    font-size: 15px;
+    margin: 3px;
+}
+
+.FormfromJSON button{
+    float: right;
+}
+
+.FormfromJSON button[type='submit']{
+    background-color: #318CE7;
+    box-shadow: inset 0 0 3px 2px #4c9ff1;
+    padding: 5px 6px;
+    border: 1px solid #318CE7;
+    border-radius: 3px;
+    color: rgb(240, 240, 240);
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.form_row{
+    display: block;
+    text-transform: capitalize;
+    margin: 3px 0;
+    padding: 0 3px;
+}
+
+.form_row input[type="text"], .form_row select{
+    outline: none;
+    width: 97%;
+    padding: 5px;
+    border: 1px solid lightgrey;
+    border-radius: 2px;
+    margin-top: 5px;
+    background-color: white;
+}
+
+.form_row select:hover, .form_row select:active,
+    .form_row input[type="text"]:active, 
+    .form_row input[type="text"]:hover{
+    border-color: grey;
+}
+
+.form_row label{
+    font-size: 14px;
+    /* font-weight: bolder; */
+    margin: 0;
+}
+
+.field_labels{
+    font-weight: 400 !important;
+    margin: auto 2px;
+}
+
+.form_row select{
+    width: 100%;
+    color: #3d4e63cc !important;
+}
+
+.form_row option{
+    padding: 3px !important;
+}
+
+
+.radio_options{
+    margin: 10px 1px;
+}
+

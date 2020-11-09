@@ -12,7 +12,7 @@ import {
 import * as showdown from 'showdown' 
 import * as json2md from 'json2md'
 
-import './chat_interface.css'
+// import './chat_interface.css'
 import configJson from '../config/UI_configuration.json'
 import { FormfromJSON } from './FormFeilds'
 
@@ -26,6 +26,13 @@ var currentTime = () => {
     const min = date.getMinutes()
     const time = `${ hours === 0 ? 12 : hours > 12 ? Math.floor( hours % 12 ) : hours }:${ min > 9 ? min : '0'+min }${hours > 12 ? ' PM' : ' AM' }`
     return { time, date }
+}
+
+
+function markdown2HTML( markdown ) {
+    let answerElement = converter.makeHtml( json2md( markdown ) )
+    answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
+    return answerElement
 }
 
 function sendFeedback( payload ){
@@ -71,6 +78,31 @@ function MsgFeedback(props){
 }
 
 
+
+function Cards(props){
+    const { data } = props
+    
+    if( data.type === 'CARD' )
+        return  <div className="chat_card">
+                    <div><img src={ data.answerJson[0].image } alt="card_image" /></div>
+                    <div className="chat-text" dangerouslySetInnerHTML={{__html: markdown2HTML( data.answerJson[0].content ) }} />
+                </div> 
+    else 
+        return  <div style={{     whiteSpace: 'nowrap', width: '100%', maxWidth: '510px', 
+                                    padding: '8px', overflowX: 'auto', border: '1px solid #e8e6e6', borderRadius: '8px' }}>
+                    {  
+                        data.msg.content.map( ( card, idx ) => {
+                            console.log( card )
+                            return  <div className="chat_card"  key={ idx } style={{ display: 'inline-block', margin: '0 5px' }}>
+                                        <div><img src={ card.image } alt="card_image" /></div>
+                                        <div className="chat-text" dangerouslySetInnerHTML={{__html: markdown2HTML( card.content ) }} />
+                                    </div> 
+                        })
+                    }
+                </div>
+}
+
+
 class ChatInterface extends React.Component{
     constructor(props){
         super(props)
@@ -88,35 +120,10 @@ class ChatInterface extends React.Component{
         this.handleClick = this.handleClick.bind(this)
     }
 
-    getMsgStructure( user_type, msg, nudges = [], suggested = [], 
-                        show_feedback = false, feedback_value = null, feedback_String = null, formJson= null,
-                        hyperlinks= [], Images= [], Image_carousel= [], confirm_msgs=[], card_info= null
-                    ){
-
-        /*
-            nudges => for clickable options below message
-            suggested => clickable buttons for each reply
-            show_feedback, feedback_value, feedback_String => boolean to show thumb UP/DOWN, thumb UP/DOWN, feedback message  
-            hyperlinks => list of hyperlinks from the text message to be shown as clickable buttons below message
-            form_feilds =>  embedding form inside message
-            Images => images to shown along with messages
-            Image_carousel => list of thumbnails and text along with link
-            confirm_msgs => clickable buttons for confirmation
-        */
-
-        return  {   
-                    user_type, msg, ...currentTime(), 
-                    nudges, suggested, show_suggested: true, 
-                    show_feedback, feedback_value, feedback_String, formJson,
-                    hyperlinks, Images, Image_carousel, confirm_msgs, card_info
-                }
-    }
-
     getMsgs( serverResponse , show_feedback=false){
 
         let welcome_msgs = serverResponse.bot_response.map( msg_data => {
-            const answerElement = msg_data.markdown && msg_data.markdown !== undefined ? this.markdown2HTML(msg_data.content) : msg_data
-
+            const answerElement = msg_data.markdown && msg_data.markdown !== undefined ? markdown2HTML(msg_data.content) : msg_data
             return { user_type: 'bot', type: msg_data.type, msg: answerElement, ...currentTime(), show_feedback: false, feedback_value: null, feedback_String: null,
                     hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? 
                         this.getHyperlinksfromHTML( answerElement ): [] , suggested: [], question: '', answerJson: msg_data }
@@ -129,21 +136,7 @@ class ChatInterface extends React.Component{
         return welcome_msgs
     }
 
-
-    markdown2HTML( markdown ) {
-        let answerElement = converter.makeHtml( json2md( markdown ) )
-        answerElement = answerElement.replace(/<a href="/g,'<a target="_blank" href="')
-        return answerElement
-    }
-
     async componentDidMount(){
-        // const welcome_msgs = configJson.welcome_msgs.map( msg_data => {
-        //                         return {...this.getMsgStructure( msg_data.user_type, this.markdown2HTML(msg_data.msg), msg_data.nudges, msg_data.suggestions, 
-        //                                                             msg_data.show_feedback, null, null, msg_data.formJson, [], [], [], [], msg_data.card_info)
-        //                                              , question: '', answerJson: {} }
-        //                     })
-
-        // this.setState({ msgs : welcome_msgs })
 
         await fetch('/api/test-create-session',
           {
@@ -156,14 +149,6 @@ class ChatInterface extends React.Component{
         )
         .then( res => res.json())
         .then( responseJson => { 
-            // console.log( responseJson ) 
-
-            // let welcome_msgs = responseJson.bot_response.map( msg_data => {
-            //     return {...this.getMsgStructure( 'bot', this.markdown2HTML(msg_data.content)), type: msg_data.type
-            //                                                                 , question: '', answerJson: {} }
-            // })
-
-            // welcome_msgs[ welcome_msgs.length -1 ].suggested = responseJson.footer_options
 
             this.setState({ session_id: responseJson.session_id, msgs: this.getMsgs( responseJson ) })
         })
@@ -210,28 +195,9 @@ class ChatInterface extends React.Component{
         )
         .then( res => res.json())
         .then( responseJson => {
-          this.setState({ show_dots: false })
-          // console.log( responseJson )
-            
-          this.setState({ msgs: [ ...this.state.msgs, ...this.getMsgs( responseJson, true )] })
-        //   responseJson.forEach( answer_element => {
-        //     if( answer_element.type === 'TEXT' ){
-    
-        //         let { msgs } = this.state
-        //         const answerElement = this.markdown2HTML( answer_element.answer_json.answer )
-
-        //         msgs.push( {...this.getMsgStructure( 'bot', answerElement, 
-        //                                                 answer_element.answer_json.nudges === undefined ? [] : answer_element.answer_json.nudges, [], 
-        //                                                 true, null, null, this.getHyperlinksfromHTML( answerElement ) ) , question, answerJson: answer_element.answer_json } )
-                
-        //         this.setState({ msgs })
-        //     }
-        //   })
-    
+          this.setState({ show_dots: false, msgs: [ ...this.state.msgs, ...this.getMsgs( responseJson, true )] })
           document.getElementById('user_input').value = null
-    
           this.scrollBottom()
-    
         })
         .catch(err => {
           console.log( err )
@@ -267,7 +233,7 @@ class ChatInterface extends React.Component{
             
             var json2str = ( json ) => { return json.map( feild => { return "**" + feild.key + "** : " + feild.value } ).join('<br/>') }
 
-            msgs.push( { user_type:'user', msg: typeof( value ) === "object" ? this.markdown2HTML( json2str( value ) ) : value ,
+            msgs.push( { user_type:'user', msg: typeof( value ) === "object" ? markdown2HTML( json2str( value ) ) : value ,
                                  ...currentTime(), type: 'TEXT', suggested: [], show_feedback: false } )
             this.setState({show_dots: true, msgs})
 
@@ -289,93 +255,88 @@ class ChatInterface extends React.Component{
     }
 
     getMessages( msgs ){
-        return msgs.map( ( msg_data, index ) => {            
+        return msgs.map( ( msg_data, index ) => { 
                 return  <div key={ index } style={{ display: 'flex', marginLeft: msg_data.user_type === 'bot' ? '20px' : 'auto' }}>
-                        <div style={{ width: '30px', height: '30px' }}>
-                            { index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) ?  
-                                <img src={ configJson.bot_image } alt="bot_image" className="bot_image" />  
-                            : null }
-                        </div>
-                        <div style={{ width: '100%' }}>
-                            { index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) ?  
-                                <div className="bot_name">{ configJson.bot_name }</div>
-                            : null }
-
-                            <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` }> 
-                                { msg_data.type === 'TEXT' ?
-                                    <div className={`${msg_data.user_type}`} suppressContentEditableWarning dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
+                            <div style={{ width: '30px', height: '30px' }}>
+                                { index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) ?  
+                                    <img src={ configJson.bot_image } alt="bot_image" className="bot_image" />  
                                 : null }
-
-                                {/* {  msg_data.nudges.length > 0 ?
-                                    <ul className="nudges">
-                                        { msg_data.nudges.map( ( nudge, index) => {
-                                            return  <li key={ index } onClick={e => this.handleQuery({...e, keyCode: 13, target: { value: nudge} }, "nudge") } >
-                                                    {nudge}
-                                                    </li>
-                                        }) 
-                                        }
-                                    </ul>
-                                : null } */}
-
-                                {   msg_data.type === 'FORM' ?
-                                    <div className="msg_form" >
-                                        <FormfromJSON 
-                                            json={ msg_data.msg } 
-                                            readOnly = { msg_data.readOnly }
-                                            onSubmit={data =>  {
-                                                this.handleQuery({ target: { value: data}, keyCode: 13 }, "form");
-                                                msgs[ index ].readOnly = true
-                                                this.setState({msgs})
-                                            }}
-                                        />
-                                    </div>
-                                : null}
-
-
-                                {/* {   msg_data.card_info !== undefined && msg_data.card_info !== null ? 
-                                    <div className="chat_card">
-                                        <div><img src={ msg_data.card_info.img_url } alt="card_image" /></div>
-                                        <div className="chat-text" dangerouslySetInnerHTML={{__html: this.markdown2HTML( msg_data.card_info.text ) }} />
-                                    </div>
-                                : null } */}
                             </div>
-
-
-                            {  msgs.length - 1 === index || ( msgs[index + 1] !== undefined && msg_data.user_type !== msgs[index + 1].user_type ) ?
-                                <div className="time">{ msg_data.time }</div> 
-                            : null }
-
-                            {   msg_data.suggested.length > 0 ?
-                                    <div className="suggested_container">
-                                        { 
-                                            msg_data.suggested.map( ( suggested, idx ) => {
-                                                return  <div key={ idx } className="suggested_que" 
-                                                            onClick={e => this.handleQuery( { ...e, keyCode: 13, target: {value: suggested }}, "nudge")} > 
-                                                            { suggested } 
-                                                        </div>
-                                            })
-                                        }
-                                    </div>
+                            <div style={{ width: '100%' }}>
+                                { index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) ?  
+                                    <div className="bot_name">{ configJson.bot_name }</div>
                                 : null }
 
-                            { msg_data.show_feedback ?
-                                <MsgFeedback  
-                                    data={ msg_data }   
-                                    updateData={ newData  => {
-                                        msgs[ index ] = newData
-                                        this.setState({ msgs })
-                                    }}
-                                    askFeedback={data => this.setState({ feedback_data: {...data, index }, show_feedback_form: true })}
-                                />
-                            : null }
+                                <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` }> 
+                                    { msg_data.type === 'TEXT' ?
+                                        <div className={`${msg_data.user_type}`} suppressContentEditableWarning 
+                                            dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
+                                    : null }
+
+                                    {/* {  msg_data.nudges.length > 0 ?
+                                        <ul className="nudges">
+                                            { msg_data.nudges.map( ( nudge, index) => {
+                                                return  <li key={ index } onClick={e => this.handleQuery({...e, keyCode: 13, target: { value: nudge} }, "nudge") } >
+                                                        {nudge}
+                                                        </li>
+                                            }) 
+                                            }
+                                        </ul>
+                                    : null } */}
+
+                                    {   msg_data.type === 'FORM' ?
+                                        <div className="msg_form" >
+                                            <FormfromJSON 
+                                                json={ msg_data.msg } 
+                                                readOnly = { msg_data.readOnly }
+                                                onSubmit={data =>  {
+                                                    this.handleQuery({ target: { value: data}, keyCode: 13 }, "form");
+                                                    msgs[ index ].readOnly = true
+                                                    this.setState({msgs})
+                                                }}
+                                            />
+                                        </div>
+                                    : null}
+                                </div>
+
+                                {  msg_data.type === 'CARD' || msg_data.type === 'CAROUSEL' ? 
+                                    <Cards data={ msg_data } />
+                                : null }
+
+                                {  msgs.length - 1 === index || ( msgs[index + 1] !== undefined && msg_data.user_type !== msgs[index + 1].user_type ) ?
+                                    <div className="time">{ msg_data.time }</div> 
+                                : null }
+
+                                {   msg_data.suggested.length > 0 ?
+                                        <div className="suggested_container">
+                                            { 
+                                                msg_data.suggested.map( ( suggested, idx ) => {
+                                                    return  <div key={ idx } className="suggested_que" 
+                                                                onClick={e => this.handleQuery( { ...e, keyCode: 13, target: {value: suggested }}, "nudge")} > 
+                                                                { suggested } 
+                                                            </div>
+                                                })
+                                            }
+                                        </div>
+                                    : null }
+
+                                { msg_data.show_feedback ?
+                                    <MsgFeedback  
+                                        data={ msg_data }   
+                                        updateData={ newData  => {
+                                            msgs[ index ] = newData
+                                            this.setState({ msgs })
+                                        }}
+                                        askFeedback={data => this.setState({ feedback_data: {...data, index }, show_feedback_form: true })}
+                                    />
+                                : null }
+                            </div>
                         </div>
-                    </div>
         })
     }
 
 
     render(){
-        console.log( this.state.msgs )
         const messages = this.getMessages( this.state.msgs )
 
         return  <>

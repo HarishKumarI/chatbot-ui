@@ -137,3 +137,50 @@ export default class App extends React.Component {
     );
   }
 }
+
+
+
+// read more and less html
+// import React, { useState } from "react";
+// import "./styles.css";
+
+// const json2md = require("json2md");
+// const showdown = require("showdown");
+
+// const converter = new showdown.Converter({ noHeaderId: "true" });
+// const markdownJson = [
+//   { p: "Alto STD" },
+//   { p: "Alto STD (O)" },
+//   { p: "Alto LXi" },
+//   { p: "Alto LXi (O)" },
+//   { p: "Alto VXi" },
+//   { p: "Alto VXi Plus" },
+//   { p: "Alto LXi (O) CNG" },
+//   { p: "Alto LXi CNG" }
+// ];
+
+// export default function App() {
+//   const [readMore, setreadMore] = useState(false);
+
+//   const html = converter.makeHtml(json2md(markdownJson));
+//   let dom = document.createElement("div");
+//   dom.innerHTML = html;
+
+//   return (
+//     <div className="App">
+//       <div
+//         dangerouslySetInnerHTML={{
+//           __html: Array.from(dom.children)
+//             .slice(0, readMore ? dom.children.length : 5)
+//             .map((tag) => {
+//               return tag.outerHTML;
+//             })
+//             .join("\n")
+//         }}
+//       />
+//       <a href="#/" onClick={(e) => setreadMore(!readMore)}>
+//         {readMore ? "Less" : "More"}...
+//       </a>
+//     </div>
+//   );
+// }

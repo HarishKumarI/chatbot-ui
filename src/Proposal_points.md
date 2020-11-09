@@ -79,3 +79,39 @@ Config od compute node - which UI and in what way?
 
 
 assets of cars while listing
+
+
+
+ways to embed custom widgets:
+- html string with inline styling.
+- iframes ( bad-idea )
+- in case of forms for submit provide a action url to access form elements values onsubmit.
+
+
+
+#### **things involved to display widgets in UI:**
+- HTML code ( icons, images, forms etc )
+- styling and user interactions, feedback
+- JavaScript events
+
+#### **backend support**
+- sending the HTML DOM elements in a String and then using ***dangerouslySetInnerHTML*** which I am already using for displaying markdown content.
+- inline styling can be used but it has to be added for each and every element else if any styling is available for that element from the UI side that will be applicable.
+- JavaScript code should be added to appropriate events.
+
+#### **Drawbacks**
+- these elements won't be able to interact with state objects to React.
+- for any form submit, it should be handled by giving an action URL and handled all kinds of data there.
+- interactions & feedbacks( hover, etc ) cannot be achieved( since we can only write styling for tags and not interactions in inline styling ). 
+- not data exchange with the front-end variable.
+- event trigger for each element in the content for example: 
+                  in the case of the form if we want to fire separate events for each element then we have to send all these elements separate widgets.
+
+The above drawbacks can be resolved by using iframes except sharing data with the front-end.
+
+
+table title, desc, table data with row and column headers.
+
+
+
+- screenshots of the UI with minimal messages - EOD
