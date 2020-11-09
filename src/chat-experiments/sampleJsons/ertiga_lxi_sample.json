@@ -1,0 +1,71 @@
+[
+    {
+        "session_id" : "",
+        "bot_response" : [
+            {
+                "type" : "TEXT",
+                "markdown" : true,
+                "content" : { "p": "Welcome to Carwale. <br/>I can help you with car information. What would you like to know ?"}
+            }
+        ],
+        "footer_options" : [
+            "what is the best selling car?", "latest cars in the market", "cars under 5 Lakhs"
+        ],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "What is price of ertiga lxi?" },
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {
+        "session_id" : "",
+        "bot_response": [
+            {
+                "content": [
+                    {
+                        "description": "Which city are you looking at?",
+                        "disabled": false,
+                        "key": "city",
+                        "label": "City",
+                        "required": true,
+                        "type": "text",
+                        "value": "hyderguda"
+                    }
+                ],
+                "description": "Please fill below for car price :",
+                "title": "",
+                "type": "FORM"
+            }
+        ],
+        "footer_options" : [],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "city: hyderabad",
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "Maruti Suzuki Ertiga Lxi priced at ₹ 8.84 Lakh On-Road"
+            }
+        ],
+        "footer_options": []
+    }
+]

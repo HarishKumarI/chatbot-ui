@@ -1,0 +1,152 @@
+[
+    {
+        "session_id" : "",
+        "bot_response" : [
+            {
+                "type" : "TEXT",
+                "markdown" : true,
+                "content" : { "p": "Welcome to Carwale. <br/>I can help you with car information. What would you like to know ?"}
+            }
+        ],
+        "footer_options" : [
+            "what is the best selling car?", "latest cars in the market", "cars under 5 Lakhs"
+        ],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "show me SUVs and hatchback cars between 25-40 L" },
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {   "session_id": "",
+        "bot_response": [
+            {
+                "content": [
+                    {   
+                        "type": "CARD",
+                        "title": "Mitsubishi Pajero Sport",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mitsubishi-cars/pajerosport/",
+                        "image": "https://imgd.aeplcdn.com/600x337/ec/b8/0e/9739/img/m/Mitsubishi-Pajero-Sport-Right-Front-Three-Quarter-52939_ol.jpg?t=170422253&t=170422253&q=85",
+                        "content":  {
+                                        "p": "**₹ 33.42 Lakh** On-Road Price, Hyderabad <br/> **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Audi Q2",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/audi-cars/q2/",
+                        "image": "https://imgd.aeplcdn.com/664x374/cw/ec/22801/Audi-Q2-Right-Front-Three-Quarter-70075.jpg?v=201711021421&q=85",
+                        "content":  {
+                                        "p": "**₹ 42.63 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Toyota Fortuner",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/toyota-cars/fortuner/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/19812/fortuner-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 36.78 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Mahindra Alturas G4",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mahindra-cars/alturas-g4/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/33266/alturas-g4-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 38.08 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Mitsubishi Outlander",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mitsubishi-cars/outlander/",
+                        "image": "https://imgd.aeplcdn.com/600x337/cw/ec/34253/Mitsubishi-Outlander-Exterior-130062.jpg?wm=0&q=85",
+                        "content":  {
+                                        "p": "**₹ 38.08 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Hyundai Tucson",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/hyundai-cars/tucson/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/39082/tucson-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 30.58 Lakh** On-Road Price, Hyderabad <br/> **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "MG Gloster",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mg-cars/gloster/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/43485/gloster-exterior-right-front-three-quarter-2.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 40.52 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Jeep Compass",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/jeep-cars/compass/",
+                        "image": "https://imgd.aeplcdn.com/600x337/cw/ec/25107/Jeep-Compass-Exterior-103917.jpg?wm=0&q=85",
+                        "content":  {
+                                        "p": "**₹ 30.08 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Mini Countryman",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mini-cars/countryman/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/34290/countryman-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 46.23 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** Hatchback"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Kia Carnival",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/kia-cars/carnival/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/41205/kia-carnival-right-front-three-quarter8.jpeg?q=85https://imgd.aeplcdn.com/600x337/cw/ec/34253/Mitsubishi-Outlander-Exterior-130062.jpg?wm=0&q=85",
+                        "content":  {
+                                        "p": "**₹ 40.31 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Honda CR-V",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/honda-cars/cr-v/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/34457/cr-v-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 33.45 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {
+                        "type": "LINK",
+                        "content": "[ list of SUVs and hatchback cars between 25-40 L ]( https://www.carwale.com/new/search/#bs=6,3&budget=8 )"
+                    }
+                ],
+                "title": "SUVs and hatchback cars between 25-40 L",
+                "type": "CAROUSEL"
+            }                
+        ],
+        "footer_options": []
+    }
+]

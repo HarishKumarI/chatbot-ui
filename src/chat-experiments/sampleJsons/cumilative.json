@@ -1,0 +1,434 @@
+[
+    {
+        "session_id" : "",
+        "bot_response" : [
+            {
+                "type" : "TEXT",
+                "markdown" : true,
+                "content" : { "p": "Welcome to Carwale.com <br/>I am here to answer your questions regarding car features and comparison. You can ask me questions like below"},
+                "footer_options" : [
+                    "what is the mileage of Innova Diesel?", "latest cars in the market", "cars under 5 Lakhs"
+                ]
+            }
+        ],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "What is price of ertiga ?" },
+                "user": "user"
+            }
+        ]
+    },
+    {
+        "session_id" : "",
+        "bot_response": [
+            {
+                "content": [
+                    {
+                        "description": "please select the version you are interested in",
+                        "disabled": false,
+                        "key": "car_version",
+                        "label": "Car Version",
+                        "options": [
+                            "ertiga lxi",
+                            "ertiga vxi",
+                            "ertiga zxi"
+                        ],
+                        "required": true,
+                        "type": "dropdown",
+                        "value": null
+                    },
+                    {
+                        "description": "Which city are you looking at?",
+                        "disabled": false,
+                        "key": "city",
+                        "label": "City",
+                        "required": true,
+                        "type": "text",
+                        "value": null
+                    }
+                ],
+                "description": "car prices are city and version specific. please let me know the following details and I can help with the price of ertiga",
+                "title": "",
+                "submit_text": "Get Price",
+                "type": "FORM"
+            }
+        ],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "car_version: ertiga vxi<br/> city: hyderguda",
+                "user": "user"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "did you mean the city as Hyderabad? <br/> **Yes** / **No** "
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "yes",
+                "user": "user"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "Maruti Suzuki Ertiga priced at ₹ 8.84 Lakh On-Road, Hyderabad"
+            },
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "whould you like to connect with dealer in city **Hyderabad**"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "yes",
+                "user": "user"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "content": [
+                    {
+                        "description": "Enter Name",
+                        "disabled": false,
+                        "key": "name",
+                        "label": "Name",
+                        "required": true,
+                        "type": "text",
+                        "value": null
+                    },
+                    {
+                        "description": "Enter Email",
+                        "disabled": false,
+                        "key": "email",
+                        "label": "Email",
+                        "required": true,
+                        "type": "text",
+                        "value": null
+                    },
+                    {
+                        "description": "Enter Phone Number",
+                        "disabled": false,
+                        "key": "phone_num",
+                        "label": "phone no",
+                        "required": true,
+                        "type": "text",
+                        "value": null
+                    }
+                ],
+                "description": "Great, I am happy to connect with dealer in city **Hyderabad**. Please help me with the contact details.",
+                "title": "",
+                "type": "FORM"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "Name: Harish <br/> Email: abc@gmail.com <br /> Phone: 7452847851",
+                "user": "user"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "Sent your info. Dealer will reach out to you soon."
+            },
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "Thank you for interacting with me. <br/> Anything else you would like to know about?",
+                "show_feedback": true
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "tell me about hyundai i20" },
+                "user": "user"
+            }
+        ]
+    },
+    {   "session_id": "",
+        "bot_response": [
+            {   
+                "type": "CARD",
+                "title": "Hyundai i20",
+                "markdown": true,
+                "url": "https://www.carwale.com/hyundai-cars/i20/",
+                "image": "https://imgd.aeplcdn.com/664x374/n/cw/ec/40530/i20-exterior-right-front-three-quarter-5.jpeg?q=85",
+                "content":  {
+                                "p": "Hyundai i20 is a **5 seater Hatchback** available in a price range of **Rs 8.03 - 13.50 Lakh**. It is available in 24 variants, 1 engine option and **4 transmission options : Manual, Automatic (CVT), Semi - Automatic and Automatic (Dual Clutch)**. Other key specifications of the i20 include a Ground Clearance of 170 mm and Bootspace of 311 litres. The i20 is available in 8 colours. The **mileage** of i20 ranges from **19.65 kmpl to 25.2 kmpl.**"
+                            }
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "what is the mileage of Hyundai i20 Diesel variant?" },
+                "user": "user"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "Mileage of Hyundai i20 Diesel variant: **25.2 kmpl**." }
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "compare Maruti Suzuki Ertiga and Toyota Innova Crysta" },
+                "user": "user"
+            }
+        ]
+    },
+    {   "session_id": "",
+        "bot_response": [
+            {
+                "content": [
+                    {   
+                        "type": "CARD",
+                        "title": "Maruti Suzuki Ertiga",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/marutisuzuki-cars/ertiga/",
+                        "image": "https://imgd.aeplcdn.com/272x153/cw/ec/35211/Maruti-Suzuki-Ertiga-Right-Rear-Three-Quarter-141765.jpg?wm=0&q=85",
+                        "content":  {
+                                        "p": "Maruti Suzuki Ertiga is a **7 seater SUV/MUV** available in a price range of Rs **8.84 - 12.03 Lakh**. It is available in 7 variants, 1 engine option and **2 transmission options : Manual and Automatic (Torque Converter)**. Other key specifications of the Ertiga include a Ground Clearance of 180 mm, Kerb Weight of 1135 kg and Bootspace of 209 litres. The Ertiga is available in **5 colours**. The mileage of Ertiga ranges from **17.99 km/kg to 26.2 km/kg**."
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Toyota Innova Crysta",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/toyota-cars/innova-crysta/",
+                        "image": "https://imgd.aeplcdn.com/272x153/n/cw/ec/20623/innova-crysta-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "Toyota Innova Crysta is a **7 seater SUV/MUV** available in a price range of **Rs 19.03 - 29.49 Lakh**. It is available in 23 variants, 1 engine option and **2 transmission options : Manual and Automatic**. Other key specifications of the Innova Crysta include a Ground Clearance of 176 mm and Kerb Weight of 1730 kg. The Innova Crysta is available in **7 colours**. The mileage of Innova Crysta ranges from **10.75 kmpl to 15.1 kmpl**."
+                                    }
+                    }
+                ],
+                "title": "Here is the breif comparison between **Maruti Suzuki Ertiga LXi** and **Toyota Innova Crysta 2.7 GX 7 STR**. <br/> for detailed comparison just follow this [ link ]( https://www.carwale.com/compare-cars/marutisuzuki-ertiga-vs-toyota-innova-crysta/?c1=6022&c2=6738&source=17 )",
+                "type": "CAROUSEL"
+            }                
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "show me SUVs and hatchback cars between 25-40 L" },
+                "user": "user"
+            }
+        ]
+    },
+    {   "session_id": "",
+        "bot_response": [
+            {
+                "content": [
+                    {   
+                        "type": "CARD",
+                        "title": "Mitsubishi Pajero Sport",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mitsubishi-cars/pajerosport/",
+                        "image": "https://imgd.aeplcdn.com/600x337/ec/b8/0e/9739/img/m/Mitsubishi-Pajero-Sport-Right-Front-Three-Quarter-52939_ol.jpg?t=170422253&t=170422253&q=85",
+                        "content":  {
+                                        "p": "**₹ 33.42 Lakh** On-Road Price, Hyderabad <br/> **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Audi Q2",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/audi-cars/q2/",
+                        "image": "https://imgd.aeplcdn.com/664x374/cw/ec/22801/Audi-Q2-Right-Front-Three-Quarter-70075.jpg?v=201711021421&q=85",
+                        "content":  {
+                                        "p": "**₹ 42.63 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Toyota Fortuner",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/toyota-cars/fortuner/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/19812/fortuner-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 36.78 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Mahindra Alturas G4",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mahindra-cars/alturas-g4/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/33266/alturas-g4-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 38.08 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Mitsubishi Outlander",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mitsubishi-cars/outlander/",
+                        "image": "https://imgd.aeplcdn.com/600x337/cw/ec/34253/Mitsubishi-Outlander-Exterior-130062.jpg?wm=0&q=85",
+                        "content":  {
+                                        "p": "**₹ 38.08 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Hyundai Tucson",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/hyundai-cars/tucson/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/39082/tucson-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 30.58 Lakh** On-Road Price, Hyderabad <br/> **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "MG Gloster",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mg-cars/gloster/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/43485/gloster-exterior-right-front-three-quarter-2.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 40.52 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Jeep Compass",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/jeep-cars/compass/",
+                        "image": "https://imgd.aeplcdn.com/600x337/cw/ec/25107/Jeep-Compass-Exterior-103917.jpg?wm=0&q=85",
+                        "content":  {
+                                        "p": "**₹ 30.08 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Mini Countryman",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/mini-cars/countryman/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/34290/countryman-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 46.23 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** Hatchback"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Kia Carnival",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/kia-cars/carnival/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/41205/kia-carnival-right-front-three-quarter8.jpeg?q=85https://imgd.aeplcdn.com/600x337/cw/ec/34253/Mitsubishi-Outlander-Exterior-130062.jpg?wm=0&q=85",
+                        "content":  {
+                                        "p": "**₹ 40.31 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Honda CR-V",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/honda-cars/cr-v/",
+                        "image": "https://imgd.aeplcdn.com/600x337/n/cw/ec/34457/cr-v-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 33.45 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
+                                    }
+                    },
+                    {
+                        "type": "LINK",
+                        "content": "if you would like to see cars with applying more criteria for selection. Advanced search page [ here ]( https://www.carwale.com/new/search/#bs=6,3&budget=8 )."
+                    }
+                ],
+                "title": "Here are few list of cars matching preferences of **body type** SUVs and hatchback, **price** 25-40 L",
+                "type": "CAROUSEL"
+            }                
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "I want to buy a budget car. what would you recommend?" },
+                "user": "user"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "I can answer questions based on specification and comparisons. for queries you have would like to connet to our experts?" }
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "yes" },
+                "user": "user"
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "Hello &#128075;, <br /> I see you are looking for a budget car. <br /> may I know your budget?" }
+            }
+        ],
+        "user_agent": true
+    }
+]

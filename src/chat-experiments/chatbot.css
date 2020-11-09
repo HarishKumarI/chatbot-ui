@@ -113,12 +113,16 @@
 .chat-persona{
     display: flex;
     align-items: center;
+    height: 15px;
 }
 
 .chat-persona img{
     width: var( --img-width );
     height: var( --img-width );
     border-radius: 50%;
+    z-index: 5;
+    position: relative;
+    transform: translateY( 10px );
 }
 
 .chat-persona .bot_name{
@@ -131,7 +135,6 @@
 
 .msg{
     display: table-cell;
-    margin: 2px;
     align-items: center;
     width: 100%;
     transition: all 2s;
@@ -156,16 +159,18 @@
 }
 
 
-.bot{
+.agent, .bot{
     width: fit-content;
     max-width: 85%;
     border: var( --bot-border );
     background-color: var(--bot_background);
     border-radius: 10px;
-    padding: 8px;
+    padding: 8px 10px;
     color: var( --bot-color );
     border-bottom-left-radius: 0px;
     margin-left: calc( var( --img-width ) + 10px );
+    word-break: break-word;
+    box-sizing: border-box;
 }
 
 .user{
@@ -209,32 +214,18 @@
     margin: 0;
 }
 
-.card .card-text{
-    margin: 0 !important;
-    padding: 5px;
-    line-height: 130%;
-    color: rgb(107, 106, 106);
-}
-
-.card-text p{
-    margin: 0;
-}
-
-.card-text ul{
-    margin: 0;
-    padding-left: 38px;
-}
 
 /* multilpe cards */
 
 .card-carousel{
     position: relative;
+    overflow-x: auto;
 }
 
 .card-carousel-container{
     overflow-x: auto;
     white-space: nowrap;
-    padding-left: calc( var( --img-width ) + 10px );
+    padding-left: calc( var( --img-width ) );
 }
 
 .card-carousel-container::-webkit-scrollbar-thumb {
@@ -244,9 +235,40 @@
 .card-carousel-container .card{
     width: 100%;
     max-width: var( --carousel-card-max-width );
-    display: inline-block;
-    margin: 5px 10px;
+    display: inline-table;
+    margin: 5px 8px;
 }
+
+.card-carousel-container img{
+    padding: 20px;
+    width: 84%;
+}
+
+.card .card-text{
+    margin: 0 !important;
+    padding: 10px;
+    line-height: 150%;
+    color: rgb(107, 106, 106);
+    font-size: 14px;
+    /* word-break: break-all !important; */
+    width: 93%;
+    height: inherit;
+    word-wrap: break-word !important;
+    white-space: normal;
+}
+
+.card-text p{
+    margin: 0;
+    height: inherit;
+    /* word-break: break-all !important; */
+    word-wrap: break-word !important;
+}
+
+.card-text ul{
+    margin: 0;
+    padding-left: 38px;
+}
+
 
 .navigation-btns svg{
     border: var( --carousel-btns-border );
@@ -255,7 +277,7 @@
     border-radius: 50%;
     width:  var( --carousel-btns-width );
     height: var( --carousel-btns-width );
-    top: 50%;
+    top: calc( 50% - var( --carousel-btns-width ) );
     margin: 0 18px;
     box-shadow: var( --carousel-btns-box-shadow );
     background-color: var( --carousel-btns-bg );
@@ -270,6 +292,12 @@
     right: 0;
 }
 
+.card-carousel-container .link{
+    display: none;
+    width: 150px;
+    height: 100%;
+}
+
 
 /* suggested questions populated for every reply based on the response */
 
@@ -277,6 +305,7 @@
     text-align: end;
     margin: 5px 0 !important;
     padding-left: calc( var( --img-width ) + 10px );
+    margin-right: 20px !important;
 }
 
 .suggested_que{
@@ -298,9 +327,7 @@
 
 .feedback{
     display: flex;
-    flex-direction: row;
-    float: right;
-    justify-content: center;
+    flex-direction: row-reverse;
     align-items: center;
 }
 
@@ -396,6 +423,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+}
+
+#feedback_note:active, #feedback_note:hover{
+    border-color: grey;
 }
 
 .feedback_btns{
@@ -414,24 +447,39 @@
 }
 
 
+.positive,.positive:hover{
+    color: var( --thumbs_up_color );
+    cursor: default;
+}
+
+.negative, .negative:hover{
+    color: var( --thumbs_down_color );
+    cursor: default;
+}
+
 
 /* change afterwards */
 
 
 .msg p{
-    margin: 0;
+    margin: 0 !important;
 }
 
+.msg *{
+    width: fit-content !important;
+    text-align: start;
+}
 
 .msg_form{
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    max-width: 85%;
+    max-width: 80%;
     padding: 8px;
     background-color: var(--bot_background);
     border: 1px solid rgb(235, 234, 234);
     border-bottom-left-radius: 0px;
+    margin: 5px 0;
     margin-left: calc( var( --img-width ) + 10px );
 }
 
@@ -461,7 +509,7 @@
     }
 
     .messages-container > *{
-        max-width: 54% !important;
+        max-width: 100% !important;
     }
 
     .card-carousel{

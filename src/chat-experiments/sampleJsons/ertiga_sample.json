@@ -1,0 +1,85 @@
+[
+    {
+        "session_id" : "",
+        "bot_response" : [
+            {
+                "type" : "TEXT",
+                "markdown" : true,
+                "content" : { "p": "Welcome to Carwale.com <br/>I am here to answer your questions regarding car features and comparison. You can ask me questions like below"}
+            }
+        ],
+        "footer_options" : [
+            "what is the mileage of Innova Diesel?", "latest cars in the market", "cars under 5 Lakhs"
+        ],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "What is price of ertiga ?" },
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {
+        "session_id" : "",
+        "bot_response": [
+            {
+                "content": [
+                    {
+                        "description": "Which car version are you interested in ?",
+                        "disabled": false,
+                        "key": "car_version",
+                        "label": "Car Version",
+                        "options": [
+                            "ertiga lxi",
+                            "ertiga vxi",
+                            "ertiga zxi"
+                        ],
+                        "required": true,
+                        "type": "dropdown",
+                        "value": "ertiga vxi"
+                    },
+                    {
+                        "description": "Which city are you looking at?",
+                        "disabled": false,
+                        "key": "city",
+                        "label": "City",
+                        "required": true,
+                        "type": "text",
+                        "value": "hyderguda"
+                    }
+                ],
+                "description": "Please fill below for car price :",
+                "title": "",
+                "type": "FORM"
+            }
+        ],
+        "footer_options" : [],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "car_version: ertiga vxi<br/> city: hyderguda",
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "please note - showing for hyderabad <br/> Maruti Suzuki Ertiga priced at ₹ 8.84 Lakh On-Road"
+            }
+        ],
+        "footer_options": []
+    }
+]

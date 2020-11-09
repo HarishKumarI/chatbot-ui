@@ -58,16 +58,18 @@ input:read-only, select:disabled, button:disabled{
     font-weight: bolder;
     font-size: 16px;
     color: #3d4e63cc;
+    margin: 1px 3px 5px;
 }
 
 .FormfromJSON .form_desc{
     color: #3d4e63cc;
     font-size: 15px;
-    margin: 3px;
+    margin: 2px 3px 5px;
 }
 
 .FormfromJSON button{
     float: right;
+    margin-top: 4px;
 }
 
 .FormfromJSON button[type='submit']{

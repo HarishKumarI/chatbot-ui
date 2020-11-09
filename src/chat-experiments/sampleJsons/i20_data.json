@@ -1,0 +1,42 @@
+[
+    {
+        "session_id" : "",
+        "bot_response" : [
+            {
+                "type" : "TEXT",
+                "markdown" : true,
+                "content" : { "p": "Welcome to Carwale. <br/>I can help you with car information. What would you like to know ?"}
+            }
+        ],
+        "footer_options" : [
+            "what is the best selling car?", "latest cars in the market", "cars under 5 Lakhs"
+        ],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "tell me about hyundai i20 magna 1.2 MT" },
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {   "session_id": "",
+        "bot_response": [
+            {   
+                "type": "CARD",
+                "title": "Hyundai i20 magna 1.2 MT",
+                "markdown": true,
+                "url": "https://www.carwale.com/hyundai-cars/i20/magna12mt/",
+                "image": "https://imgd.aeplcdn.com/664x374/n/cw/ec/40530/i20-exterior-right-front-three-quarter-5.jpeg?q=85",
+                "content":  {
+                                "p": "**₹ 8.03 Lakh** On-Road Price, Hyderabad <br/> **MILEAGE:** 20.35 kmpl<br/> **ENGINE:** 1197 cc <br/> **TRANSMISSION:** Manual <br/> **FUEL TYPE:** Petrol <br/> **SEATING CAPACITY:** 5 Seater<br/> **Emission Standard:** BS 6 <br/> [for more details...](https://www.carwale.com/hyundai-cars/i20/magna12mt/)"
+                            }
+            }
+        ],
+        "footer_options": []
+    }
+]

@@ -115,3 +115,38 @@ table title, desc, table data with row and column headers.
 
 
 - screenshots of the UI with minimal messages - EOD
+
+
+
+
+## **scenarios to be covered in screenshots**
+
+- [x] General welcome message with buttons  
+- [x] Car specific welcome message with buttons (when we know what car they are interested in)
+- What is price of ertiga ?    ( user entered query )
+  - [x] Show form - versions in dropdown
+  - [x] show user giving city not in db (say Hyderguda)
+  - [x] answer to show some nearby city (Hyderabad) and mention `please note - showing for hyderabad`
+- [x] What is price of ertiga lxi?
+    1. Show form - without version field (OR) version field disabled ?
+
+
+- bot asking `You seem to be interested in ertiga lxi. Would you like to connect with dealer?`
+  - [x] User - Yes
+  - [x] Form shown
+  - [x] User types invalid mobile num
+  - [x] another form with only mobile num field active . user types properly
+      - bot responds - `Sent your info. Dealer will reach out to you soon.`
+- [x] tell me about hyundai i20
+    - Summary card - title, image, description in table , URL to car
+    - #### **Hyundai i20 Key Specifications** (as in carwale page - https://www.carwale.com/hyundai-cars/i20/)
+- [x] Compare ertiga with innova
+    - [x]  compare carousel summary cards
+    - Show URL for extensive comparison
+- [x] show me SUVs and hatchback cars between 30-40 L
+  - carousel of cards (cards must contain price info and body_type - SUV/hatchback, URL)
+  - show 10 cards and filter URL 
+- [x] What is the engine and mileage of Ford Figo ?
+  -  card with image, and only engine and mileage info and URL to car
+- [ ] Feedback image
+- [ ] Redirect to human agent image

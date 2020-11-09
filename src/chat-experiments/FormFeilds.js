@@ -26,7 +26,7 @@ function FormfromJSON(props){
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
-                                            <select name={ feild.label } disabled={ readOnly } >
+                                            <select name={ feild.label } disabled={ readOnly } defaultValue={ feild.value } >
                                                 <option> { feild.description }</option>
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
@@ -110,10 +110,11 @@ function FormfromJSON(props){
                         onSubmit( json.content )
                     }
                     }>
-                    <div className="form_title">{ title }</div>
-                    <div className="form_desc" >{ description }</div>
+                    { title.length > 0 ? <div className="form_title">{ title }</div> : null }
+                    { description.length > 0 ? <div className="form_desc" >{ description }</div> : null }
+                    
                     { feilds }
-                    <button disabled={ readOnly } type="submit">Submit</button>
+                    <button disabled={ readOnly } type="submit">{ json.submit_text === undefined ? 'Submit' : json.submit_text }</button>
                 </form>
             </div>
 }

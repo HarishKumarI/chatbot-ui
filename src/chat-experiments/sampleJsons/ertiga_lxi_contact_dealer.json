@@ -1,0 +1,182 @@
+[
+    {
+        "session_id" : "",
+        "bot_response" : [
+            {
+                "type" : "TEXT",
+                "markdown" : true,
+                "content" : { "p": "Welcome to Carwale. <br/>I can help you with car information. What would you like to know ?"}
+            }
+        ],
+        "footer_options" : [
+            "what is the best selling car?", "latest cars in the market", "cars under 5 Lakhs"
+        ],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "What is price of ertiga ?" },
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {
+        "session_id" : "",
+        "bot_response": [
+            {
+                "content": [
+                    {
+                        "description": "Which car version are you interested in ?",
+                        "disabled": false,
+                        "key": "car_version",
+                        "label": "Car Version",
+                        "options": [
+                            "ertiga lxi",
+                            "ertiga vxi",
+                            "ertiga zxi"
+                        ],
+                        "required": true,
+                        "type": "dropdown",
+                        "value": "ertiga vxi"
+                    },
+                    {
+                        "description": "Which city are you looking at?",
+                        "disabled": false,
+                        "key": "city",
+                        "label": "City",
+                        "required": true,
+                        "type": "text",
+                        "value": "hyderguda"
+                    }
+                ],
+                "description": "Please fill below for car price :",
+                "title": "",
+                "type": "FORM"
+            }
+        ],
+        "footer_options" : [],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "car_version: ertiga vxi<br/> city: hyderguda",
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "please note - showing for hyderabad <br/> Maruti Suzuki Ertiga priced at ₹ 8.84 Lakh On-Road"
+            }
+        ],
+        "footer_options": []
+    },
+    {
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "You seem to be interested in ertiga lxi. Would you like to connect with dealer?"
+            }
+        ],
+        "footer_options": []
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "yes",
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {
+        "session_id" : "",
+        "bot_response": [
+            {
+                "content": [
+                    {
+                        "description": "",
+                        "disabled": false,
+                        "key": "name",
+                        "label": "Name",
+                        "required": true,
+                        "type": "text",
+                        "value": "vineeth"
+                    },
+                    {
+                        "description": "",
+                        "disabled": false,
+                        "key": "phone_num",
+                        "label": "phone no",
+                        "required": true,
+                        "type": "text",
+                        "value": "742589452"
+                    }
+                ],
+                "description": "Please enter the following details :",
+                "title": "",
+                "type": "FORM"
+            }
+        ],
+        "footer_options" : [],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "name: vineeth <br/> phone no: 742589452",
+                "user": "user"
+            }
+        ],
+        "footer_options": []
+    },
+    {
+        "session_id" : "",
+        "bot_response": [
+            {
+                "content": [
+                    {
+                        "description": "",
+                        "disabled": false,
+                        "key": "phone_num",
+                        "label": "phone no",
+                        "required": true,
+                        "type": "text",
+                        "value": "7425895245"
+                    }
+                ],
+                "description": "Please enter the following details :",
+                "title": "",
+                "type": "FORM"
+            }
+        ],
+        "footer_options" : [],
+        "time_taken" : ""
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": "Sent your info. Dealer will reach out to you soon."
+            }
+        ],
+        "footer_options": []
+    }
+]
