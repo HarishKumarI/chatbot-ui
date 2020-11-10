@@ -9,8 +9,8 @@ import {
     ThumbDownAltRounded,
     ChatOutlined,
     Close,
-    ChevronRight,
-    ChevronLeft
+    // ChevronRight,
+    // ChevronLeft
 } from '@material-ui/icons'
 
 import uiJSON from './ui-custom.json'
