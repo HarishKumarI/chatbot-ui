@@ -501,11 +501,7 @@
     }        
 
     .chat_card img{
-        max-width: 240px;
-    }
-
-    .messages-container > *{
-        max-width: 100% !important;
+        max-width: 200px;
     }
 
     .card-carousel .card{
