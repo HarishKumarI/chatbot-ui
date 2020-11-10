@@ -387,7 +387,7 @@
                         "content": "if you would like to see cars with applying more criteria for selection. Advanced search page [ here ]( https://www.carwale.com/new/search/#bs=6,3&budget=8 )."
                     }
                 ],
-                "title": "Here are few list of cars matching preferences of **body type** SUVs and hatchback, **price** 25-40 L",
+                "title": "Here are few list of cars matching preferences of **body type SUVs and hatchback**, **price 25-40 L**",
                 "type": "CAROUSEL"
             }                
         ]
@@ -407,7 +407,7 @@
         "bot_response": [
             {
                 "type": "TEXT", "markdown": true,
-                "content": { "p": "I can answer questions based on specification and comparisons. for queries you have would like to connet to our experts?" }
+                "content": { "p": "I can answer questions based on specification and comparisons of a car. for advanced queries would you like to connect to our experts?" }
             }
         ]
     },
