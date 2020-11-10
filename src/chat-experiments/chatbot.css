@@ -500,10 +500,6 @@
         height: 130px;
     }        
 
-    .chat_card{
-        max-width: 260px;
-    }
-
     .chat_card img{
         max-width: 240px;
     }
@@ -512,17 +508,8 @@
         max-width: 100% !important;
     }
 
-    .card-carousel{
-        max-width: 65% !important;
-    }
-
     .card-carousel .card{
-        max-width: 75%;
+        max-width: 45%;
     }
 
-    .msg_form{
-        max-width: 50% !important;
-    }
-
-    
 }

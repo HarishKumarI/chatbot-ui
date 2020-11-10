@@ -94,7 +94,7 @@
         "bot_response": [
             {
                 "type": "TEXT", "markdown": true,
-                "content": "Maruti Suzuki Ertiga priced at ₹ 8.84 Lakh On-Road, Hyderabad"
+                "content": "Maruti Suzuki Ertiga priced at **₹ 8.84 Lakh** On-Road, Hyderabad"
             },
             {
                 "type": "TEXT", "markdown": true,
@@ -239,7 +239,7 @@
                         "url": "https://www.carwale.com/marutisuzuki-cars/ertiga/",
                         "image": "https://imgd.aeplcdn.com/272x153/cw/ec/35211/Maruti-Suzuki-Ertiga-Right-Rear-Three-Quarter-141765.jpg?wm=0&q=85",
                         "content":  {
-                                        "p": "Maruti Suzuki Ertiga is a **7 seater SUV/MUV** available in a price range of Rs **8.84 - 12.03 Lakh**. It is available in 7 variants, 1 engine option and **2 transmission options : Manual and Automatic (Torque Converter)**. Other key specifications of the Ertiga include a Ground Clearance of 180 mm, Kerb Weight of 1135 kg and Bootspace of 209 litres. The Ertiga is available in **5 colours**. The mileage of Ertiga ranges from **17.99 km/kg to 26.2 km/kg**."
+                                        "p": "Maruti Suzuki Ertiga is a **7 seater SUV/MUV** available in a price range of **Rs 8.84 - 12.03 Lakh**. It is available in 7 variants, 1 engine option and **2 transmission options : Manual and Automatic (Torque Converter)**. Other key specifications of the Ertiga include a Ground Clearance of 180 mm, Kerb Weight of 1135 kg and Bootspace of 209 litres. The Ertiga is available in **5 colours**. The mileage of Ertiga ranges from **17.99 km/kg to 26.2 km/kg**."
                                     }
                     },
                     {   
