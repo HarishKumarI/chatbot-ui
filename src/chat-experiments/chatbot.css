@@ -193,8 +193,12 @@
 }
 
 .card_title{
-    margin-left: 10px;
+    margin: 0 10px;
     font-weight: var( --card-title-font-weight );   
+    word-wrap: break-word !important;
+    white-space: normal;
+    /* border-top: var( --card-image-border-bottom ); */
+    padding-top: 5px;
 }
 
 .card{
@@ -207,11 +211,11 @@
 
 .card img{
     width: inherit;
-    border-radius: var( --card-border-radius );
-    border-bottom: var( --card-image-border-bottom );
+    /* border-radius: var( --card-border-radius ); */
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     margin: 0;
+    display: block;
 }
 
 
@@ -225,6 +229,7 @@
 .card-carousel-container{
     overflow-x: auto;
     white-space: nowrap;
+    padding: 3px 0;
     padding-left: calc( var( --img-width ) );
 }
 
@@ -240,8 +245,9 @@
 }
 
 .card-carousel-container img{
-    padding: 20px;
-    width: 84%;
+    display: block;
+    margin: 20px;
+    width: 80%;
 }
 
 .card .card-text{
@@ -251,13 +257,16 @@
     color: rgb(107, 106, 106);
     font-size: 14px;
     /* word-break: break-all !important; */
-    width: 93%;
     height: inherit;
     word-wrap: break-word !important;
     white-space: normal;
 }
 
-.card-text p{
+.card-carousel-container .card-text{
+    width: 85%;
+}
+
+.card_title p, .card-text p{
     margin: 0;
     height: inherit;
     /* word-break: break-all !important; */
@@ -268,7 +277,6 @@
     margin: 0;
     padding-left: 38px;
 }
-
 
 .navigation-btns svg{
     border: var( --carousel-btns-border );

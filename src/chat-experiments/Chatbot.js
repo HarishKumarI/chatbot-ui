@@ -58,7 +58,7 @@ function Card(props){
                 >
                 <img src={ card_data.image } alt="card_image" />
                 <div >
-                    <div className="card_title" >{ card_data.title }</div>
+                    <div className="card_title"  dangerouslySetInnerHTML={{ __html: markdown2HTML( card_data.title ) }} />
                     <div className="card-text" dangerouslySetInnerHTML={{__html: markdown2HTML( card_data.content ) }} />
                 </div>
             </div>
