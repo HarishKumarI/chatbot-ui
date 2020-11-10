@@ -52,7 +52,7 @@ function markdown2HTML( markdown ) {
 function Card(props){
     const card_data = props.data
 
-    return  <div className="card" 
+    return  <div className={ props.compare === undefined ? 'card' : '' } 
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
                 onClick={e => { if( card_data.url !== undefined ) window.open( card_data.url, '_blank' ) } }
                 >
@@ -337,7 +337,14 @@ class ChatBot extends React.Component{
                                                 </div> 
 
                                     if( idx > 10 ) return null
+
+                                    if( msg_data.msg.compare )
+                                        return <div className="single-card" key={idx}>
+                                            <Card data={ card_info } compare={ msg_data.msg.compare } />
+                                        </div> 
+                                    
                                     return  <Card data={ card_info } key={idx} />
+                                   
                                 })
                             } 
                         </div>

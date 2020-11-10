@@ -5,9 +5,9 @@
             {
                 "type" : "TEXT",
                 "markdown" : true,
-                "content" : { "p": "Welcome to Carwale.com <br/>I am here to answer your questions regarding car features and comparison. You can ask me questions like below"},
+                "content" : { "p": "Welcome to Carwale.com <br/>I am here to answer your questions regarding car features and comparison. You can ask me questions like below."},
                 "footer_options" : [
-                    "what is the mileage of Innova Diesel?", "latest cars in the market", "cars under 5 Lakhs"
+                    "What is the mileage of Innova Diesel?", "How does ertiga and innova compare?", "What cars are available between 10-15 lakhs"
                 ]
             }
         ],
@@ -31,8 +31,8 @@
                     {
                         "description": "please select the version you are interested in",
                         "disabled": false,
-                        "key": "car_version",
-                        "label": "Car Version",
+                        "key": "car_variant",
+                        "label": "Car Variant",
                         "options": [
                             "ertiga lxi",
                             "ertiga vxi",
@@ -52,7 +52,7 @@
                         "value": null
                     }
                 ],
-                "description": "car prices are city and version specific. please let me know the following details and I can help with the price of ertiga",
+                "description": "Car prices are city and variant specific. Please let me know the following details and I can help with the price of ertiga",
                 "title": "",
                 "submit_text": "Get Price",
                 "type": "FORM"
@@ -65,7 +65,7 @@
         "bot_response": [
             {
                 "type": "TEXT", "markdown": true,
-                "content": "car_version: ertiga vxi<br/> city: hyderguda",
+                "content": "car variant: ertiga vxi<br/> city: hyderguda",
                 "user": "user"
             }
         ]
@@ -75,7 +75,7 @@
         "bot_response": [
             {
                 "type": "TEXT", "markdown": true,
-                "content": "did you mean the city as Hyderabad? <br/> **Yes** / **No** "
+                "content": "Did you mean the city as Hyderabad? <br/> **Yes** / **No** "
             }
         ]
     },
@@ -98,7 +98,7 @@
             },
             {
                 "type": "TEXT", "markdown": true,
-                "content": "whould you like to connect with dealer in city **Hyderabad**"
+                "content": "You seem to be interested in ertiga. Would you like to connect with a dealer in city **Hyderabad**"
             }
         ]
     },
@@ -204,7 +204,7 @@
         "bot_response": [
             {
                 "type": "TEXT", "markdown": true,
-                "content": { "p": "what is the mileage of Hyundai i20 Diesel variant?" },
+                "content": { "p": "What is the mileage of Hyundai i20 Diesel variant?" },
                 "user": "user"
             }
         ]
@@ -223,7 +223,27 @@
         "bot_response": [
             {
                 "type": "TEXT", "markdown": true,
-                "content": { "p": "compare Maruti Suzuki Ertiga and Toyota Innova Crysta" },
+                "content": { "p": "What are the dimensions of eritga lxi ?" },
+                "user": "user"
+            }
+        ]
+    },
+    {
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "The dimensions of ertiga lxi are : <br/> <ul> <li>Length - 4395 mm</li> <li>Width - 1735 mm</li> <li>Height - 1690 mm</li> <li>Wheelbase - 2740 mm</li> <li>Ground Clearance - 180 mm</li>" 
+                            }
+            }
+        ]
+    },
+    {   
+        "session_id": "",
+        "bot_response": [
+            {
+                "type": "TEXT", "markdown": true,
+                "content": { "p": "How do ertiga and innova crysta compare?" },
                 "user": "user"
             }
         ]
@@ -253,9 +273,36 @@
                                     }
                     }
                 ],
-                "title": "Here is the breif comparison between **Maruti Suzuki Ertiga LXi** and **Toyota Innova Crysta 2.7 GX 7 STR**. <br/> for detailed comparison just follow this [ link ]( https://www.carwale.com/compare-cars/marutisuzuki-ertiga-vs-toyota-innova-crysta/?c1=6022&c2=6738&source=17 )",
+                "title": "Here is a breif comparison between **Ertiga** and **Innova Crysta**. <br/> For detailed comparison just follow this [ link ]( https://www.carwale.com/compare-cars/marutisuzuki-ertiga-vs-toyota-innova-crysta/?c1=6022&c2=6738&source=17 )",
                 "type": "CAROUSEL"
-            }                
+            },
+            {
+                "content": [
+                    {   
+                        "type": "CARD",
+                        "title": "Maruti Suzuki Ertiga",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/marutisuzuki-cars/ertiga/",
+                        "image": "https://imgd.aeplcdn.com/272x153/cw/ec/35211/Maruti-Suzuki-Ertiga-Right-Rear-Three-Quarter-141765.jpg?wm=0&q=85",
+                        "content":  {
+                                        "p": "**₹ 8.84 Lakh** On-Road Price, Hyderabad <br/>  **ENGINE:** 1462cc <br/> **MILEAGE:** 19.01 kmpl <br/> **TRANSMISSION:** Manual - 5 Gears <br/> **FUEL TYPE:** Petrol <br/> **SEATING CAPACITY:** 7 Seater<br/> **Emission Standard:** BS 6"
+                                    }
+                    },
+                    {   
+                        "type": "CARD",
+                        "title": "Toyota Innova Crysta",
+                        "markdown": true,
+                        "url": "https://www.carwale.com/toyota-cars/innova-crysta/",
+                        "image": "https://imgd.aeplcdn.com/272x153/n/cw/ec/20623/innova-crysta-exterior-right-front-three-quarter.jpeg?q=85",
+                        "content":  {
+                                        "p": "**₹ 19.03 Lakh** On-Road Price, Hyderabad <br/>  **ENGINE:** 2694cc <br/> **MILEAGE:** 11.25 kmpl <br/> **TRANSMISSION:** Manual - 5 Gears <br/> **FUEL TYPE:** Petrol <br/> **SEATING CAPACITY:** 7 Seater<br/> **Emission Standard:** BS 6"
+                                    }
+                    }
+                ],
+                "title": "",
+                "type": "CAROUSEL",
+                "compare": true
+            }
         ]
     },
     {   
@@ -384,7 +431,7 @@
                     },
                     {
                         "type": "LINK",
-                        "content": "if you would like to see cars with applying more criteria for selection. Advanced search page [ here ]( https://www.carwale.com/new/search/#bs=6,3&budget=8 )."
+                        "content": "If you would like to see cars applying more criteria for selection use our advanced search page [ here. ]( https://www.carwale.com/new/search/#bs=6,3&budget=8 )"
                     }
                 ],
                 "title": "Here are few list of cars matching preferences of **body type SUVs and hatchback**, **price 25-40 L**",
@@ -407,7 +454,7 @@
         "bot_response": [
             {
                 "type": "TEXT", "markdown": true,
-                "content": { "p": "I can answer questions based on specification and comparisons of a car. for advanced queries would you like to connect to our experts?" }
+                "content": { "p": "I can answer questions based on specification and comparisons of a car. For other questions, I am happy to connect with our expert.<br/> Would you like to connect with our experts?" }
             }
         ]
     },
