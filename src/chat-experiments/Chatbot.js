@@ -22,7 +22,7 @@ import uiJSON from './ui-custom.json'
 // import dataJSON from './sampleJsons/ertiga_sample.json'
 // import dataJSON from './sampleJsons/ford_figo.json'
 // import dataJSON from './sampleJsons/i20_data.json'
-import dataJSON from './sampleJsons/cumilative.json'
+// import dataJSON from './sampleJsons/cumilative.json'
 
 import agent_image from './agent.png'
 
@@ -65,8 +65,22 @@ function Card(props){
 }
 
 
-function sendFeedback( payload ){
-    console.log( payload)
+function sendFeedback( payload, cmt){
+    // console.log( payload )
+    fetch( `/api/${ cmt ? 'feedback-long' : 'feedback-short' }`, 
+        {
+            method: 'POST',
+            headers: {
+            "content-type": "application/json"
+            },
+            body: JSON.stringify({ feedback : payload.feedback, feedback_text: payload.cmt})
+        }
+    )
+    .then( res => res.json() )
+    .then( responseJson => {
+        console.log( responseJson )
+    }) 
+
 }
 
 
@@ -83,7 +97,7 @@ function MsgFeedback(props){
             data.feedback_value = false
         }
 
-        sendFeedback( { question: data.question, answerJson: data.answerJson, feedback: data.feedback_value, cmt: '' } )
+        sendFeedback( { question: data.question, answerJson: data.answerJson, feedback: data.feedback_value, cmt: '' }, false )
         updateData(data)
     }
 
@@ -126,31 +140,31 @@ class ChatBot extends React.Component{
 
     async componentDidMount(){
 
-        // await fetch('/api/test-create-session',
-        //   {
-        //     method: 'POST',
-        //     headers: {
-        //       "content-type": "application/json"
-        //     },
-        //     body: JSON.stringify({ context : null, timestamp : new Date(), channel : "cognichat" })
-        //   }
-        // )
-        // .then( res => res.json())
-        // .then( responseJson => { 
+        await fetch('/api/test-create-session',
+          {
+            method: 'POST',
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({ context : null, timestamp : new Date(), channel : "cognichat" })
+          }
+        )
+        .then( res => res.json())
+        .then( responseJson => { 
 
-        //     this.setState({ session_id: responseJson.session_id, msgs: this.getMsgs( responseJson ) })
+            this.setState({ session_id: responseJson.session_id, msgs: this.getMsgs( responseJson ) })
+        })
+        .catch(err => { console.log(err); this.setState({ show_dots: false })})
+
+        // let msgs = []
+
+        // dataJSON.forEach( msg => { 
+        //     msgs.push( ...this.getMsgs( msg ) ) 
         // })
-        // .catch(err => { console.log(err); this.setState({ show_dots: false })})
 
-        let msgs = []
-
-        dataJSON.forEach( msg => { 
-            msgs.push( ...this.getMsgs( msg ) ) 
-        })
-
-        this.setState({
-            msgs
-        })
+        // this.setState({
+        //     msgs
+        // })
 
     }
 
@@ -160,7 +174,7 @@ class ChatBot extends React.Component{
             return  {   user_type:  serverResponse.user_agent !== undefined ? 'agent' :  msg_data.user === undefined ? 'bot': msg_data.user, 
                         type: msg_data.type, 
                         msg: answerElement, ...currentTime(), 
-                        show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : false, 
+                        show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : show_feedback ? show_feedback : false, 
                         feedback_value: null, feedback_String: null,
                         hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
                         suggested: msg_data.footer_options || [], question: '', answerJson: msg_data 
@@ -194,7 +208,7 @@ class ChatBot extends React.Component{
     }
 
     async servercall( question, type, isnudge ){
-        let body = { 'query': null, form: null,  timestamp : new Date(), channel : "cognichat" }
+        let body = { 'query': null, form: null,  timestamp : new Date(), channel : "cognichat", session_id: this.state.session_id }
 
         if( isnudge )
             body.nudge = true
@@ -242,7 +256,7 @@ class ChatBot extends React.Component{
         let { feedback_data, msgs } = this.state 
         const cmt = $('#feedback_note').val()
         msgs[ feedback_data.index ].feedback_String = cmt.length ? cmt : null
-        sendFeedback( { question: feedback_data.question, answerJson: feedback_data.answerJson, feedback: feedback_data.feedback_value, cmt } )
+        sendFeedback( { question: feedback_data.question, answerJson: feedback_data.answerJson, feedback: feedback_data.feedback_value, cmt }, true )
 
         this.setState({ show_feedback_form: false, feedback_data: null, msgs })
 
@@ -279,7 +293,7 @@ class ChatBot extends React.Component{
     getMessages( msgs ){
         let msgs_list = []
         msgs.forEach( ( msg_data, index ) => {
-            if( index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot'  ) )
+            if( index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot' && msgs[index-1].user_type !== msg_data.user_type ) )
                 /* bot persona */
                 msgs_list.push( 
                     <div className="chat-persona" key={index+'_0'}>
@@ -316,7 +330,7 @@ class ChatBot extends React.Component{
                 let cards = []
 
                 cards = msg_data.msg.content.filter( x => x.type === 'CARD' )
-                link = msg_data.msg.content.filter( x => x.type !== 'CARD' )
+                link = msg_data.msg.content.filter( x => x.type === 'LINK' )
                     
                 msgs_list.push(
                     <div className="card-carousel" key={index+'_3'}>
@@ -332,9 +346,7 @@ class ChatBot extends React.Component{
                         <div className={ `card-carousel-container ${ 'cards_list_'+index }` }>
                             {   cards.map( ( card_info, idx ) => {
                                     if( idx > 9 ) 
-                                        return  <div className="link card" key={ idx }>
-                                                    <a href={ markdown2HTML( link[0].content ).anchor.href } >see more</a> 
-                                                </div> 
+                                        return  <div className="link" key={ idx } dangerouslySetInnerHTML={{ __html: markdown2HTML( link[0].content ) }} /> 
 
                                     if( idx > 10 ) return null
 

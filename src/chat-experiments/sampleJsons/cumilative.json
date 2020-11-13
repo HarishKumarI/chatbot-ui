@@ -430,8 +430,12 @@
                                     }
                     },
                     {
-                        "type": "LINK",
+                        "type": "TEXT",
                         "content": "If you would like to see cars applying more criteria for selection use our advanced search page [ here. ]( https://www.carwale.com/new/search/#bs=6,3&budget=8 )"
+                    },
+                    {
+                        "type": "LINK",
+                        "content": "[ see more ]( https://www.carwale.com/new/search/#bs=6,3&budget=8 )"
                     }
                 ],
                 "title": "Here are few list of cars matching preferences of **body type SUVs and hatchback**, **price 25-40 L**",

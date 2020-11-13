@@ -230,7 +230,7 @@
 .card-carousel-container{
     overflow-x: auto;
     white-space: nowrap;
-    padding: 3px 0;
+    padding: 3px 18px;
     padding-left: calc( var( --img-width ) );
 }
 
@@ -319,9 +319,19 @@
 }
 
 .card-carousel-container .link{
+    /* height: 300px; */
+    width: fit-content;
+    display: inline-table;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 8px;
+    padding: 5px;
+    border: var( --card-border );
+    border-radius: var( --card-border-radius );
+    box-shadow: var( --card-box-shadow );
+
     display: none;
-    width: 150px;
-    height: 100%;
 }
 
 
