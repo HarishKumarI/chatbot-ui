@@ -131,7 +131,8 @@ class ChatBot extends React.Component{
             msgs: [],
             feedback_data: null,
             show_feedback_form: false,
-            session_id: null
+            session_id: null,
+            user_id: null
         }
 
         this.handleClick = this.handleClick.bind( this )
@@ -139,6 +140,7 @@ class ChatBot extends React.Component{
     }
 
     async componentDidMount(){
+        this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
 
         await fetch('/api/test-create-session',
           {
@@ -169,15 +171,16 @@ class ChatBot extends React.Component{
     }
 
     getMsgs( serverResponse , show_feedback=false){
-        let welcome_msgs = serverResponse.bot_response.map( msg_data => {
+        let welcome_msgs = serverResponse.bot_response.map( ( msg_data, index, arr ) => {
             const answerElement = msg_data.markdown && msg_data.markdown !== undefined ? markdown2HTML(msg_data.content) : msg_data
             return  {   user_type:  serverResponse.user_agent !== undefined ? 'agent' :  msg_data.user === undefined ? 'bot': msg_data.user, 
                         type: msg_data.type, 
                         msg: answerElement, ...currentTime(), 
-                        show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : show_feedback ? show_feedback : false, 
+                        show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : show_feedback && arr.length - 1 === index ? show_feedback : false, 
                         feedback_value: null, feedback_String: null,
                         hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
-                        suggested: msg_data.footer_options || [], question: '', answerJson: msg_data 
+                        suggested: msg_data.footer_options || [], question: '', answerJson: msg_data,
+                        index: index
                     }
         })
 
@@ -292,6 +295,8 @@ class ChatBot extends React.Component{
 
     getMessages( msgs ){
         let msgs_list = []
+        
+
         msgs.forEach( ( msg_data, index ) => {
             if( index === 0 || ( index > 0 && msgs[index-1].user_type !== 'bot' && msgs[index-1].user_type !== msg_data.user_type ) )
                 /* bot persona */
@@ -312,13 +317,15 @@ class ChatBot extends React.Component{
                 )
 
             if( msg_data.type === 'CARD' )
+
                 msgs_list.push(
                     <div className="single-card" key={index+'_2'}>
-                        <Card data={ msg_data.answerJson[0] } />
+                        <Card data={ msg_data.answerJson[ msg_data.index ] } />
                     </div> 
                 )
 
             if( msg_data.type === 'CAROUSEL' ){
+
                 msgs_list.push(
                     <div className={ `msg` } key={index+'_1'}>   
                         <div className={`${msg_data.user_type}`} suppressContentEditableWarning 
