@@ -16,9 +16,9 @@ function FormfromJSON(props){
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
-                                            <input type="text" placeholder={ `${ feild.description }` } 
+                                            <input type="text" placeholder={ `${ feild.description }` } id={ feild.value.id } 
                                                 name={ feild.label } readOnly={ readOnly }
-                                                defaultValue={ feild.value }
+                                                defaultValue={ feild.value.display_value }
                                                 required={ feild.required } /> 
                                         </div> 
                                 break;
@@ -30,8 +30,8 @@ function FormfromJSON(props){
                                                 <option> { feild.description }</option>
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
-                                                        return  <option key={option_idx} >
-                                                                    { option }
+                                                        return  <option key={option_idx} value={option.id}>
+                                                                    { option.display_value }
                                                                 </option>
                                                     })
                                                 }
@@ -46,8 +46,8 @@ function FormfromJSON(props){
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
                                                         return  <div key={option_idx} > 
-                                                                    <input type="radio" name={feild.label} defaultValue={option} readOnly={ readOnly } />
-                                                                    <label className="field_labels">{ option }</label>
+                                                                    <input type="radio" name={feild.label} defaultValue={option.display_value} readOnly={ readOnly } id={option.id} />
+                                                                    <label className="field_labels">{ option.display_value }</label>
                                                                 </div>
                                                     })
                                                 }
@@ -62,8 +62,8 @@ function FormfromJSON(props){
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
                                                         return  <div key={option_idx} > 
-                                                                    <input type="checkbox" name={feild.label} defaultValue={option} readOnly={ readOnly } />
-                                                                    <label className="field_labels">{ option }</label>
+                                                                    <input type="checkbox" name={feild.label} defaultValue={option.display_value} readOnly={ readOnly } id={option.id} />
+                                                                    <label className="field_labels">{ option.display_value }</label>
                                                                 </div>
                                                     })
                                                 }
@@ -100,13 +100,26 @@ function FormfromJSON(props){
                         let keyValPair = {}
                         const elements = e.target.elements
                         Array.from(elements).forEach( elementValue => {
-                            keyValPair[ elementValue.name ] =  elementValue.value
+                            let default_value = ''
+                            let id = ''
+
+                            if( ["SELECT"].includes( elementValue.tagName ) ){
+                                    default_value = elementValue.selectedOptions[0].innerText 
+                                    id = elementValue.selectedOptions[0].value 
+                                }
+                            else 
+                                {
+                                    default_value = elementValue.value
+                                    id = elementValue.id.length > 0 ? elementValue.id : null
+                                }
+                            
+                            keyValPair[ elementValue.name ] =  { default_value, id }
                         })
 
                         json.content.forEach( feild => {
                             feild.value = feild.description === keyValPair[ feild.label ] ? feild.value : keyValPair[ feild.label ]
                         } )
-                        console.log( json.content )
+                        // console.log( json.content )
                         onSubmit( json.content )
                     }
                     }>
@@ -121,32 +134,49 @@ function FormfromJSON(props){
 
 const sampleFormObj = {
     "content": [
-      {
-        "description": "Which car version are you interested in ?",
-        "key": "car_version",
-        "label": "Car Version",
-        "options": [
-          "ertiga lxi",
-          "ertiga vxi",
-          "ertiga zxi"
-        ],
-        "required": true,
-        "type": "dropdown",
-        "value": null
-      },
-      {
-        "description": "Which city are you looking at?",
-        "key": "city",
-        "label": "City",
-        "required": true,
-        "type": "text",
-        "value": null
-      }
+        {
+            "description": "Which car version are you interested in ?",
+            "disabled": false,
+            "key": "car_version",
+            "label": "Car Version",
+            "options": [
+                {
+                    "display_value": "ertiga lxi",
+                    "id": "ertiga_lxi"
+                },
+                {
+                    "display_value": "ertiga vxi",
+                    "id": "ertiga_vxi"
+                },
+                {
+                    "display_value": "ertiga zxi",
+                    "id": "ertiga_zxi"
+                }
+            ],
+            "required": true,
+            "type": "dropdown",
+            "value": {
+                "display_value": null,
+                "id": null
+            }
+        },
+        {
+            "description": "Which city are you looking at?",
+            "disabled": false,
+            "key": "city",
+            "label": "City",
+            "required": true,
+            "type": "text",
+            "value": {
+                "display_value": null,
+                "id": null
+            }
+        }
     ],
     "description": "Please fill below for car price :",
     "title": "",
     "type": "FORM"
-  }
+}
 
 
 

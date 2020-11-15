@@ -280,8 +280,7 @@ class ChatBot extends React.Component{
             document.getElementById('user_input').value = null
             
             let { msgs} = this.state
-            
-            var json2str = ( json ) => { return json.map( feild => { return feild.key + ": " + feild.value } ).join('<br/>') }
+            var json2str = ( json ) => { return json.map( feild => { console.log( feild ); return feild.key + ": " + feild.value.display_value } ).join('<br/>') }
 
             msgs.push( { user_type:'user', msg: typeof( value ) === "object" ? markdown2HTML( json2str( value ) ) : value ,
                                  ...currentTime(), type: 'TEXT', suggested: [], show_feedback: false } )

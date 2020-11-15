@@ -3,7 +3,7 @@ import './App.css'
 import $ from 'jquery'
 import configJSON from './config/UI_configuration.json'
 import ChatInterface from './components/ChatInterface'
-import {FormFeilds} from './components/FormFeilds'
+import {FormFeilds} from './chat-experiments/FormFeilds'
 import Experiment from './chat-experiments/'
 
 import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom'
