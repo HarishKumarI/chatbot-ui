@@ -72,8 +72,8 @@ function App(){
   return  <Router>
             <Route exact path="/experiment" component={ MainApp } />
             <Route exact path="/formElements" component={ FormFeilds } />
-            <Route exact path="/:user_id" component={ Experiment } />
-            <Route exact path="/" component={Login} />
+            {/* <Route exact path="/:user_id" component={ Experiment } /> */}
+            <Route exact path="/" component={Experiment} />
           </Router>
 }
 
