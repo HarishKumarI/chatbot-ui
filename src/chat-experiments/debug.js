@@ -62,25 +62,16 @@ class Debug extends React.Component{
                         </h3>
 
                         <div style={{ overflowY: 'auto', height: 'inherit' }}>
-                            {    this.state.loading.length > 0 ? this.state.loading 
-                                : this.state.loading ? 'loading...' : 
-                                // <ReactJson  style={{ textAlign: 'initial' }} 
-                                // src={ this.state.sessionjson.history } theme="colors" displayDataTypes={false} 
-                                // displayObjectSize={ false } onEdit={ false } onAdd={ false }
-                                // onDelete={ false } collapsed={ false } sortKeys={ false } />
-                                    this.state.sessionjson !== undefined ?
-                                        <table>
-                                            <tbody>
-                                            {
-                                                this.state.sessionjson.history.map( ( response, idx) => {
-                                                    return <tr key={ idx }><td>{ response['sender'] }</td><td>{ response['message'] }</td><td>{ response['bot_response'] }</td><td>{ response['feedback'] }</td><td>{ response['feedback_text'] }</td></tr>
-                                                })
-                                            }
-                                            </tbody>
-                                        </table>
+                            {   this.state.sessionjson !== undefined ?
+                                <ReactJson  style={{ textAlign: 'initial' }} 
+                                src={ this.state.sessionjson.history } theme="colors" displayDataTypes={false} 
+                                displayObjectSize={ false } onEdit={ false } onAdd={ false }
+                                onDelete={ false } collapsed={ false } sortKeys={ false } />
                                 : null
                             }
                         </div>
+
+                        { this.state.loading ? 'loading...' : null }
                     </div>
                 </div>
     }
