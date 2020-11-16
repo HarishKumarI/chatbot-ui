@@ -5,7 +5,7 @@ import configJSON from './config/UI_configuration.json'
 import ChatInterface from './components/ChatInterface'
 import {FormFeilds} from './chat-experiments/FormFeilds'
 import Experiment from './chat-experiments/'
-
+import Debug from './chat-experiments/debug'
 import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom'
 
 function Title(props){
@@ -73,6 +73,7 @@ function App(){
             <Route exact path="/experiment" component={ MainApp } />
             <Route exact path="/formElements" component={ FormFeilds } />
             {/* <Route exact path="/:user_id" component={ Experiment } /> */}
+            <Route exact path="/debug" component={Debug} />
             <Route exact path="/" component={Experiment} />
           </Router>
 }
