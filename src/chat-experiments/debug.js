@@ -35,10 +35,12 @@ class Debug extends React.Component{
         $.post('http://95.217.239.6:7051/api/session', JSON.stringify({ session_id }) , res=>{
             this.setState({ sessionjson: res, loading: false })
         })
+        .catch(err => {
+            this.setState({loading: 'error'})
+        })
     }
 
     render(){
-        console.log( this.state.select_session )
         const sessions = this.state.session_ids.map( ( sessionId, idx) => {
             return  <li key={idx} className={ sessionId.session_id === this.state.select_session ? 'select_session' : '' }
                         onClick={e => this.handleSession(sessionId.session_id) } >
@@ -52,19 +54,33 @@ class Debug extends React.Component{
                         { this.state.loader }
                         <ul className="sessionsList">{sessions}</ul>
                     </div>
-                    <div style={{ height: '100vh', width: '100%'}}>
-                        <h3 style={{ textAlign: 'center' }}> Conversation Output </h3>
-                        <div >
+                    <div style={{ height: '100vh', width: '100%', overflowY: 'hidden'}}>
+                        <h3 style={{ textAlign: 'center' }}> Conversation Output 
                             {   this.state.sessionjson !== undefined ?
-                                <ReactJson  style={{ textAlign: 'initial' }} 
-                                src={ this.state.sessionjson.history } theme="colors" displayDataTypes={false} 
-                                displayObjectSize={ false } onEdit={ false } onAdd={ false }
-                                onDelete={ false } collapsed={ false } sortKeys={ false } />
+                                <span style={{ float: 'right' }} >User Id: { this.state.sessionjson.user_id }</span>
+                            : null }
+                        </h3>
+
+                        <div style={{ overflowY: 'auto', height: 'inherit' }}>
+                            {    this.state.loading.length > 0 ? this.state.loading 
+                                : this.state.loading ? 'loading...' : 
+                                // <ReactJson  style={{ textAlign: 'initial' }} 
+                                // src={ this.state.sessionjson.history } theme="colors" displayDataTypes={false} 
+                                // displayObjectSize={ false } onEdit={ false } onAdd={ false }
+                                // onDelete={ false } collapsed={ false } sortKeys={ false } />
+                                    this.state.sessionjson !== undefined ?
+                                        <table>
+                                            <tbody>
+                                            {
+                                                this.state.sessionjson.history.map( ( response, idx) => {
+                                                    return <tr key={ idx }><td>{ response['sender'] }</td><td>{ response['message'] }</td><td>{ response['bot_response'] }</td><td>{ response['feedback'] }</td><td>{ response['feedback_text'] }</td></tr>
+                                                })
+                                            }
+                                            </tbody>
+                                        </table>
                                 : null
                             }
                         </div>
-
-                        { this.state.loading ? 'loading...' : null }
                     </div>
                 </div>
     }

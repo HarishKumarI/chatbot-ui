@@ -51,7 +51,7 @@ function markdown2HTML( markdown ) {
 
 function Card(props){
     const card_data = props.data
-
+    console.log( card_data )
     return  <div className={ props.compare === undefined ? 'card' : '' } 
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
                 onClick={e => { if( card_data.url !== undefined ) window.open( card_data.url, '_blank' ) } }
@@ -180,14 +180,14 @@ class ChatBot extends React.Component{
                         show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : show_feedback && arr.length - 1 === index ? show_feedback : false, 
                         feedback_value: null, feedback_String: null,
                         hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
-                        suggested: msg_data.footer_options || [], question: '', answerJson: msg_data,
+                        suggested: msg_data.footer_options || [], question: '', answerJson: serverResponse.bot_response,
                         index: index
                     }
         })
 
         // welcome_msgs[ welcome_msgs.length -1 ].suggested = serverResponse.footer_options
         // welcome_msgs[ welcome_msgs.length -1 ].show_feedback = show_feedback
-        welcome_msgs[ welcome_msgs.length -1 ].answerJson = serverResponse.bot_response
+        // welcome_msgs[ welcome_msgs.length -1 ].answerJson = serverResponse.bot_response
 
         return welcome_msgs
     }
@@ -316,14 +316,15 @@ class ChatBot extends React.Component{
                     </div>
                 )
 
-            if( msg_data.type === 'CARD' )
-
+            if( msg_data.type === 'CARD' ){
+                console.log( msg_data, msg_data.index )
                 msgs_list.push(
                     <div className="single-card" key={index+'_2'}>
                         <Card data={ msg_data.answerJson[ msg_data.index ] } />
                     </div> 
                 )
-
+            }
+            
             if( msg_data.type === 'CAROUSEL' ){
 
                 msgs_list.push(
