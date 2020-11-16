@@ -148,7 +148,7 @@ class ChatBot extends React.Component{
             headers: {
               "content-type": "application/json"
             },
-            body: JSON.stringify({ context : null, timestamp : new Date(), channel : "cognichat" })
+            body: JSON.stringify({ context : null, timestamp : new Date(), channel : "cognichat", user_id: this.props.user_id_props.match.params['user_id'] })
           }
         )
         .then( res => res.json())
@@ -211,7 +211,7 @@ class ChatBot extends React.Component{
     }
 
     async servercall( question, type, isnudge ){
-        let body = { 'query': null, form: null,  timestamp : new Date(), channel : "cognichat", session_id: this.state.session_id }
+        let body = { 'query': null, form: null,  timestamp : new Date(), channel : "cognichat", session_id: this.state.session_id, user_id: this.state.user_id }
 
         if( isnudge )
             body.nudge = true

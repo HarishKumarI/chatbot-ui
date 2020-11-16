@@ -34,10 +34,16 @@ function MainApp(props){
 function Login( ){
   const history = useHistory();
   
-  function verifyUser(event){
+  function verifyUser(e){
+      e.preventDefault();
       let userid = $('#userid').val() 
       if( userid !== '' ){
-        history.push(`/${userid}`);
+        $.post('/api/verify', JSON.stringify({"user_id":  parseInt( userid )} ),
+          (res) => {
+            if( res.isvalid === 'VALID' )
+              history.push(`/${userid}`);
+          }
+        )
       }
   }
   
@@ -72,9 +78,9 @@ function App(){
   return  <Router>
             <Route exact path="/experiment" component={ MainApp } />
             <Route exact path="/formElements" component={ FormFeilds } />
-            {/* <Route exact path="/:user_id" component={ Experiment } /> */}
+            <Route exact path="/:user_id" component={ Experiment } />
             <Route exact path="/debug" component={Debug} />
-            <Route exact path="/" component={Experiment} />
+            <Route exact path="/" component={Login} />
           </Router>
 }
 
