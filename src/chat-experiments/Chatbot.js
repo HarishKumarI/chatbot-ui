@@ -140,6 +140,7 @@ class ChatBot extends React.Component{
     }
 
     async componentDidMount(){
+        // console.log( this.props.user_id_props.match.params['user_id'] )
         this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
 
         await fetch('/api/test-create-session',

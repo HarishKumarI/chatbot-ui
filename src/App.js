@@ -3,10 +3,7 @@ import './App.css'
 import $ from 'jquery'
 import configJSON from './config/UI_configuration.json'
 import ChatInterface from './components/ChatInterface'
-import {FormFeilds} from './chat-experiments/FormFeilds'
-import Experiment from './chat-experiments/'
-import Debug from './chat-experiments/debug'
-import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 function Title(props){
   return <div className="App-header">
@@ -41,7 +38,7 @@ function Login( ){
         $.post('/api/verify', JSON.stringify({"user_id":  parseInt( userid )} ),
           (res) => {
             if( res.isvalid === 'VALID' )
-              history.push(`/${userid}`);
+              history.push(`login/${userid}`);
           }
         )
       }
@@ -73,15 +70,15 @@ function Login( ){
 
 
 
-function App(){
-  document.title = 'Carwale chatbot | CogniQA'
-  return  <Router>
-            <Route exact path="/experiment" component={ MainApp } />
-            <Route exact path="/formElements" component={ FormFeilds } />
-            <Route exact path="/:user_id" component={ Experiment } />
-            <Route exact path="/debug" component={Debug} />
-            <Route exact path="/" component={Login} />
-          </Router>
-}
+// function App(){
+//   document.title = 'Carwale chatbot | CogniQA'
+//   return  <Router>
+//             <Route exact path="/" component={Login} />
+//             <Route exact path="/experiment" component={ MainApp } />
+//             <Route exact path="/formElements" component={ FormFeilds } />
+//             <Route strict path="/debug/:sessionId" component={Debug} />
+//             <Route path="/:user_id" component={ Experiment } />
+//           </Router>
+// }
 
-export default App
+export { Login, MainApp }
