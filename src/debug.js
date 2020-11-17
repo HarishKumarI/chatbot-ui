@@ -94,11 +94,12 @@ class Debug extends React.Component{
                         )
 
                     if( response.type === 'CARD' || response.type === 'CAROUSEL' ){
-                        msgs_list.push( 
-                            <div onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}_` }>
-                                <Textmsg user_type={'bot'} msg={ markdown2HTML( response.title ) }  highlightmsg={highlightmsg} />
-                            </div>
-                        )
+                        if( response.title.length > 0 )
+                            msgs_list.push( 
+                                <div onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}_` }>
+                                    <Textmsg user_type={'bot'} msg={ markdown2HTML( response.title ) }  highlightmsg={highlightmsg} />
+                                </div>
+                            )
 
                         msgs_list.push(
                             <div onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}` }>
