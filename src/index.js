@@ -4,9 +4,9 @@ import './index.css';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import Debug from './chat-experiments/debug'
+import Debug from './debug'
 import {FormFeilds} from './chat-experiments/FormFeilds'
-import { MainApp, Login} from './App';
+import { Login} from './App';
 import Experiment from './chat-experiments/'
 
 
@@ -18,7 +18,6 @@ document.title = 'Carwale chatbot | CogniQA'
 const routing = (
   <Router>
       <Route exact path="/" component={Login} />
-          <Route exact path="/experiment" component={ MainApp } />
           <Route exact path="/formElements" component={ FormFeilds } />
           <Route exact path="/debug/" component={Debug} />
           <Route exact path="/login/:user_id" component={ Experiment } />

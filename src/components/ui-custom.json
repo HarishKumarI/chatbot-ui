@@ -1,0 +1,11 @@
+{
+    "title": "CarWale Chat Assistant",
+    "tagline": "Powered by CogniQA platform",
+    "bot_image": "https://www.carwale.com/apple-touch-icon.png",
+    "bot_name": "carwale.com - Virtual Assistant",
+    "agent_name": "carwale.com - expert agent",
+    "input_placeholder":"Ask Something...",
+    "positive_feedback": "Thanks for the feedback! what did you like about it?",
+    "negative_feedback": "What's went wrong with the answer?",
+    "msgs": []
+}

@@ -2,7 +2,6 @@ import React from 'react'
 import './App.css'
 import $ from 'jquery'
 import configJSON from './config/UI_configuration.json'
-import ChatInterface from './components/ChatInterface'
 import { useHistory } from 'react-router-dom'
 
 function Title(props){
@@ -10,21 +9,6 @@ function Title(props){
           <div className="title">{ configJSON.title }</div>
           <div className="tagline">{ configJSON.tagline }</div>
         </div>
-}
-
-function MainApp(props){
-    return (
-      <div className="App ">
-        <Title />
-        <div className="separater"></div>
-
-        <div className="chat_interface">
-          <div className="chat_window" >
-            <ChatInterface props={props} />
-          </div>
-        </div>
-      </div>
-    );
 }
 
 
@@ -81,4 +65,4 @@ function Login( ){
 //           </Router>
 // }
 
-export { Login, MainApp }
+export { Login }
