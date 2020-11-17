@@ -7,5 +7,6 @@
     "input_placeholder":"Ask Something...",
     "positive_feedback": "Thanks for the feedback! what did you like about it?",
     "negative_feedback": "What's went wrong with the answer?",
-    "msgs": []
+    "msgs": [],
+    "errorImage": "https://img.icons8.com/carbon-copy/2x/image.png"
 }

@@ -51,7 +51,7 @@ function markdown2HTML( markdown ) {
 
 function Card(props){
     const card_data = props.data
-    console.log( card_data )
+    // console.log( card_data )
     return  <div className={ props.compare === undefined ? 'card' : '' } 
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
                 onClick={e => { if( card_data.url !== undefined ) window.open( card_data.url, '_blank' ) } }
@@ -141,7 +141,7 @@ class ChatBot extends React.Component{
 
     async componentDidMount(){
         // console.log( this.props.user_id_props.match.params['user_id'] )
-        
+
         this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
 
         await fetch('/api/test-create-session',
@@ -327,13 +327,13 @@ class ChatBot extends React.Component{
             }
             
             if( msg_data.type === 'CAROUSEL' ){
-
-                msgs_list.push(
-                    <div className={ `msg` } key={index+'_1'}>   
-                        <div className={`${msg_data.user_type}`} suppressContentEditableWarning 
-                                                dangerouslySetInnerHTML={{ __html: markdown2HTML( msg_data.msg.title ) }} /> 
-                    </div>
-                )
+                if( msg_data.msg.title.length > 0 )
+                    msgs_list.push(
+                        <div className={ `msg` } key={index+'_1'}>   
+                            <div className={`${msg_data.user_type}`} suppressContentEditableWarning 
+                                                    dangerouslySetInnerHTML={{ __html: markdown2HTML( msg_data.msg.title ) }} /> 
+                        </div>
+                    )
 
                 let link = null
                 let cards = []

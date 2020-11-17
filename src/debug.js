@@ -5,6 +5,7 @@ import ReactJson from 'react-json-view'
 import { ChevronRight, ChevronLeft } from '@material-ui/icons'
 
 import { BotPersona, Textmsg, Cards } from './components'
+import { FormfromJSON } from './chat-experiments/FormFeilds'
 
 import './debug.css'
 
@@ -50,7 +51,7 @@ class Debug extends React.Component{
             })
         })
         .catch(err => {
-            this.setState({loader: false})
+            this.setState({loading: false})
         })
     }
 
@@ -92,30 +93,35 @@ class Debug extends React.Component{
                             </div>
                         )
 
-                    if( response.type === 'CARD' || response.type === 'CAROUSEL' )
+                    if( response.type === 'CARD' || response.type === 'CAROUSEL' ){
+                        msgs_list.push( 
+                            <div onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}_` }>
+                                <Textmsg user_type={'bot'} msg={ markdown2HTML( response.title ) }  highlightmsg={highlightmsg} />
+                            </div>
+                        )
+
                         msgs_list.push(
                             <div onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}` }>
                                 <Cards Cards={ response.type === 'CARD' ? [ response ] : response.content } 
                                     highlightmsg={ highlightmsg } key={ `${idx}_${index+1}` }
-                                    markdown2HTML={mdJson => markdown2HTML( mdJson )} 
+                                    markdown2HTML={mdJson => markdown2HTML( mdJson ? mdJson : '' )} 
                                 />
                             </div>
                         )
+                    }
 
-                    // if(msg.type === 'FORM')
-                    //     msgs_list.push( 
-                    //         <div className="msg_form" key={ `${idx}_${index+1}` } >
-                    //             <FormfromJSON 
-                    //                 json={ msg.msg } 
-                    //                 readOnly = { msg.readOnly }
-                    //                 onSubmit={data =>  {
-                    //                     this.handleQuery({ target: { value: data}, keyCode: 13 }, "form");
-                    //                     msgs[ index ].readOnly = true
-                    //                     this.setState({msgs})
-                    //                 }}
-                    //             />
-                    //         </div>
-                    //     )
+                    if(response.type === 'FORM')
+                        msgs_list.push( 
+                            <div className="msg_form" onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}` }>
+                                <FormfromJSON 
+                                    json={ response } 
+                                    readOnly = { true }
+                                    onSubmit={data =>  {
+                                        
+                                    }}
+                                />
+                            </div>
+                        )
         
                     // if( msg_data.show_feedback )
                     //     msgs_list.push(
@@ -174,7 +180,7 @@ class Debug extends React.Component{
                                         <ChevronLeft className="chevron_icons"  onClick={e => this.setState({ togglesidebar: false }) }/>
                                         <div className="session_title"> Sessions List  </div>
                                         { sessions.length > 0 ? 
-                                            <div style={{ overflowY: 'auto', height: '93vh', padding: '2px' }} >
+                                            <div style={{ overflowY: 'auto', height: '91vh', padding: '2px' }} >
                                                 <ul className="sessions-list-ul">{sessions}</ul>
                                             </div>
                                         : null }
@@ -205,9 +211,17 @@ class Debug extends React.Component{
                             </div>
 
                             <div className="chat-window">
-                                <div className="debug_messages-container">
-                                    { messages }
-                                </div>
+                                {
+                                    this.state.loading ? 
+                                        <div className="loader"> 
+                                            <img src="https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif" alt="loadingicon" /> 
+                                            <div> Loading... </div>
+                                        </div>
+                                    :   <div className="debug_messages-container">
+                                            { messages }
+                                        </div>
+                                }
+                                
                             </div>
                         </div>
                         
@@ -216,9 +230,16 @@ class Debug extends React.Component{
                                 <div className="chat-interface-title" >
                                     <span style={{ fontSize: '20px' }}> Debug Output </span>
                                 </div>
+                                { selectedMsg  !== null ?
+                                    <div style={{ margin: '5px', lineHeight: '145%' }} >
+                                        User Feedback: { sessionjson.history[ selectedMsg ].feedback } <br/>
+                                        User Comment: { sessionjson.history[ selectedMsg ].feedback_text }
+                                    </div>
+                                : null }
+
                                 <div className="debug-div">
                                     { selectedMsg  !== null ?
-                                        <ReactJson  style={{ textAlign: 'initial' }} src={ this.state.sessionjson ? this.state.sessionjson.history[this.state.selectedMsg] : {}} theme="colors" 
+                                        <ReactJson  style={{ textAlign: 'initial' }} src={ sessionjson ? sessionjson.history[ selectedMsg ] : {}} theme="colors" 
                                             displayDataTypes={false} 
                                             displayObjectSize={ false } onEdit={ false } onAdd={ false }
                                             onDelete={ false } collapsed={false} sortKeys={ false } 

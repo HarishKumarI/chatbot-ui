@@ -87,7 +87,7 @@
 
 /* messages */
 
-.msg{
+.debug_msg{
     display: table-cell;
     align-items: center;
     width: 100%;

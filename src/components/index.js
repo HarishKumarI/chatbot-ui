@@ -17,7 +17,7 @@ function BotPersona( props ){
 function Textmsg( props ){
     const { user_type, msg, highlightmsg } = props
 
-    return <div className={ `${ highlightmsg ? 'highlightmsg' : '' } msg ${ user_type === 'user' ? 'user_text' : '' }` } >   
+    return <div className={ `${ highlightmsg ? 'highlightmsg' : '' } debug_msg ${ user_type === 'user' ? 'user_text' : '' }` } >   
                 <div className={`${ user_type}`} suppressContentEditableWarning 
                                         dangerouslySetInnerHTML={{ __html: msg}} /> 
             </div>
@@ -28,11 +28,15 @@ function Textmsg( props ){
 function Card(props){
     const { card_data, markdown2HTML, highlightmsg, compare} = props
 
+    function handleImageError(e){
+        e.src = uiJSON.errorImage
+    }
+
     return  <div className={ `${ highlightmsg ? 'highlightmsg' : '' } ${ compare === undefined ? 'card' : '' }` } 
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
                 onClick={e => { if( card_data.url !== undefined ) window.open( card_data.url, '_blank' ) } }
                 >
-                <img src={ card_data.image } alt="card_image" />
+                <img src={ card_data.image } onError={ handleImageError } alt="card_image" />
                 <div style={{ display: 'block !important' }}>
                     <div className="card_title"  dangerouslySetInnerHTML={{ __html: markdown2HTML( card_data.title ) }} />
                     <div className="card-text" dangerouslySetInnerHTML={{__html: markdown2HTML( card_data.content ) }} />
@@ -42,7 +46,7 @@ function Card(props){
 
 function Cards( props ){
     const { Cards, highlightmsg, markdown2HTML } = props
-    console.log( Cards, Cards.length )
+    // console.log( Cards, Cards.length )
 
     if ( Cards.length === 1 )
         return  <div className="debug_single-card" >
@@ -75,7 +79,7 @@ function Cards( props ){
                                                     <Card card_data={ card_info } markdown2HTML={ markdown2HTML } highlightmsg={ highlightmsg } />
                                                 </div> 
                                     
-                                    return  <Card card_data={ card_info } markdown2HTML={ markdown2HTML } highlightmsg={ highlightmsg } />
+                                    return  <Card card_data={ card_info } markdown2HTML={ markdown2HTML } highlightmsg={ highlightmsg } key={idx} />
                                    
                                 })
                             } 
