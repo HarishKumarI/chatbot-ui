@@ -2,7 +2,7 @@ import React from 'react'
 import $ from 'jquery'
 import ReactJson from 'react-json-view'
 
-import { ChevronRight, ChevronLeft } from '@material-ui/icons'
+import { ChevronRight, ChevronLeft, ThumbUpAltRounded, ThumbDownAltRounded, } from '@material-ui/icons'
 
 import { BotPersona, Textmsg, Cards } from './components'
 import { FormfromJSON } from './chat-experiments/FormFeilds'
@@ -174,7 +174,7 @@ class Debug extends React.Component{
                     <div className="debug-title"> 
                         Chatbot Debug Tool 
                     </div>
-                    <div style={{ display: 'flex', height: '93.5vh' }}>
+                    <div style={{ display: 'flex', height: '93.5vh', overflowY: 'hidden' }}>
                         {   this.state.showsidebar ? 
                                 this.state.togglesidebar ?
                                     <div className="sessions-list">
@@ -233,7 +233,8 @@ class Debug extends React.Component{
                                 </div>
                                 { selectedMsg  !== null ?
                                     <div style={{ margin: '5px', lineHeight: '145%' }} >
-                                        User Feedback: { sessionjson.history[ selectedMsg ].feedback } <br/>
+                                        User Feedback: { sessionjson.history[ selectedMsg ].feedback !== null ?  
+                                                            sessionjson.history[ selectedMsg ].feedback ? <ThumbUpAltRounded /> :  <ThumbDownAltRounded /> : '' } <br/>
                                         User Comment: { sessionjson.history[ selectedMsg ].feedback_text }
                                     </div>
                                 : null }
