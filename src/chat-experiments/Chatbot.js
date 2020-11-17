@@ -95,6 +95,7 @@ function MsgFeedback(props){
         else{
             document.getElementsByClassName('ThumbDown')[0].className = "ThumbDown_review"
             data.feedback_value = false
+            askFeedback( data )
         }
 
         sendFeedback( { question: data.question, answerJson: data.answerJson, feedback: data.feedback_value, cmt: '' }, false )
