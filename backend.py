@@ -54,7 +54,7 @@ def SessionData():
                 for i, el in enumerate(res['inference_output']):
                     res['inference_output'][i]['G'] = None
 
-        print( result['history'] )
+        # print( result['history'] )
                     
 
         return jsonify({'history': result['history'], 'user_id': result.get('user_id', None)})
