@@ -272,8 +272,15 @@ input:checked + .slider:before {
 /* cards */
 
 .debug_single-card{
-    width: var( --single-card-width ) !important;
+    width: fit-content !important;
+    max-width: var( --single-card-width ) !important;
     margin-left: calc( var( --img-width ) + 10px );
+}
+
+.debug_single-card > div{
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
 .card_title{
@@ -319,6 +326,7 @@ input:checked + .slider:before {
     margin: 0;
     padding: 3px 20px;
     padding-left: calc( var( --img-width ) );
+    max-width: 560px;
 }
 
 .debug_card-carousel-container::-webkit-scrollbar-thumb {
@@ -326,7 +334,7 @@ input:checked + .slider:before {
 }
 
 
-.debug_card-carousel-container .single-card{
+.debug_card-carousel-container .debug_single-card{
     width: 100%;
     max-width: var( --single-card-width ) !important;
     display: inline-table;
@@ -336,7 +344,7 @@ input:checked + .slider:before {
     box-shadow: var( --card-box-shadow );
 }
 
-.debug_card-carousel-container .single-card img{
+.debug_card-carousel-container .debug_single-card img{
     display: block;
     margin: 20px;
     width: 90%;
@@ -355,7 +363,7 @@ input:checked + .slider:before {
     width: 80%;
 }
 
-.debug_card-carousel-container .single-card .card-text, .card .card-text{
+.debug_card-carousel-container .debug_single-card .card-text, .card .card-text{
     margin: 0 !important;
     padding: 10px;
     line-height: 150%;
@@ -369,6 +377,11 @@ input:checked + .slider:before {
 
 .debug_card-carousel-container .card-text{
     width: 85%;
+}
+
+.debug_single-card .card-text{
+    width: 100%;
+    margin: 0;
 }
 
 .card_title p, .card-text p, .msg ul{

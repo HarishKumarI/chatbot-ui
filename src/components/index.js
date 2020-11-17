@@ -31,8 +31,7 @@ function Card(props){
     function handleImageError(e){
         e.src = uiJSON.errorImage
     }
-
-    return  <div className={ `${ highlightmsg ? 'highlightmsg' : '' } ${ compare === undefined ? 'card' : '' }` } 
+    return  <div className={ `${ highlightmsg ? 'highlightmsg' : '' } ${ compare  ? '' : 'card' }` } 
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
                 onClick={e => { if( card_data.url !== undefined ) window.open( card_data.url, '_blank' ) } }
                 >
@@ -57,6 +56,7 @@ function Cards( props ){
                 </div>
     else{
         const compare = Cards.length === 2
+        console.log( compare, Cards )
         return  <div className="debug_card-carousel" >
                         <div className="navigation-btns">
                             {/* <ChevronLeft className="previous" />
@@ -75,8 +75,8 @@ function Cards( props ){
                                     if( idx > 10 ) return null
 
                                     if( compare )
-                                        return  <div className="single-card" key={idx}>
-                                                    <Card card_data={ card_info } markdown2HTML={ markdown2HTML } highlightmsg={ highlightmsg } />
+                                        return  <div className="debug_single-card" key={idx}>
+                                                    <Card card_data={ card_info } markdown2HTML={ markdown2HTML } highlightmsg={ highlightmsg } compare={compare} />
                                                 </div> 
                                     
                                     return  <Card card_data={ card_info } markdown2HTML={ markdown2HTML } highlightmsg={ highlightmsg } key={idx} />

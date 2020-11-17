@@ -19,7 +19,8 @@ const routing = (
   <Router>
       <Route exact path="/" component={Login} />
           <Route exact path="/formElements" component={ FormFeilds } />
-          <Route exact path="/debug/" component={Debug} />
+          <Route exact path="/debug" component={ Debug } />
+          <Route exact path="/debug/:session_id" component={ Debug } />
           <Route exact path="/login/:user_id" component={ Experiment } />
   </Router>
 )

@@ -359,9 +359,9 @@ class ChatBot extends React.Component{
 
                                     if( idx > 10 ) return null
 
-                                    if( msg_data.msg.compare )
+                                    if( msg_data.msg.compare || cards.length === 2 )
                                         return <div className="single-card" key={idx}>
-                                            <Card data={ card_info } compare={ msg_data.msg.compare } />
+                                            <Card data={ card_info } compare={ msg_data.msg.compare || cards.length === 2 } />
                                         </div> 
                                     
                                     return  <Card data={ card_info } key={idx} />

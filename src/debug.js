@@ -43,11 +43,26 @@ class Debug extends React.Component{
     }
 
     componentDidMount(){
+        if( this.props.match.params.session_id ){
+            this.handleSession({ session_id: this.props.match.params.session_id })
+        }
+
         this.setState({ loading: true })
         $.get('http://95.217.239.6:7051/api/session_list', res=>{
+            const sessions_list = res.session_list.map( session => { if( session.created_at === null ) return {created_at: '', session_id: session.session_id, user_id: session.user_id} ; else return session })
+            let selected_session = null
+
+            sessions_list.forEach( session => {
+                if( this.props.match.params.session_id ){
+                    if( session.session_id === this.props.match.params.session_id )
+                        selected_session = session
+                }
+            })
+
             this.setState({ 
-                sessions_list: res.session_list.map( session => { if( session.created_at === null ) return {created_at: '', session_id: session.session_id, user_id: session.user_id} ; else return session }), 
-                loading: false 
+                sessions_list, 
+                loading: false,
+                selected_session
             })
         })
         .catch(err => {
@@ -155,7 +170,7 @@ class Debug extends React.Component{
     render(){
         const { selected_session, sessionjson, selectedMsg } = this.state
 
-        // console.log( selectedMsg )
+        console.log( selected_session )
 
         this.state.sessions_list.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1)
         
