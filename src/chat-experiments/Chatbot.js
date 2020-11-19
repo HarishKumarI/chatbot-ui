@@ -114,7 +114,7 @@ function MsgFeedback(props){
 
                     { data.feedback_value !== null ?  
                         <div className={ `chat_icon ${ data.feedback_String !== null ? data.feedback_value ? 'positive' : 'negative' : null }` } 
-                            onClick={e => { if( data.feedback_String === null ) askFeedback( data ) } }> <ChatOutlined   /> 
+                            onClick={e => {askFeedback( data ) } }> <ChatOutlined   /> 
                         </div> 
                     : null }
                 </div>
@@ -159,7 +159,11 @@ class ChatBot extends React.Component{
 
             this.setState({ session_id: responseJson.session_id, msgs: this.getMsgs( responseJson ) })
         })
-        .catch(err => { console.log(err); this.setState({ show_dots: false })})
+        .catch(err => { 
+            console.log(err); 
+            this.setState({ show_dots: false })
+            $('#root').append(`<div class="errormsg" style="background-color: rgb(221, 103, 103)"> Sorry, there was an unexpected error in this service. </div>`)
+        })
 
         // let msgs = []
 
@@ -235,13 +239,19 @@ class ChatBot extends React.Component{
         )
         .then( res => res.json())
         .then( responseJson => {
-          this.setState({ show_dots: false, msgs: [ ...this.state.msgs, ...this.getMsgs( responseJson, true )] })
-          document.getElementById('user_input').value = null
-          this.scrollBottom()
+            this.setState({ show_dots: false, msgs: [ ...this.state.msgs, ...this.getMsgs( responseJson, true )] })
+            document.getElementById('user_input').value = null
+            this.scrollBottom()
         })
         .catch(err => {
-          console.log( err )
-          this.setState({ show_dots: false })
+            console.log( err )
+            let { msgs } = this.state
+            msgs.push( { user_type:'bot', msg: 'Sorry, there was an unexpected error in this service. We are fixing it.',
+                                   ...currentTime(), type: 'TEXT', suggested: [], show_feedback: false } )
+
+            this.setState({ show_dots: false, msgs })
+            
+            $('#root').append(`<div class="errormsg" style="background-color: rgb(221, 103, 103)"> Sorry, there was an unexpected error in this service. We are fixing it.  </div>`)
         })
     
     }
@@ -260,10 +270,10 @@ class ChatBot extends React.Component{
     handleClick(e){
         e.preventDefault()
         let { feedback_data, msgs } = this.state 
-        const cmt = $('#feedback_note').val()
+        const cmt = document.getElementById('feedback_note').innerText
         msgs[ feedback_data.index ].feedback_String = cmt.length ? cmt : null
         sendFeedback( { question: feedback_data.question, answerJson: feedback_data.answerJson, feedback: feedback_data.feedback_value, cmt }, true )
-
+        console.log( msgs[ feedback_data.index ], cmt )
         this.setState({ show_feedback_form: false, feedback_data: null, msgs })
 
     }
@@ -319,7 +329,6 @@ class ChatBot extends React.Component{
                 )
 
             if( msg_data.type === 'CARD' ){
-                console.log( msg_data, msg_data.index )
                 msgs_list.push(
                     <div className="single-card" key={index+'_2'}>
                         <Card data={ msg_data.answerJson[ msg_data.index ] } />
@@ -438,7 +447,11 @@ class ChatBot extends React.Component{
                             msgs[ index ] = newData
                             this.setState({ msgs })
                         }}
-                        askFeedback={data => this.setState({ feedback_data: {...data, index }, show_feedback_form: true })}
+                        askFeedback={data => { 
+                            setTimeout( () => { $('#feedback_note').text(data.feedback_String) }, 15) 
+                            console.log(data.feedback_String, $('#feedback_note').text() );
+                            this.setState({ feedback_data: {...data, index }, show_feedback_form: true }) 
+                        }  }
                     />
                 )
 
@@ -501,11 +514,17 @@ class ChatBot extends React.Component{
                                 </div>
                             </div>
 
-                            <textarea id="feedback_note" placeholder="Add a note." 
-                                // onKeyUp={e => console.log(e.target.value)} 
-                                // onChange={e => console.log( e.target.value )}  
-                            >    
-                            </textarea>
+                            <div contentEditable={true} suppressContentEditableWarning
+                                id="feedback_note" data-placeholder="Add a note." 
+                                onKeyUp={e => {
+                                    let { feedback_data, msgs } = this.state 
+                                    const cmt = e.target.innerText
+                                    msgs[ feedback_data.index ].feedback_String = cmt.length ? cmt : null
+                                    console.log( cmt )
+                                    this.setState({ feedback_data, msgs })
+                                }}  
+                                >
+                            </div>
                             <div className="feedback_btns">
                                 <button onClick={ this.handleClick } >Submit</button>
                             </div>

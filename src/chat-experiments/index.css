@@ -18,7 +18,7 @@
 [data-placeholder]:empty:before {
   content: attr(data-placeholder);
   color: #183950a4;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 * ::-webkit-scrollbar{

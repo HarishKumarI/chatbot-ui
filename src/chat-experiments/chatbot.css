@@ -457,11 +457,12 @@
     padding: 10px;
     outline: none;
     margin: 0 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* display: flex; */
+    /* align-items: center;
+    justify-content: center; */
     border: 2px solid lightgrey;
     border-radius: 5px;
+    white-space: pre-wrap;
 }
 
 #feedback_note:active, #feedback_note:hover{

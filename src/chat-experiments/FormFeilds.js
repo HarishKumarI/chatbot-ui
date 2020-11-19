@@ -23,15 +23,15 @@ function FormfromJSON(props){
                                         </div> 
                                 break;
                             case 'dropdown':
-                                console.log( feild )
+                                // console.log( feild )
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
-                                            <select name={ feild.label } disabled={ readOnly } >
+                                            <select name={ feild.label } disabled={ readOnly } defaultValue={ feild.value.display_value } >
                                                 <option> { feild.description }</option>
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
-                                                        return  <option key={option_idx} value={option.id} selected={ feild.value.display_value === option.display_value }>
+                                                        return  <option key={option_idx} value={option.id} >
                                                                     { option.display_value }
                                                                 </option>
                                                     })

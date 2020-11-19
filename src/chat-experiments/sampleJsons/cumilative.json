@@ -40,7 +40,7 @@
                         ],
                         "required": true,
                         "type": "dropdown",
-                        "value": null
+                        "value": { "display_value": null, "id": null }
                     },
                     {
                         "description": "Which city are you looking at?",
@@ -49,7 +49,7 @@
                         "label": "City",
                         "required": true,
                         "type": "text",
-                        "value": null
+                        "value": { "display_value": null, "id": null }
                     }
                 ],
                 "description": "Car prices are city and variant specific. Please let me know the following details and I can help with the price of ertiga",
@@ -124,7 +124,7 @@
                         "label": "Name",
                         "required": true,
                         "type": "text",
-                        "value": null
+                        "value": { "display_value": null, "id": null }
                     },
                     {
                         "description": "Enter Email",
@@ -133,7 +133,7 @@
                         "label": "Email",
                         "required": true,
                         "type": "text",
-                        "value": null
+                        "value": { "display_value": null, "id": null }
                     },
                     {
                         "description": "Enter Phone Number",
@@ -142,7 +142,7 @@
                         "label": "phone no",
                         "required": true,
                         "type": "text",
-                        "value": null
+                        "value": { "display_value": null, "id": null }
                     }
                 ],
                 "description": "Great, I am happy to connect with dealer in city Hyderabad. Please help me with the contact details.",

@@ -170,7 +170,7 @@ class Debug extends React.Component{
     render(){
         const { selected_session, sessionjson, selectedMsg } = this.state
 
-        console.log( selected_session )
+        // console.log( selected_session )
 
         this.state.sessions_list.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1)
         
@@ -180,7 +180,7 @@ class Debug extends React.Component{
             return  <li key={idx} className={ this.state.selected_session === null ? '' : sessionId.session_id === this.state.selected_session.session_id ? 'select_session' : '' }
                         onClick={e => this.handleSession(sessionId) } >
                         User Id: { sessionId.user_id }<br />
-                        <span style={{ fontSize: '12px', color: '#828080', width: '100%', textAlign: 'end' }}>Created at: {sessionId.created_at}</span>
+                        <span style={{ fontSize: '12px', color: '#828080', width: '100%', textAlign: 'end' }}>Created at: { ( new Date(sessionId.created_at) ).toLocaleString() }</span>
                     </li>
         })
 

@@ -56,7 +56,7 @@ function Cards( props ){
                 </div>
     else{
         const compare = Cards.length === 2
-        console.log( compare, Cards )
+        // console.log( compare, Cards )
         return  <div className="debug_card-carousel" >
                         <div className="navigation-btns">
                             {/* <ChevronLeft className="previous" />
