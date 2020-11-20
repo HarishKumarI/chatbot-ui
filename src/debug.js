@@ -256,7 +256,7 @@ class Debug extends React.Component{
 
                                 <div className="debug-div">
                                     { selectedMsg  !== null ?
-                                        <ReactJson  style={{ textAlign: 'initial' }} src={ sessionjson ? sessionjson.history[ selectedMsg ] : {}} theme="colors" 
+                                        <ReactJson  style={{ textAlign: 'initial', padding: '15px' }} src={ sessionjson ? sessionjson.history[ selectedMsg ] : {}} theme="colors" 
                                             displayDataTypes={false} 
                                             displayObjectSize={ false } onEdit={ false } onAdd={ false }
                                             onDelete={ false } collapsed={false} sortKeys={ false } 

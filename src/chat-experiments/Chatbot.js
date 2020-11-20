@@ -162,7 +162,7 @@ class ChatBot extends React.Component{
         .catch(err => { 
             console.log(err); 
             this.setState({ show_dots: false })
-            $('#root').append(`<div class="errormsg" style="background-color: rgb(221, 103, 103)"> Sorry, there was an unexpected error in this service. </div>`)
+            // $('#root').append(`<div class="errormsg" style="background-color: rgb(221, 103, 103)"> Sorry, there was an unexpected error in this service. </div>`)
         })
 
         // let msgs = []
@@ -251,7 +251,7 @@ class ChatBot extends React.Component{
 
             this.setState({ show_dots: false, msgs })
             
-            $('#root').append(`<div class="errormsg" style="background-color: rgb(221, 103, 103)"> Sorry, there was an unexpected error in this service. We are fixing it.  </div>`)
+            // $('#root').append(`<div class="errormsg" style="background-color: rgb(221, 103, 103)"> Sorry, there was an unexpected error in this service. We are fixing it.  </div>`)
         })
     
     }
