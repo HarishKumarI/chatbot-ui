@@ -62,6 +62,20 @@ def SessionData():
 #             print(e)
 #             return jsonify( {'msg':'error', 'data': {} } )
 
+@app.route('/api/dev_feedback', methods=['POST'])
+def developerFeedback():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+        session_id = data['session_id']
+        history_value = data['history']
+        res = r.get('session:'+session_id)    # replace with cookie
+        result = pickle.loads(res)
+        result['history'] = history_value
+        try:
+            r.set('session:'+sessionId, pickle.dumps( result ) )
+            return jsonify({ "msg": 'success' })
+        except:
+            return jsonify({"msg":'error'})
 
 
 if __name__ == '__main__':

@@ -40,6 +40,7 @@ class Debug extends React.Component{
         }
 
         this.handleSession = this.handleSession.bind( this )
+        this.developer_feedback = this.developer_feedback.bind(this)
     }
 
     componentDidMount(){
@@ -78,6 +79,24 @@ class Debug extends React.Component{
         .catch(err => {
             this.setState({loading: 'error'})
         })
+    }
+
+    developer_feedback(e, idx){
+        const { name, value } = e.target
+        let { sessionjson } = this.state
+        try{
+            sessionjson.history[ idx ].developer_feedback[ name ] = value
+        }
+        catch(err){
+            sessionjson.history[idx].developer_feedback = {}
+            sessionjson.history[ idx ].developer_feedback[ name ] = value
+        }
+
+        $.post('http://95.217.239.6:7051/api/dev_feedback', JSON.stringify({ session_id: this.state.selected_session.session_id, history: sessionjson.history }) , res => {
+            console.log( res )
+        })
+
+        console.log( name, value, idx, sessionjson.history[ idx ].developer_feedback, this.state.selected_session.session_id )
     }
 
 
@@ -247,11 +266,46 @@ class Debug extends React.Component{
                                     <span style={{ fontSize: '20px' }}> Debug Output </span>
                                 </div>
                                 { selectedMsg  !== null ?
-                                    <div style={{ margin: '5px', lineHeight: '145%' }} >
-                                        User Feedback: { sessionjson.history[ selectedMsg ].feedback !== null ?  
-                                                            sessionjson.history[ selectedMsg ].feedback ? <ThumbUpAltRounded /> :  <ThumbDownAltRounded /> : '' } <br/>
-                                        User Comment: { sessionjson.history[ selectedMsg ].feedback_text }
-                                    </div>
+                                    <>
+                                        <div style={{ margin: '5px', lineHeight: '145%' }} >
+                                            User Feedback: { sessionjson.history[ selectedMsg ].feedback !== null ?  
+                                                                sessionjson.history[ selectedMsg ].feedback ? <ThumbUpAltRounded /> :  <ThumbDownAltRounded /> : '' } <br/>
+                                            User Comment: { sessionjson.history[ selectedMsg ].feedback_text }
+                                        </div>
+                                        <div>
+                                            <div style={{ marginTop: '8px' }} >Developer Feedback:</div>
+                                            <div className="dev_feedback">
+                                                <div>
+                                                    State: 
+                                                    <select name="state" defaultValue={ sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.state } 
+                                                        onChange={e => this.developer_feedback( e, selectedMsg )} >
+                                                        <option value="--select--" > --select-- </option>
+                                                        <option value="Open" > Open </option>
+                                                        <option value="In Analysis" > In Analysis </option>
+                                                        <option value="Fix Planned" > Fix Planned </option>
+                                                        <option value="Fixed" > Fixed </option>
+                                                        <option value="Closed" > Closed </option>
+                                                        <option value="Deferred" > Deferred </option>
+                                                        <option value="Won't Fix" > Won't Fix </option>
+                                                    </select>
+                                                    Issue Type: 
+                                                    <input type="text" name="issue_type" placeholder="issue type" 
+                                                        defaultValue={sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.issue_type } 
+                                                        onBlur={e => this.developer_feedback( e, selectedMsg )}
+                                                        />
+                                                </div>
+                                                <div>
+                                                    <div>Notes:</div>
+                                                    <div contentEditable={true} suppressContentEditableWarning name="notes" data-placeholder="developer notes" 
+                                                        onBlur={e => {
+                                                            this.developer_feedback( { ...e, target:{ ...e.target, name: 'notes',value: e.target.innerText} }, selectedMsg )
+                                                        }}  
+                                                        >{sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.notes}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
                                 : null }
 
                                 <div className="debug-div">

@@ -259,7 +259,7 @@ input:checked + .slider:before {
 
 .debug-div{
     overflow-y: auto;
-    height: 96%;
+    height: 65%;
 }
 
 .highlightmsg{
@@ -448,4 +448,40 @@ input:checked + .slider:before {
 .loader div{
     color: var( --title-color );
     margin-top: -15px;
+}
+
+.dev_feedback{
+    margin: 0px 0 10px;
+    /* border: 1px solid black; */
+}
+
+.dev_feedback select{
+    margin: 10px;
+    padding: 5px;
+    outline: none;
+}
+
+.dev_feedback input{
+    width: 68%;
+    margin: 0 10px;
+    padding: 5px;
+    outline: none;
+}
+
+.dev_feedback textarea{
+    width: 98%;
+    margin: 10px 0;
+    height: fit-content;
+    min-height: 100px;
+    outline: none;
+}
+
+.dev_feedback div[contentEditable]{
+    border: 1px solid rgb(105, 105, 105);
+    padding: 8px;
+    margin: 5px 0;
+    height: 100px;
+    overflow-y: auto;
+    outline: none;
+    border-radius: 2px;
 }

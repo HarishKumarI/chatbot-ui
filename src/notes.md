@@ -14,7 +14,7 @@
 
 ### Must features
 - [x] show a ... loading indicator while backend is processing ( loading animation )
-- [ ] Session Creation
+- [x] Session Creation
 - [ ] Maintenance
 - [x] Welcome Message
 - [x] Showing Nudges with message
