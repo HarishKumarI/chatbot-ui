@@ -42,7 +42,7 @@ function Login( ){
                 <input type="text" placeholder='Enter User Id' id="userid" style={{padding: '3px', outline: 'none', width: '210px'}} />
               </div>
               <div style={{ alignItems: 'end', flexDirection: 'row-reverse', justifyContent: 'end', display: 'flex', marginTop: '25px' }}>
-                <button primary floated="right"
+                <button primary={ true } floated="right"
                     style={{ padding: '5px 10px', fontWeight: 'bolder', color: 'white', backgroundColor: '#44a1fd', border: 'none', borderRadius: '4px' }}
                   >Login</button>
               </div>

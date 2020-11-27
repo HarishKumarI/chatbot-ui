@@ -44,7 +44,7 @@ function Card(props){
 }
 
 function Cards( props ){
-    const { Cards, highlightmsg, markdown2HTML } = props
+    const { Cards, highlightmsg, markdown2HTML, index } = props
     // console.log( Cards, Cards.length )
 
     if ( Cards.length === 1 )
@@ -67,7 +67,7 @@ function Cards( props ){
                                 ScrollElement.scrollLeft = scrollWidth <= scrollLeft + 20 ? scrollWidth : scrollLeft + 20
                              */}
                         </div>
-                        <div className={ `debug_card-carousel-container`} >
+                        <div className={ `debug_card-carousel-container ${ 'cards_list_'+index }`}  >
                             {   Cards.map( ( card_info, idx ) => {
                                     // if( idx > 9 ) 
                                     //     return  <div className="link" key={ idx } dangerouslySetInnerHTML={{ __html: markdown2HTML( link[0].content ) }} /> 

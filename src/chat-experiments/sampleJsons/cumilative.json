@@ -335,9 +335,7 @@
                         "markdown": true,
                         "url": "https://www.carwale.com/audi-cars/q2/",
                         "image": "https://imgd.aeplcdn.com/664x374/cw/ec/22801/Audi-Q2-Right-Front-Three-Quarter-70075.jpg?v=201711021421&q=85",
-                        "content":  {
-                                        "p": "**₹ 42.63 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
-                                    }
+                        "content":  []
                     },
                     {   
                         "type": "CARD",
@@ -395,9 +393,7 @@
                         "markdown": true,
                         "url": "https://www.carwale.com/jeep-cars/compass/",
                         "image": "https://imgd.aeplcdn.com/600x337/cw/ec/25107/Jeep-Compass-Exterior-103917.jpg?wm=0&q=85",
-                        "content":  {
-                                        "p": "**₹ 30.08 Lakh** On-Road Price, Hyderabad <br/>  **Body Type:** SUV/MUV"
-                                    }
+                        "content":  []
                     },
                     {   
                         "type": "CARD",

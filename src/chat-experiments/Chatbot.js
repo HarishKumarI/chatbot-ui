@@ -470,11 +470,31 @@ class ChatBot extends React.Component{
     }
 
 
+    evenCardsHeight(e){
+        var class_list =  Array.from( document.getElementsByClassName('card-carousel-container') ).map( carousel => { return ( carousel.className.split(' ')[1] ) })
+        // console.log( class_list, new Date(), document.getElementsByClassName('card-carousel-container') )
+        class_list.forEach( carousel => {
+            // console.log( carousel )
+            let cards = Array.from( document.getElementsByClassName( carousel )[0].children ).filter( x => x.className.includes( 'card' ) )
+            let max_height = 0
+            // console.log( cards.length )
+            cards.forEach( card => {
+                // console.log( card.className )
+                max_height = max_height < card.offsetHeight ? card.offsetHeight : max_height
+            })
+            console.log( max_height )
+            cards.forEach( card => {
+                card.style.height = `${max_height}px`
+            })
+        })
+    }
 
     render(){
         const messages = this.getMessages( this.state.msgs ) 
 
-        // console.log( this.state.msgs )
+        // console.log( new Date() )
+
+        setTimeout( () => { this.evenCardsHeight() }, 500 )
 
         return  <>
                     <div className="messages-container">

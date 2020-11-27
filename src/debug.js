@@ -131,14 +131,14 @@ class Debug extends React.Component{
                     if( response.type === 'CARD' || response.type === 'CAROUSEL' ){
                         if( response.title.length > 0 )
                             msgs_list.push( 
-                                <div onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}_` }>
+                                <div onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}_` }  >
                                     <Textmsg user_type={'bot'} msg={ markdown2HTML( response.title ) }  highlightmsg={highlightmsg} />
                                 </div>
                             )
 
                         msgs_list.push(
                             <div onClick={e => this.setState({ selectedMsg: idx })} key={ `${idx}_${index+1}` }>
-                                <Cards Cards={ response.type === 'CARD' ? [ response ] : response.content } 
+                                <Cards Cards={ response.type === 'CARD' ? [ response ] : response.content } index={idx}
                                     highlightmsg={ highlightmsg } key={ `${idx}_${index+1}` }
                                     markdown2HTML={mdJson => markdown2HTML( mdJson ? mdJson : '' )} 
                                 />
@@ -187,6 +187,26 @@ class Debug extends React.Component{
         return msgs_list
     }
 
+    evenCardsHeight(e){
+        var class_list =  Array.from( document.getElementsByClassName('debug_card-carousel-container') ).map( carousel => { return ( carousel.className.split(' ')[1] ) })
+        // console.log( class_list, new Date() )
+        class_list.forEach( carousel => {
+            // console.log( carousel )
+            let cards = Array.from( document.getElementsByClassName( carousel )[0].children ).filter( x => x.className.includes( 'card' ) )
+            let max_height = 0
+            cards.forEach( card => {
+                // console.log( card.className )
+                max_height = max_height < card.offsetHeight ? card.offsetHeight : max_height
+            })
+
+            cards.forEach( card => {
+                card.style.height = `${max_height}px`
+            })
+        })
+    }
+
+    
+
     render(){
         const { selected_session, sessionjson, selectedMsg } = this.state
 
@@ -204,6 +224,7 @@ class Debug extends React.Component{
                     </li>
         })
 
+        setTimeout( this.evenCardsHeight(), 50000)
        
         const d = new Date()
         const diff = ( d - new Date( selected_session === null ? '' : selected_session.created_at ) ) / ( 1000*60 )
