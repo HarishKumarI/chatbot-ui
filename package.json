@@ -2,7 +2,7 @@
   "name": "cogniqa-frambot",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://95.217.239.6:7009",
+  "proxy": "http://95.217.239.6:7015",
   "homepage": "http://HarishKumarI.github.io/chatbot-ui",
   "dependencies": {
     "-": "0.0.1",
