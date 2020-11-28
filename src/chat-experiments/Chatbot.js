@@ -22,7 +22,7 @@ import uiJSON from './ui-custom.json'
 // import dataJSON from './sampleJsons/ertiga_sample.json'
 // import dataJSON from './sampleJsons/ford_figo.json'
 // import dataJSON from './sampleJsons/i20_data.json'
-// import dataJSON from './sampleJsons/cumilative.json'
+import dataJSON from './sampleJsons/cumilative.json'
 
 import agent_image from './agent.png'
 
@@ -170,17 +170,17 @@ class ChatBot extends React.Component{
 
         this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
 
-        this.createSession( this.props.user_id_props.match.params['user_id'], false )
+        // this.createSession( this.props.user_id_props.match.params['user_id'], false )
 
-        // let msgs = []
+        let msgs = []
 
-        // dataJSON.forEach( msg => { 
-        //     msgs.push( ...this.getMsgs( msg ) ) 
-        // })
+        dataJSON.forEach( msg => { 
+            msgs.push( ...this.getMsgs( msg ) ) 
+        })
 
-        // this.setState({
-        //     msgs
-        // })
+        this.setState({
+            msgs
+        })
     }
 
     getMsgs( serverResponse , show_feedback=false){

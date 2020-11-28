@@ -261,32 +261,6 @@
                         "url": "https://www.carwale.com/marutisuzuki-cars/ertiga/",
                         "image": "https://imgd.aeplcdn.com/272x153/cw/ec/35211/Maruti-Suzuki-Ertiga-Right-Rear-Three-Quarter-141765.jpg?wm=0&q=85",
                         "content":  {
-                                        "p": "Maruti Suzuki Ertiga is a **7 seater SUV/MUV** available in a price range of **Rs 8.84 - 12.03 Lakh**. It is available in 7 variants, 1 engine option and **2 transmission options : Manual and Automatic (Torque Converter)**. Other key specifications of the Ertiga include a Ground Clearance of 180 mm, Kerb Weight of 1135 kg and Bootspace of 209 litres. The Ertiga is available in **5 colours**. The mileage of Ertiga ranges from **17.99 km/kg to 26.2 km/kg**."
-                                    }
-                    },
-                    {   
-                        "type": "CARD",
-                        "title": "Toyota Innova Crysta",
-                        "markdown": true,
-                        "url": "https://www.carwale.com/toyota-cars/innova-crysta/",
-                        "image": "https://imgd.aeplcdn.com/272x153/n/cw/ec/20623/innova-crysta-exterior-right-front-three-quarter.jpeg?q=85",
-                        "content":  {
-                                        "p": "Toyota Innova Crysta is a **7 seater SUV/MUV** available in a price range of **Rs 19.03 - 29.49 Lakh**. It is available in 23 variants, 1 engine option and **2 transmission options : Manual and Automatic**. Other key specifications of the Innova Crysta include a Ground Clearance of 176 mm and Kerb Weight of 1730 kg. The Innova Crysta is available in **7 colours**. The mileage of Innova Crysta ranges from **10.75 kmpl to 15.1 kmpl**."
-                                    }
-                    }
-                ],
-                "title": "Here is a brief comparison between **Ertiga** and **Innova Crysta**. <br/> For detailed comparison just follow this [ link ]( https://www.carwale.com/compare-cars/marutisuzuki-ertiga-vs-toyota-innova-crysta/?c1=6022&c2=6738&source=17 )",
-                "type": "CAROUSEL"
-            },
-            {
-                "content": [
-                    {   
-                        "type": "CARD",
-                        "title": "Maruti Suzuki Ertiga",
-                        "markdown": true,
-                        "url": "https://www.carwale.com/marutisuzuki-cars/ertiga/",
-                        "image": "https://imgd.aeplcdn.com/272x153/cw/ec/35211/Maruti-Suzuki-Ertiga-Right-Rear-Three-Quarter-141765.jpg?wm=0&q=85",
-                        "content":  {
                                         "p": "**₹ 8.84 Lakh** On-Road Price, Hyderabad <br/>  **ENGINE:** 1462cc <br/> **MILEAGE:** 19.01 kmpl <br/> **TRANSMISSION:** Manual - 5 Gears <br/> **FUEL TYPE:** Petrol <br/> **SEATING CAPACITY:** 7 Seater<br/> **Emission Standard:** BS 6"
                                     }
                     },

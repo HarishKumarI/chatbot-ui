@@ -343,6 +343,7 @@
 
 .suggested_que{
     display: inline-flex;
+    width: fit-content;
     padding: 5px;
     border: 2px solid var( --nudges-color );
     margin: 2px 5px !important;
@@ -539,6 +540,10 @@
 }
 
 @media only screen and (min-width: 320px) and (max-width: 480px){
+    .messages-container{
+        max-height: 88vh;
+    }
+
     .feedback_form{
         height: 380px;
     }
@@ -552,12 +557,19 @@
         height: 130px;
     }        
 
-    .chat_card img{
-        max-width: 200px;
+    .single-card{
+        width: 75vw !important;
     }
 
     .card-carousel .card{
-        max-width: 45%;
+        max-width: 70%;
     }
 
+    .card img{
+        width: 90%;
+    }
+
+    .card-carousel img{
+        margin: 10px auto;
+    }
 }

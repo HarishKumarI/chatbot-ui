@@ -195,7 +195,7 @@ class Debug extends React.Component{
             let cards = Array.from( document.getElementsByClassName( carousel )[0].children ).filter( x => x.className.includes( 'card' ) )
             let max_height = 0
             cards.forEach( card => {
-                console.log( card.className )
+                // console.log( card.className )
                 max_height = max_height < card.offsetHeight ? card.offsetHeight : max_height
             })
 
@@ -224,7 +224,7 @@ class Debug extends React.Component{
                     </li>
         })
 
-        setTimeout( this.evenCardsHeight(), 500)
+        setTimeout( this.evenCardsHeight(), 5000)
        
         const d = new Date()
         const diff = ( d - new Date( selected_session === null ? '' : selected_session.created_at ) ) / ( 1000*60 )
