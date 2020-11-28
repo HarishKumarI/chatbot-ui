@@ -293,14 +293,14 @@ class Debug extends React.Component{
                                 { selectedMsg  !== null ?
                                     <>
                                         <div style={{ margin: '5px', lineHeight: '145%' }} >
-                                            User Feedback: { sessionjson.history[ selectedMsg ].feedback !== null ?  
+                                            <span style={{ fontWeight: 'bolder' }} >User Feedback:</span> { sessionjson.history[ selectedMsg ].feedback !== null ?  
                                                                 sessionjson.history[ selectedMsg ].feedback ? <ThumbUpAltRounded /> :  <ThumbDownAltRounded /> : '' } <br/>
-                                            User Comment: { sessionjson.history[ selectedMsg ].feedback_text }
+                                            <span style={{ fontWeight: 'bolder' }} >User Comment:</span> { sessionjson.history[ selectedMsg ].feedback_text }
                                         </div>
                                         <div>
                                             {  diff > 30  ?
                                                 <>
-                                                    <div style={{ marginTop: '8px' }} >Developer Feedback:</div>
+                                                    <div style={{ marginTop: '8px', fontWeight: 'bold' }} >Developer Feedback:</div>
                                                     <div className="dev_feedback">
                                                         <div>
                                                             State: 

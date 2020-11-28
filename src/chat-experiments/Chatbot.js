@@ -22,7 +22,7 @@ import uiJSON from './ui-custom.json'
 // import dataJSON from './sampleJsons/ertiga_sample.json'
 // import dataJSON from './sampleJsons/ford_figo.json'
 // import dataJSON from './sampleJsons/i20_data.json'
-import dataJSON from './sampleJsons/cumilative.json'
+// import dataJSON from './sampleJsons/cumilative.json'
 
 import agent_image from './agent.png'
 
