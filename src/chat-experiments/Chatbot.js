@@ -171,7 +171,6 @@ class ChatBot extends React.Component{
         this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
 
         this.createSession( this.props.user_id_props.match.params['user_id'], false )
-        // console.log( process.env.REACT_APP_STAGE )
 
         // let msgs = []
 
@@ -194,7 +193,8 @@ class ChatBot extends React.Component{
                         feedback_value: null, feedback_String: null,
                         hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
                         suggested: msg_data.footer_options || [], question: '', answerJson: serverResponse.bot_response,
-                        index: index
+                        index: index,
+                        card_limit: 5
                     }
         })
 
@@ -371,15 +371,21 @@ class ChatBot extends React.Component{
                         </div>
                         <div className={ `card-carousel-container ${ 'cards_list_'+index }` }>
                             {   cards.map( ( card_info, idx ) => {
-                                    if( idx > 9 ) 
-                                        return  <div className="link" key={ idx } dangerouslySetInnerHTML={{ __html: markdown2HTML( link[0].content ) }} /> 
-
-                                    if( idx > 10 ) return null
-
+                                    if( idx > msg_data.card_limit +1 ) return null
+                                    if( idx > msg_data.card_limit ) 
+                                        return  <div className="link" key={idx} 
+                                                    onClick={e => {
+                                                            // console.log( msg_data.card_limit )
+                                                            msg_data.card_limit += 5
+                                                            // console.log( msg_data.card_limit ) 
+                                                            this.setState({ msgs })
+                                                        }}
+                                                > More </div>
+                                                    
                                     if( msg_data.msg.compare || cards.length === 2 )
-                                        return <div className="single-card" key={idx}>
-                                            <Card data={ card_info } compare={ msg_data.msg.compare || cards.length === 2 } />
-                                        </div> 
+                                        return  <div className="single-card" key={idx}>
+                                                    <Card data={ card_info } compare={ msg_data.msg.compare || cards.length === 2 } />
+                                                </div> 
                                     
                                     return  <Card data={ card_info } key={idx} />
                                    
