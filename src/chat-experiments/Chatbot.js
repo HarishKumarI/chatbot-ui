@@ -22,7 +22,7 @@ import uiJSON from './ui-custom.json'
 // import dataJSON from './sampleJsons/ertiga_sample.json'
 // import dataJSON from './sampleJsons/ford_figo.json'
 // import dataJSON from './sampleJsons/i20_data.json'
-// import dataJSON from './sampleJsons/cumilative.json'
+import dataJSON from './sampleJsons/cumilative.json'
 
 import agent_image from './agent.png'
 
@@ -140,10 +140,8 @@ class ChatBot extends React.Component{
         this.handleQuery = this.handleQuery.bind( this )
     }
 
-    async componentDidMount(){
-        // console.log( this.props.user_id_props.match.params['user_id'] )
-
-        this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
+    async createSession( user_id, reset_session ){
+        let body = { context : null, timestamp : new Date(), channel : "cognichat", user_id, reset_session }
 
         await fetch('/api/test-create-session',
           {
@@ -151,7 +149,7 @@ class ChatBot extends React.Component{
             headers: {
               "content-type": "application/json"
             },
-            body: JSON.stringify({ context : null, timestamp : new Date(), channel : "cognichat", user_id: this.props.user_id_props.match.params['user_id'] })
+            body: JSON.stringify( body )
           }
         )
         .then( res => res.json())
@@ -164,6 +162,15 @@ class ChatBot extends React.Component{
             this.setState({ show_dots: false })
             // $('#root').append(`<div class="errormsg" style="background-color: rgb(221, 103, 103)"> Sorry, there was an unexpected error in this service. </div>`)
         })
+    }
+
+
+    componentDidMount(){
+        // console.log( this.props.user_id_props.match.params['user_id'] )
+
+        this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
+
+        this.createSession( this.props.user_id_props.match.params['user_id'], false )
 
         // let msgs = []
 
@@ -174,7 +181,6 @@ class ChatBot extends React.Component{
         // this.setState({
         //     msgs
         // })
-
     }
 
     getMsgs( serverResponse , show_feedback=false){
@@ -415,8 +421,8 @@ class ChatBot extends React.Component{
                         { 
                             msg_data.suggested.map( ( suggested, idx ) => {
                                 return  <div key={ idx } className="suggested_que" 
-                                            onClick={e => this.handleQuery( { ...e, keyCode: 13, target: {value: suggested }}, "nudge")} > 
-                                            { suggested } 
+                                            onClick={e => this.handleQuery( { ...e, keyCode: 13, target: {value: suggested.query }}, "nudge")} > 
+                                            { suggested.display_text } 
                                         </div>
                             })
                         }
@@ -482,7 +488,7 @@ class ChatBot extends React.Component{
                 // console.log( card.className )
                 max_height = max_height < card.offsetHeight ? card.offsetHeight : max_height
             })
-            console.log( max_height )
+            // console.log( max_height )
             cards.forEach( card => {
                 card.style.height = `${max_height}px`
             })
@@ -492,64 +498,73 @@ class ChatBot extends React.Component{
     render(){
         const messages = this.getMessages( this.state.msgs ) 
 
-        // console.log( new Date() )
-
         setTimeout( () => { this.evenCardsHeight() }, 500 )
 
         return  <>
-                    <div className="messages-container">
-                        { messages }
-
-                        { this.state.show_dots ?
-                            <div  className="dots">
-                                <div className="dot1"></div>
-                                <div className="dot2"></div>
-                                <div className="dot3"></div>
-                            </div>
-                        : null }
-                    </div>
-
-                    <div className="chat_text_handler" >
-                        <input type="text" id="user_input"  className="msg_input" placeholder={ uiJSON.input_placeholder }
-                            onKeyUp={e => this.handleQuery(e, "query") }
-                        />
-                        <Send className={ `send_icon` } 
-                            onClick={e => this.handleQuery({...e, keyCode: 13, target: { value: $('#user_input').val()} }, "query")} 
-                        />
-                    </div>
-
-
-
-                    { this.state.show_feedback_form ?   
-                        <div className="feedback_form"> 
-                            <div style={{ display: 'flow-root' }}> <Close className="close_icon" onClick={ e => this.setState({ show_feedback_form: false })} /> </div>
-                            <div className="feedback_title"> 
-                                <div id="feedback_thumbs">
-                                    { this.state.feedback_data.feedback_value ? <div className="ThumbUp"   > <ThumbUpAltRounded   /> </div> : null }
-                                    { !this.state.feedback_data.feedback_value ? <div className="ThumbDown" > <ThumbDownAltRounded /> </div> : null }
-                                </div>
-
-                                <div className={ `feedback_title_text ${ this.state.feedback_data.feedback_value ? 'positive' : 'negative' }`} > 
-                                    { this.state.feedback_data.feedback_value ? uiJSON.positive_feedback : uiJSON.negative_feedback }
-                                </div>
-                            </div>
-
-                            <div contentEditable={true} suppressContentEditableWarning
-                                id="feedback_note" data-placeholder="Add a note." 
-                                onKeyUp={e => {
-                                    let { feedback_data, msgs } = this.state 
-                                    const cmt = e.target.innerText
-                                    msgs[ feedback_data.index ].feedback_String = cmt.length ? cmt : null
-                                    console.log( cmt )
-                                    this.setState({ feedback_data, msgs })
-                                }}  
-                                >
-                            </div>
-                            <div className="feedback_btns">
-                                <button onClick={ this.handleClick } >Submit</button>
+                    <div className="chat_interface">
+                        <div className="clear_session" >
+                            <div className="clear_session_btn"
+                                onClick={e => this.createSession( this.props.user_id_props.match.params['user_id'], true )}> 
+                                clear session 
                             </div>
                         </div>
-                    : null }
+                        <div className="chat_window" >
+                                
+                            <div className="messages-container">
+                                { messages }
+
+                                { this.state.show_dots ?
+                                    <div  className="dots">
+                                        <div className="dot1"></div>
+                                        <div className="dot2"></div>
+                                        <div className="dot3"></div>
+                                    </div>
+                                : null }
+                            </div>
+
+                            <div className="chat_text_handler" >
+                                <input type="text" id="user_input"  className="msg_input" placeholder={ uiJSON.input_placeholder }
+                                    onKeyUp={e => this.handleQuery(e, "query") }
+                                />
+                                <Send className={ `send_icon` } 
+                                    onClick={e => this.handleQuery({...e, keyCode: 13, target: { value: $('#user_input').val()} }, "query")} 
+                                />
+                            </div>
+
+
+
+                            { this.state.show_feedback_form ?   
+                                <div className="feedback_form"> 
+                                    <div style={{ display: 'flow-root' }}> <Close className="close_icon" onClick={ e => this.setState({ show_feedback_form: false })} /> </div>
+                                    <div className="feedback_title"> 
+                                        <div id="feedback_thumbs">
+                                            { this.state.feedback_data.feedback_value ? <div className="ThumbUp"   > <ThumbUpAltRounded   /> </div> : null }
+                                            { !this.state.feedback_data.feedback_value ? <div className="ThumbDown" > <ThumbDownAltRounded /> </div> : null }
+                                        </div>
+
+                                        <div className={ `feedback_title_text ${ this.state.feedback_data.feedback_value ? 'positive' : 'negative' }`} > 
+                                            { this.state.feedback_data.feedback_value ? uiJSON.positive_feedback : uiJSON.negative_feedback }
+                                        </div>
+                                    </div>
+
+                                    <div contentEditable={true} suppressContentEditableWarning
+                                        id="feedback_note" data-placeholder="Add a note." 
+                                        onKeyUp={e => {
+                                            let { feedback_data, msgs } = this.state 
+                                            const cmt = e.target.innerText
+                                            msgs[ feedback_data.index ].feedback_String = cmt.length ? cmt : null
+                                            console.log( cmt )
+                                            this.setState({ feedback_data, msgs })
+                                        }}  
+                                        >
+                                    </div>
+                                    <div className="feedback_btns">
+                                        <button onClick={ this.handleClick } >Submit</button>
+                                    </div>
+                                </div>
+                            : null }
+                        </div>
+                    </div>
                 </>
     }
 }

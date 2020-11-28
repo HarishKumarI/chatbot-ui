@@ -59,7 +59,7 @@ body{
   max-width: 600px;
   background: #ffffff;
   background-size: 50%;
-  box-shadow: 2px 5px 15px #A9A6A6;
+  box-shadow: 2px 15px 15px #A9A6A6;
   margin: 0 auto;
 }
 
@@ -105,7 +105,25 @@ body{
 }
 
 
+.user_name{
+  display: inline-flex;
+  border: 1px solid rgb(122, 122, 122);
+  width: fit-content;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px;
+  border-bottom-left-radius: 10px;
+  border-top: none;
+  border-right: none;
+  justify-content: center;
+  align-items: center;
+}
 
+.user_name:hover{
+  background-color: #818080;
+  color: white;
+}
 
 
 .errormsg {

@@ -14,14 +14,17 @@ import * as serviceWorker from './serviceWorker';
 
 document.title = 'Carwale chatbot | CogniQA'
 
+let user_data = {}
+
+console.log( user_data )
 
 const routing = (
   <Router>
-      <Route exact path="/" component={Login} />
+      <Route exact path="/" component={props => <Login { ...props} updateData={ data => {user_data = data } } /> } />
           <Route exact path="/formElements" component={ FormFeilds } />
           <Route exact path="/debug" component={ Debug } />
           <Route exact path="/debug/:session_id" component={ Debug } />
-          <Route exact path="/login/:user_id" component={ Experiment } />
+          <Route exact path="/login/:user_id" component={props => <Experiment { ...props } user_data={ user_data } /> } />
   </Router>
 )
 ReactDOM.render(routing, document.getElementById('root'))

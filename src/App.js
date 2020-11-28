@@ -3,16 +3,19 @@ import './App.css'
 import $ from 'jquery'
 import configJSON from './config/UI_configuration.json'
 import { useHistory } from 'react-router-dom'
+import { Person } from '@material-ui/icons'
+
 
 function Title(props){
   return <div className="App-header">
+          { props.userName !== undefined ? <div className="user_name"> <Person /> { props.userName } </div> : null }
           <div className="title">{ configJSON.title }</div>
           <div className="tagline">{ configJSON.tagline }</div>
         </div>
 }
 
 
-function Login( ){
+function Login( props ){
   const history = useHistory();
   
   function verifyUser(e){
@@ -20,13 +23,18 @@ function Login( ){
       let userid = $('#userid').val() 
       if( userid !== '' ){
         $.post('/api/verify', JSON.stringify({"user_id":  parseInt( userid )} ),
-          (res) => {
-            if( res.isvalid === 'VALID' )
+          res => {
+
+            if( res.isvalid === 'VALID' ){
               history.push(`login/${userid}`);
+              console.log( res )
+              props.updateData( res )
+            }
           }
         )
       }
   }
+
   
   return(
       <div className="App">
@@ -42,7 +50,7 @@ function Login( ){
                 <input type="text" placeholder='Enter User Id' id="userid" style={{padding: '3px', outline: 'none', width: '210px'}} />
               </div>
               <div style={{ alignItems: 'end', flexDirection: 'row-reverse', justifyContent: 'end', display: 'flex', marginTop: '25px' }}>
-                <button primary={ true } floated="right"
+                <button floated="right"
                     style={{ padding: '5px 10px', fontWeight: 'bolder', color: 'white', backgroundColor: '#44a1fd', border: 'none', borderRadius: '4px' }}
                   >Login</button>
               </div>
@@ -65,4 +73,4 @@ function Login( ){
 //           </Router>
 // }
 
-export { Login }
+export { Login, Title }

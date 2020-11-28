@@ -7,7 +7,9 @@
                 "markdown" : true,
                 "content" : { "p": "Welcome to Carwale.com <br/>I am here to answer your questions regarding car features and comparison. You can ask me questions like below."},
                 "footer_options" : [
-                    "What is the mileage of Innova Diesel?", "How does ertiga and innova compare?", "What cars are available between 10-15 lakhs"
+                    { "query": "What is the mileage of Innova Diesel?","display_text": "What is the mileage of Innova Diesel?" },
+                    { "query": "How does ertiga and innova compare?", "display_text": "How does ertiga and innova compare?" },
+                    { "query": "What cars are available between 10-15 lakhs","display_text": "What cars are available between 10-15 lakhs" }
                 ]
             }
         ],
