@@ -170,17 +170,17 @@ class ChatBot extends React.Component{
 
         this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
 
-        // this.createSession( this.props.user_id_props.match.params['user_id'], false )
+        this.createSession( this.props.user_id_props.match.params['user_id'], false )
 
-        let msgs = []
+        // let msgs = []
 
-        dataJSON.forEach( msg => { 
-            msgs.push( ...this.getMsgs( msg ) ) 
-        })
+        // dataJSON.forEach( msg => { 
+        //     msgs.push( ...this.getMsgs( msg ) ) 
+        // })
 
-        this.setState({
-            msgs
-        })
+        // this.setState({
+        //     msgs
+        // })
     }
 
     getMsgs( serverResponse , show_feedback=false){
