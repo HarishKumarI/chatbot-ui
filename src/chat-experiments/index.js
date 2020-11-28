@@ -25,7 +25,7 @@ class Experiment extends React.Component{
 
     render(){
         const { isvalid } = this.state
-        // console.log( this.props.match.params['user_id'], isvalid )
+        // console.log( this.props )
 
         return  <div className="App-container">
                     <Title  userName={ isvalid !== null ? isvalid.username : '' } />

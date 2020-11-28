@@ -16,8 +16,6 @@ document.title = 'Carwale chatbot | CogniQA'
 
 let user_data = {}
 
-console.log( user_data )
-
 const routing = (
   <Router>
       <Route exact path="/" component={props => <Login { ...props} updateData={ data => {user_data = data } } /> } />

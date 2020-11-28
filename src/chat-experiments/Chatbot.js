@@ -22,7 +22,7 @@ import uiJSON from './ui-custom.json'
 // import dataJSON from './sampleJsons/ertiga_sample.json'
 // import dataJSON from './sampleJsons/ford_figo.json'
 // import dataJSON from './sampleJsons/i20_data.json'
-import dataJSON from './sampleJsons/cumilative.json'
+// import dataJSON from './sampleJsons/cumilative.json'
 
 import agent_image from './agent.png'
 
@@ -141,7 +141,7 @@ class ChatBot extends React.Component{
     }
 
     async createSession( user_id, reset_session ){
-        let body = { context : null, timestamp : new Date(), channel : "cognichat", user_id, reset_session }
+        let body = { context : null, timestamp : new Date(), channel : "cognichat", user_id, reset_session, env: process.env.REACT_APP_STAGE }
 
         await fetch('/api/test-create-session',
           {
@@ -171,6 +171,7 @@ class ChatBot extends React.Component{
         this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
 
         this.createSession( this.props.user_id_props.match.params['user_id'], false )
+        // console.log( process.env.REACT_APP_STAGE )
 
         // let msgs = []
 
@@ -224,7 +225,7 @@ class ChatBot extends React.Component{
     }
 
     async servercall( question, type, isnudge ){
-        let body = { 'query': null, form: null,  timestamp : new Date(), channel : "cognichat", session_id: this.state.session_id, user_id: this.state.user_id }
+        let body = { 'query': null, form: null,  timestamp : new Date(), channel : "cognichat", session_id: this.state.session_id, user_id: this.state.user_id, env: process.env.REACT_APP_STAGE }
 
         if( isnudge )
             body.nudge = true

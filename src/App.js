@@ -27,7 +27,7 @@ function Login( props ){
 
             if( res.isvalid === 'VALID' ){
               history.push(`login/${userid}`);
-              console.log( res )
+              // console.log( res )
               props.updateData( res )
             }
           }
