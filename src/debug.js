@@ -6,6 +6,7 @@ import { ChevronRight, ChevronLeft, ThumbUpAltRounded, ThumbDownAltRounded, } fr
 
 import { BotPersona, Textmsg, Cards } from './components'
 import { FormfromJSON } from './chat-experiments/FormFeilds'
+import ChatBot from './chat-experiments/Chatbot'
 
 import './debug.css'
 
@@ -37,10 +38,13 @@ class Debug extends React.Component{
             loading: false,
             sessionjson: null,
             selectedMsg: null,
+            show_model: false,
+            model_content: null
         }
 
         this.handleSession = this.handleSession.bind( this )
         this.developer_feedback = this.developer_feedback.bind(this)
+        this.openModelBox = this.openModelBox.bind(this)
     }
 
     componentDidMount(){
@@ -49,7 +53,18 @@ class Debug extends React.Component{
         }
 
         this.setState({ loading: true })
-        $.get('http://95.217.239.6:7051/api/session_list', res=>{
+
+        fetch('http://95.217.239.6:7051/api/session_list', 
+            {
+                method: 'GET',
+                headers: {
+                    "content-type": "application/json",
+                    "content-encoding": "gzip"
+                }
+            }
+        )
+        .then( response => response.json() )
+        .then( res=>{
             const sessions_list = res.session_list.map( session => { if( session.created_at === null ) return {created_at: '', session_id: session.session_id, user_id: session.user_id} ; else return session })
             let selected_session = null
 
@@ -73,7 +88,19 @@ class Debug extends React.Component{
 
     handleSession( session ){
         this.setState({ selected_session: session, loading: true, sessionjson: undefined, selectedMsg: null })
-        $.post('http://95.217.239.6:7051/api/session', JSON.stringify({ session_id: session.session_id }) , res=>{
+        
+        fetch('http://95.217.239.6:7051/api/session', 
+            {
+                method: 'POST',
+                headers: {
+                    "content-type": "application/json",
+                    "content-encoding": "gzip"
+                },
+                body: JSON.stringify({ session_id: session.session_id })
+            }
+        )
+        .then( response => response.json() )
+        .then( res=>{
             this.setState({ sessionjson: res, loading: false, selectedMsgJson: null })
         })
         .catch(err => {
@@ -110,6 +137,11 @@ class Debug extends React.Component{
             const highlightmsg = this.state.selectedMsg === idx
 
             if( msg.sender === 'USER' ){
+                if ( msg.payload.form !== null ){
+                    msg.message = msg.payload.form.map( field => { return `${field.key}: ${field.value.display_value}` }).join('<br/>')
+                }
+
+
                 msgs_list.push(
                     <div onClick={e => this.setState({ selectedMsg: idx })} key={ idx }>
                         <Textmsg user_type={'user'} msg={ msg.message }  highlightmsg={ highlightmsg }  />
@@ -171,11 +203,25 @@ class Debug extends React.Component{
                     //             askFeedback={data => this.setState({ feedback_data: {...data, index }, show_feedback_form: true })}
                     //         />
                     //     )
-        
+                                    
+                    // console.log( response.footer_options )
+                    if( response.footer_options !== undefined )
+                        msgs_list.push(
+                            <div className="debug_suggested_container" key={`${idx}_${index+1}_`}>
+                                { 
+                                    response.footer_options.map( ( suggested, idx ) => {
+                                        return  <div key={ idx } className="suggested_que" > 
+                                                    { suggested.display_text || suggested} 
+                                                </div>
+                                    })
+                                }
+                            </div>
+                        )
+
                     /* time */
                     if( msgs.length - 1 === idx || ( msgs[idx + 1] !== undefined && msg.sender !== msgs[idx + 1].sender ) )
                         msgs_list.push(
-                            <div className={ `msg ${ msg.sender === 'user' ? 'user_text' : '' }` } key={idx+'_7'}>   
+                            <div className={ `msg ${ msg.sender === 'user' ? 'user_text' : '' }` } key={idx+'_'+index+'_7'}>   
                                 <div className="time">{ msg.time }</div> 
                             </div>
                         )
@@ -205,12 +251,27 @@ class Debug extends React.Component{
         })
     }
 
+    openModelBox(e){
+        let messages = this.state.sessionjson.history
+        let query_list = []
+
+        messages.forEach( msg=> {
+            if ( msg.sender !== 'BOT' ){
+                query_list.push({ query: msg.message, isnudge: msg.payload.nudge, form: msg.payload.form, type: msg.payload.nudge ? 'nudge' : msg.payload.form !== null ? 'form': 'query' })
+                // console.log( "msg", msg.message, '\n', "question", msg.payload.query, '\n', "isnudge", msg.payload.nudge, '\n form', msg.payload.form,'\n payload', msg.payload )
+            }
+        })
+
+        // console.log( query_list )
+
+        this.setState({ show_model: true, model_content: query_list })
+    }
     
 
     render(){
         const { selected_session, sessionjson, selectedMsg } = this.state
 
-        // console.log( selected_session )
+        // console.log( selected_session, sessionjson )
 
         this.state.sessions_list.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1)
         
@@ -256,6 +317,7 @@ class Debug extends React.Component{
                             <div className="chat-interface-title" >
                                 <span style={{ fontSize: '20px' }}> Chat Conversation </span>
                                 <div className="debug-swtich-container">
+                                    { sessionjson === null || sessionjson === undefined ? null :<button className="re-run-btn" onClick={ this.openModelBox } >Re-Run</button>}
                                     <span> Show debug </span>
                                     <label className="switch" >
                                         <input type="checkbox" checked={ this.state.showdebug } onChange={e => this.setState({ showdebug: !this.state.showdebug })} />
@@ -348,6 +410,19 @@ class Debug extends React.Component{
                                 </div>
                             </div>
                         : null }
+
+                        {   this.state.show_model ?
+                            <div id="model_box">
+                                <div className="chat-holder">
+                                    <div className="close_icon" title="close" onClick={e => this.setState({ show_model: false, model_content: null }) } >&times;</div>
+                                    <div className="chat-messages">
+                                        <div style={{ textAlign: 'center', fontSize: '20px', fontWeight: 'bolder', margin: '10px 0' }}>Chat Conversation</div>
+                                        <ChatBot user_id={ selected_session.user_id } data={ this.state.model_content } />
+                                    </div>
+                                </div>
+                            </div>
+                        : null }
+
                     </div>
                 </div>
     }

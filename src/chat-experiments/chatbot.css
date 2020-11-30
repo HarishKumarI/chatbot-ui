@@ -297,7 +297,7 @@
     padding-left: 38px;
 }
 
-.navigation-btns svg{
+.navigation-btns svg, .navigation-btns .link{
     border: var( --carousel-btns-border );
     position: absolute;
     z-index: 10;
@@ -309,6 +309,14 @@
     box-shadow: var( --carousel-btns-box-shadow );
     background-color: var( --carousel-btns-bg );
     color: var( --carousel-btns-color );
+}
+
+.navigation-btns .link{
+    border-radius: 5px;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .previous{

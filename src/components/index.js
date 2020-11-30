@@ -18,7 +18,7 @@ function Textmsg( props ){
     const { user_type, msg, highlightmsg } = props
 
     return <div className={ `${ highlightmsg ? 'highlightmsg' : '' } debug_msg ${ user_type === 'user' ? 'user_text' : '' }` } >   
-                <div className={`${ user_type}`} suppressContentEditableWarning 
+                <div className={`${ user_type}`} suppressContentEditableWarning style={{ textAlign: 'start' }}
                                         dangerouslySetInnerHTML={{ __html: msg}} /> 
             </div>
 }

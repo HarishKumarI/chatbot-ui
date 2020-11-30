@@ -200,7 +200,7 @@ input:checked + .slider:before {
 
 .session_info{
     text-align: end;
-    font-size: 14px;
+    font-size: 13px;
     color: grey;
     margin: 3px 0;
 }
@@ -484,4 +484,88 @@ input:checked + .slider:before {
     overflow-y: auto;
     outline: none;
     border-radius: 2px;
+}
+
+
+.re-run-btn{
+    cursor: pointer;
+    background-color: #5daff1;
+    padding: 4px 8px ;
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+    font-weight: bolder;
+}
+
+
+
+#model_box{
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    width: 99.8%;
+    height: 99.8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(141, 140, 140, 0.644);
+}
+
+.chat-holder{
+    width: 90vw;
+    height: 93vh;
+    background-color: white;
+    position: relative;
+}
+
+
+.close_icon{
+    position: relative;
+    font-weight: bolder;
+    font-size: 38px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.chat-messages{
+    max-height: 100%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.chat-messages .chat_interface{
+    padding: 15px;
+    overflow-y: auto;
+    height: 85vh;
+}
+
+.chat-messages .chat_window{
+    box-shadow: 2px 15px 15px rgb(189, 189, 189);
+    height: 50%;
+}
+
+
+.debug_suggested_container{
+    text-align: end;
+    margin: 5px 0 !important;
+    padding-left: calc( var( --img-width ) + 10px );
+    margin-right: 20px !important;
+}
+
+.debug_suggested_container .suggested_que{
+    display: inline-flex;
+    width: fit-content;
+    padding: 5px;
+    border: 2px solid var( --nudges-color );
+    margin: 2px 5px !important;
+    border-radius: 5px;
+    cursor: default !important;
+    color: var( --nudges-color );
+}
+
+.debug_suggested_container .suggested_que:hover{
+    background-color: var( --nudges-color );
+    color: whitesmoke;
 }

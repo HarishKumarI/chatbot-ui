@@ -32,7 +32,7 @@ class Experiment extends React.Component{
                     <div className="separater"></div>
 
                     {  isvalid !== null && isvalid.isvalid === 'VALID' ?
-                        <ChatBot user_id_props={this.props}  />
+                        <ChatBot user_id={this.props.match.params['user_id']}  />
                     :   <div style={{ textAlign: 'center', height: '300px',
                                  justifyContent: 'center', alignItems: 'center', margin: 'auto', fontSize: 'x-large' }}>
                             <div>User Not Found</div>

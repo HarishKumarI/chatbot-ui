@@ -71,7 +71,8 @@ function sendFeedback( payload, cmt){
         {
             method: 'POST',
             headers: {
-            "content-type": "application/json"
+                "content-type": "application/json",
+                "content-encoding": "gzip"
             },
             body: JSON.stringify({ feedback : payload.feedback, feedback_text: payload.cmt})
         }
@@ -147,7 +148,8 @@ class ChatBot extends React.Component{
           {
             method: 'POST',
             headers: {
-              "content-type": "application/json"
+              "content-type": "application/json",
+              "content-encoding": "gzip"
             },
             body: JSON.stringify( body )
           }
@@ -165,12 +167,24 @@ class ChatBot extends React.Component{
     }
 
 
-    componentDidMount(){
+    async componentDidMount(){
         // console.log( this.props.user_id_props.match.params['user_id'] )
+        console.log( this.props )
 
-        this.setState({ user_id: this.props.user_id_props.match.params['user_id'] })
+        this.setState({ user_id: this.props.user_id })
 
-        this.createSession( this.props.user_id_props.match.params['user_id'], false )
+        if( this.props.data !== undefined ){
+            await this.createSession( this.props.user_id, true )   
+
+            for( const msg_id in this.props.data ){
+                const msg = this.props.data[msg_id]
+
+                await this.handleQuery({ target: { value: msg.type === 'form' ? msg.form : msg.query }, keyCode: 13 }, msg.type )
+            }
+
+        }
+        else
+            this.createSession( this.props.user_id, false )
 
         // let msgs = []
 
@@ -194,7 +208,8 @@ class ChatBot extends React.Component{
                         hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
                         suggested: msg_data.footer_options || [], question: '', answerJson: serverResponse.bot_response,
                         index: index,
-                        card_limit: 5
+                        card_limit: 9,
+                        carousel_limit: 0
                     }
         })
 
@@ -234,12 +249,14 @@ class ChatBot extends React.Component{
 
         body[ type ] = question
     
+        // console.log( body, new Date() )
         await fetch('/api/test-user-query',
           {
             method: 'POST',
             headers: {
               "content-type": "application/json",
-              "session": this.state.session_id
+              "session": this.state.session_id,
+              "content-encoding": "gzip"
             },
             body: JSON.stringify(body)
           }
@@ -287,7 +304,7 @@ class ChatBot extends React.Component{
 
    
    
-    handleQuery(e, type){
+    async handleQuery(e, type){
         let { value } = e.target
         if( value.length > 0 && !$('.send_icon').hasClass('query_available') )
             $('.send_icon').addClass('query_available')
@@ -300,14 +317,14 @@ class ChatBot extends React.Component{
             document.getElementById('user_input').value = null
             
             let { msgs} = this.state
-            var json2str = ( json ) => { return json.map( feild => { console.log( feild ); return feild.key + ": " + feild.value.display_value } ).join('<br/>') }
+            var json2str = ( json ) => { return json.map( feild => { return feild.key + ": " + feild.value.display_value } ).join('<br/>') }
 
             msgs.push( { user_type:'user', msg: typeof( value ) === "object" ? markdown2HTML( json2str( value ) ) : value ,
                                  ...currentTime(), type: 'TEXT', suggested: [], show_feedback: false } )
             this.setState({show_dots: true, msgs})
 
             this.scrollBottom()
-            this.servercall( value, type === 'nudge' ? 'query' : type, type === 'nudge' ? true : false ) 
+            await this.servercall( value, type === 'nudge' ? 'query' : type, type === 'nudge' ? true : false ) 
             this.scrollBottom()
         } 
     }
@@ -357,48 +374,75 @@ class ChatBot extends React.Component{
 
                 cards = msg_data.msg.content.filter( x => x.type === 'CARD' )
                 link = msg_data.msg.content.filter( x => x.type === 'LINK' )
-                    
-                msgs_list.push(
-                    <div className="card-carousel" key={index+'_3'}>
-                        <div className="navigation-btns">
-                            {/* <ChevronLeft className="previous" />
-                            <ChevronRight className="next" /> */}
+                const carousel_cards = cards
+                const carousel_idx = index
+                
+                // let no_carousels = Array.apply( null, new Array( Math.ceil( cards.length / msg_data.card_limit ) ) )
 
-                            {/* const ScrollElement = document.getElementsByClassName('suggested_ques_list')[0]
-                                const { scrollWidth, scrollLeft } = ScrollElement
-                                ScrollElement.scrollLeft = scrollWidth <= scrollLeft + 20 ? scrollWidth : scrollLeft + 20
-                             */}
-                        </div>
-                        <div className={ `card-carousel-container ${ 'cards_list_'+index }` }>
-                            {   cards.map( ( card_info, idx ) => {
-                                    if( idx > msg_data.card_limit +1 ) return null
-                                    if( idx > msg_data.card_limit ) 
-                                        return  <div className="link" key={idx} 
-                                                    onClick={e => {
-                                                            // console.log( msg_data.card_limit )
-                                                            msg_data.card_limit += 5
-                                                            // console.log( msg_data.card_limit ) 
-                                                            this.setState({ msgs })
-                                                        }}
-                                                > More </div>
-                                                    
-                                    if( msg_data.msg.compare || cards.length === 2 )
-                                        return  <div className="single-card" key={idx}>
-                                                    <Card data={ card_info } compare={ msg_data.msg.compare || cards.length === 2 } />
-                                                </div> 
-                                    
-                                    return  <Card data={ card_info } key={idx} />
-                                   
-                                })
-                            } 
-                        </div>
+                // console.log( cards.slice( 0, msg_data.card_limit), msg_data.carousel_limit, no_carousels )
+
+                // no_carousels.forEach( ( _, carousel_idx) => {
+                //     if ( carousel_idx <= msg_data.carousel_limit ){
+                //         const carousel_cards = cards.slice( carousel_idx*msg_data.card_limit,  ( carousel_idx + 1 )*msg_data.card_limit )
                         
-                        {/* { link.length > 0 ?
-                            <div className="link" suppressContentEditableWarning 
-                                                    dangerouslySetInnerHTML={{ __html: markdown2HTML( link[0].content ) }} /> 
-                        : null } */}
-                    </div> 
-                )   
+                        // console.log( carousel_idx*msg_data.card_limit,  ( carousel_idx + 1 )*msg_data.card_limit )
+
+                        msgs_list.push(
+                            <div className="card-carousel" key={index+'_3_'+carousel_idx}>
+                                <div className="navigation-btns">
+                                    {/* <ChevronLeft className="previous" /> */}
+                                    {/* <ChevronRight className="next" /> */}
+                                    
+                                    {/* {   carousel_idx === msg_data.carousel_limit && carousel_cards.length >= msg_data.card_limit ?
+                                            <div className="link next"
+                                                onClick={e => {
+                                                        // console.log( msg_data.card_limit )
+                                                        msg_data.carousel_limit += 1
+                                                        // console.log( msg_data.card_limit ) 
+                                                        this.setState({ msgs })
+                                                    }}
+                                            > More </div>
+                                        : null
+                                    } */}
+        
+                                    {/* const ScrollElement = document.getElementsByClassName('suggested_ques_list')[0]
+                                        const { scrollWidth, scrollLeft } = ScrollElement
+                                        ScrollElement.scrollLeft = scrollWidth <= scrollLeft + 20 ? scrollWidth : scrollLeft + 20
+                                     */}
+                                </div>
+                                <div className={ `card-carousel-container ${ 'cards_list_'+index+'_'+carousel_idx }` }>
+                                    {   carousel_cards.map( ( card_info, idx ) => {
+                                            if( idx > msg_data.card_limit +1 ) return null
+                                            if( idx > msg_data.card_limit ) 
+                                                return  <div className="link" key={idx} 
+                                                            onClick={e => {
+                                                                    // console.log( msg_data.card_limit )
+                                                                    msg_data.card_limit += 10
+                                                                    // console.log( msg_data.card_limit ) 
+                                                                    this.setState({ msgs })
+                                                                }}
+                                                        > More </div>
+                                                            
+                                            if( msg_data.msg.compare || cards.length === 2 )
+                                                return  <div className="single-card" key={idx}>
+                                                            <Card data={ card_info } compare={ msg_data.msg.compare || cards.length === 2 } />
+                                                        </div> 
+                                            
+                                            return  <Card data={ card_info } key={idx} />
+                                           
+                                        })
+                                    } 
+                                </div>
+                                
+                                {/* { link.length > 0 ?
+                                    <div className="link" suppressContentEditableWarning 
+                                                            dangerouslySetInnerHTML={{ __html: markdown2HTML( link[0].content ) }} /> 
+                                : null } */}
+                            </div> 
+                        )         
+                    // }
+                // })
+ 
                 
                 msgs_list.push(
                     link.length > 0 ?
@@ -511,7 +555,7 @@ class ChatBot extends React.Component{
                     <div className="chat_interface">
                         <div className="clear_session" >
                             <div className="clear_session_btn"
-                                onClick={e => this.createSession( this.props.user_id_props.match.params['user_id'], true )}> 
+                                onClick={e => this.createSession( this.props.user_id, true )}> 
                                 Clear Session 
                             </div>
                         </div>
