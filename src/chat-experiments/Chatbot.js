@@ -512,7 +512,7 @@ class ChatBot extends React.Component{
                         <div className="clear_session" >
                             <div className="clear_session_btn"
                                 onClick={e => this.createSession( this.props.user_id_props.match.params['user_id'], true )}> 
-                                clear session 
+                                Clear Session 
                             </div>
                         </div>
                         <div className="chat_window" >

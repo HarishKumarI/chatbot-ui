@@ -265,7 +265,7 @@ class Debug extends React.Component{
                                 <br />
                                 {   selected_session !== null ?
                                     <div className="session_info">
-                                        User Id: { selected_session.user_id } Session Id: { selected_session.session_id } Created at: { selected_session.created_at }
+                                        User Id: { selected_session.user_id } Session Id: { selected_session.session_id } Created at: { ( new Date(selected_session.created_at)).toLocaleString('de-DE', { timeZone: 'Asia/Kolkata', hour12: true}) }
                                     </div>
                                 : null }
                             </div>
