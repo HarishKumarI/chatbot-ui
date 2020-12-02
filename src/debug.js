@@ -249,6 +249,8 @@ class Debug extends React.Component{
                 card.style.height = `${max_height}px`
             })
         })
+
+
     }
 
     openModelBox(e){
@@ -285,7 +287,7 @@ class Debug extends React.Component{
                     </li>
         })
 
-        setTimeout( this.evenCardsHeight(), 5000)
+        setTimeout(() => { this.evenCardsHeight() }, 5000)
        
         const d = new Date()
         const diff = ( d - new Date( selected_session === null ? '' : selected_session.created_at ) ) / ( 1000*60 )

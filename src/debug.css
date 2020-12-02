@@ -347,7 +347,9 @@ input:checked + .slider:before {
 .debug_card-carousel-container .debug_single-card img{
     display: block;
     margin: 20px;
-    width: 90%;
+    width: 83%;
+    max-height: 138px;
+    max-width: calc( var( 85% ) - 40px ) !important;
 }
 
 .debug_card-carousel-container .card{
@@ -361,6 +363,8 @@ input:checked + .slider:before {
     display: block;
     margin: 20px;
     width: 80%;
+    max-height: 105px;
+    max-width: calc( var( 80% ) - 40px ) !important;
 }
 
 .debug_card-carousel-container .debug_single-card .card-text, .card .card-text{

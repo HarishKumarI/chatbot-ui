@@ -286,3 +286,4 @@ curl --location --request POST '/api/test-user-query' \
 - Get Car Model/Variant from the query `Carnival`
 - Get Relation from the query   `color`
 - while building the content JSON. The engine uses predefined template( customized ) for the relation and creates list of cards which node value to insert in the content.
+
