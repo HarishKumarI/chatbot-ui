@@ -216,7 +216,6 @@
     /* border-radius: var( --card-border-radius ); */
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    margin: 0;
     display: block;
 }
 
@@ -224,8 +223,11 @@
 /* multilpe cards */
 
 .card-carousel{
+    width: 100%;
+    max-width: 550px;
     position: relative;
-    overflow-x: auto;
+    /* overflow-x: auto; */
+    z-index: 100;
 }
 
 .card-carousel-container{

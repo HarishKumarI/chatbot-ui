@@ -7,7 +7,6 @@ import './FormFeilds.css'
 
 function FormfromJSON(props){
     let { json, onSubmit, readOnly } = props
-
     const feilds = json.content === undefined ? [] 
                         : json.content.map( ( feild, idx) => {
                         let tag = null
@@ -17,7 +16,7 @@ function FormfromJSON(props){
                                             <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
                                             <input type="text" placeholder={ `${ feild.description }` } id={ feild.value.id } 
-                                                name={ feild.label } readOnly={ readOnly }
+                                                name={ feild.label } readOnly={ readOnly || feild.filled }
                                                 defaultValue={ feild.value.display_value }
                                                 required={ feild.required } /> 
                                         </div> 
@@ -27,7 +26,7 @@ function FormfromJSON(props){
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
-                                            <select name={ feild.label } disabled={ readOnly } defaultValue={ feild.value.display_value } >
+                                            <select name={ feild.label } disabled={ readOnly || feild.filled} defaultValue={ feild.value.display_value } >
                                                 <option> { feild.description }</option>
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
@@ -47,7 +46,7 @@ function FormfromJSON(props){
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
                                                         return  <div key={option_idx} > 
-                                                                    <input type="radio" name={feild.label} defaultValue={option.display_value} readOnly={ readOnly } id={option.id} />
+                                                                    <input type="radio" name={feild.label} defaultValue={option.display_value} readOnly={ readOnly || feild.filled } id={option.id} />
                                                                     <label className="field_labels">{ option.display_value }</label>
                                                                 </div>
                                                     })
@@ -63,7 +62,7 @@ function FormfromJSON(props){
                                                 {
                                                     feild.options.map( ( option, option_idx ) => {
                                                         return  <div key={option_idx} > 
-                                                                    <input type="checkbox" name={feild.label} defaultValue={option.display_value} readOnly={ readOnly } id={option.id} />
+                                                                    <input type="checkbox" name={feild.label} defaultValue={option.display_value} readOnly={ readOnly || feild.filled} id={option.id} />
                                                                     <label className="field_labels">{ option.display_value }</label>
                                                                 </div>
                                                     })
@@ -75,7 +74,7 @@ function FormfromJSON(props){
                                 tag =   <div className="form_row" key={idx}>
                                             <label > { feild.label.replace(/_/g, ' ') } </label>
                                             {/* <br/> */}
-                                            <input type="date" name={feild.label} defaultValue={feild.value} readOnly={ readOnly } />
+                                            <input type="date" name={feild.label} defaultValue={feild.value} readOnly={ readOnly || feild.filled } />
                                         </div>
                                 break
                             default: return null

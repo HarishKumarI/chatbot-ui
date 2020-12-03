@@ -7,5 +7,6 @@
     "input_placeholder":"Ask Something...",
     "positive_feedback": "Thanks for the feedback! what did you like about it?",
     "negative_feedback": "Please let us know what went wrong with the answer?",
-    "msgs": []
+    "msgs": [],
+    "alt_img_link": "https://imgd.aeplcdn.com/0x0/statics/grey.gif"
 }

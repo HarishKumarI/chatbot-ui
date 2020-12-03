@@ -293,7 +293,7 @@ input:checked + .slider:before {
     text-align: center;
 }
 
-.card{
+.debug_card{
     border: var( --card-border );
     width: 100%;
     margin: 10px 3px;
@@ -301,7 +301,7 @@ input:checked + .slider:before {
     box-shadow: var( --card-box-shadow );
 }
 
-.card img{
+.debug_card img{
     width: inherit;
     /* border-radius: var( --card-border-radius ); */
     border-bottom-left-radius: 0;

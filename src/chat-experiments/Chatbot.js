@@ -56,7 +56,7 @@ function Card(props){
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
                 onClick={e => { if( card_data.url !== undefined ) window.open( card_data.url, '_blank' ) } }
                 >
-                <img src={ card_data.image } alt="card_image" />
+                <img src={ card_data.image.length > 0 ? card_data.image : uiJSON.alt_img_link } alt="card_image" title={ card_data.image.length > 0 ? '' : 'No Image' } />
                 <div >
                     <div className="card_title"  dangerouslySetInnerHTML={{ __html: markdown2HTML( card_data.title ) }} />
                     <div className="card-text" dangerouslySetInnerHTML={{__html: markdown2HTML( card_data.content ) }} />
@@ -169,7 +169,7 @@ class ChatBot extends React.Component{
 
     async componentDidMount(){
         // console.log( this.props.user_id_props.match.params['user_id'] )
-        console.log( this.props )
+        // console.log( this.props )
 
         this.setState({ user_id: this.props.user_id })
 
