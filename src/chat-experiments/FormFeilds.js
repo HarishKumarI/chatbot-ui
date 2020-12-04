@@ -7,6 +7,7 @@ import './FormFeilds.css'
 
 function FormfromJSON(props){
     let { json, onSubmit, readOnly } = props
+    // console.log( json )
     const feilds = json.content === undefined ? [] 
                         : json.content.map( ( feild, idx) => {
                         let tag = null
@@ -116,8 +117,9 @@ function FormfromJSON(props){
                             keyValPair[ elementValue.name ] =  { display_value, id }
                         })
 
+                        // console.log( json.content, keyValPair )
                         json.content.forEach( feild => {
-                            feild.value = feild.description === keyValPair[ feild.label ] ? feild.value : keyValPair[ feild.label ]
+                            feild.value = feild.description === keyValPair[ feild.label ] ? feild.value : { ...keyValPair[ feild.label ], ...feild.value }
                         } )
                         // console.log( json.content )
                         onSubmit( json.content )

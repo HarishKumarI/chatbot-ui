@@ -480,7 +480,8 @@ class ChatBot extends React.Component{
                     </div>
                 )
 
-            if(msg_data.type === 'FORM')
+            if(msg_data.type === 'FORM'){
+                // console.log( msg_data )
                 msgs_list.push( 
                     <div className="msg_form" key={index+'_5'}>
                         <FormfromJSON 
@@ -494,6 +495,7 @@ class ChatBot extends React.Component{
                         />
                     </div>
                 )
+            }
 
             if( msg_data.show_feedback )
                 msgs_list.push(
