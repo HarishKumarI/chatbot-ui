@@ -410,6 +410,7 @@
                         "content": "[ see more ]( https://www.carwale.com/new/search/#bs=6,3&budget=8 )"
                     }
                 ],
+                "show_feedback": true,
                 "title": "Here are few list of cars matching preferences of **body type SUVs and hatchback**, **price 25-40 L**",
                 "type": "CAROUSEL"
             }                

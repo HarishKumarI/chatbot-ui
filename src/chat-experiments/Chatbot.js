@@ -81,7 +81,6 @@ function sendFeedback( payload, cmt){
     .then( responseJson => {
         console.log( responseJson )
     }) 
-
 }
 
 
@@ -125,6 +124,7 @@ function MsgFeedback(props){
 
 
 class ChatBot extends React.Component{
+    carousel_heights = {}
     constructor(props){
         super(props)
 
@@ -142,6 +142,27 @@ class ChatBot extends React.Component{
     }
 
     async createSession( user_id, reset_session ){
+        if( reset_session ){
+            await await fetch('/api/drop-cookie',
+            {
+              method: 'POST',
+              headers: {
+                "content-type": "application/json",
+                "content-encoding": "gzip"
+              },
+              body: JSON.stringify( {} )
+            }
+          )
+          .then( res => res.json())
+          .then( responseJson => { 
+              console.log( responseJson )
+          })
+          .catch(err => { 
+              console.log(err); 
+              // $('#root').append(`<div class="errormsg" style="background-color: rgb(221, 103, 103)"> Sorry, there was an unexpected error in this service. </div>`)
+          })
+        }
+
         let body = { context : null, timestamp : new Date(), channel : "cognichat", user_id, reset_session, env: process.env.REACT_APP_STAGE }
 
         await fetch('/api/test-create-session',
@@ -411,7 +432,8 @@ class ChatBot extends React.Component{
                                      */}
                                 </div>
                                 <div className={ `card-carousel-container ${ 'cards_list_'+index+'_'+carousel_idx }` }>
-                                    {   carousel_cards.map( ( card_info, idx ) => {
+                                    {   
+                                        carousel_cards.map( ( card_info, idx ) => {
                                             if( idx > msg_data.card_limit +1 ) return null
                                             if( idx > msg_data.card_limit ) 
                                                 return  <div className="link" key={idx} 
@@ -429,7 +451,6 @@ class ChatBot extends React.Component{
                                                         </div> 
                                             
                                             return  <Card data={ card_info } key={idx} />
-                                           
                                         })
                                     } 
                                 </div>
@@ -538,12 +559,13 @@ class ChatBot extends React.Component{
             let max_height = 0
             // console.log( cards.length )
             cards.forEach( card => {
-                // console.log( card.className )
                 max_height = max_height < card.offsetHeight ? card.offsetHeight : max_height
             })
-            // console.log( max_height )
+            if( !Object.keys( this.carousel_heights ).includes( carousel ) )
+                this.carousel_heights[ carousel ] = max_height
+            // console.log( max_height, this.carousel_heights )
             cards.forEach( card => {
-                card.style.height = `${max_height}px`
+                card.style.height = `${this.carousel_heights[ carousel ]}px`
             })
         })
     }
@@ -602,7 +624,7 @@ class ChatBot extends React.Component{
 
                                     <div contentEditable={true} suppressContentEditableWarning
                                         id="feedback_note" data-placeholder="Add a note." 
-                                        onKeyUp={e => {
+                                        onBlur={e => {
                                             let { feedback_data, msgs } = this.state 
                                             const cmt = e.target.innerText
                                             msgs[ feedback_data.index ].feedback_String = cmt.length ? cmt : null
