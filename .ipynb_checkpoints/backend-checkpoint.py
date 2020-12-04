@@ -9,8 +9,6 @@ app = Flask(__name__)
 
 CORS(app)
 
-
-
 @app.route('/api/session_list',methods=['GET'])
 def SessionList():
     if(request.method == 'GET'):
