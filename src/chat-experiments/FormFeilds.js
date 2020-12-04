@@ -119,7 +119,7 @@ function FormfromJSON(props){
 
                         // console.log( json.content, keyValPair )
                         json.content.forEach( feild => {
-                            feild.value = feild.description === keyValPair[ feild.label ] ? feild.value : { ...keyValPair[ feild.label ], ...feild.value }
+                            feild.value = feild.description === keyValPair[ feild.label ] ? feild.value : { ...feild.value,...keyValPair[ feild.label ] }
                         } )
                         // console.log( json.content )
                         onSubmit( json.content )

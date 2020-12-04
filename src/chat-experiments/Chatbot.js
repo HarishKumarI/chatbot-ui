@@ -297,7 +297,7 @@ class ChatBot extends React.Component{
         const cmt = document.getElementById('feedback_note').innerText
         msgs[ feedback_data.index ].feedback_String = cmt.length ? cmt : null
         sendFeedback( { question: feedback_data.question, answerJson: feedback_data.answerJson, feedback: feedback_data.feedback_value, cmt }, true )
-        console.log( msgs[ feedback_data.index ], cmt )
+        // console.log( msgs[ feedback_data.index ], cmt )
         this.setState({ show_feedback_form: false, feedback_data: null, msgs })
 
     }
@@ -508,7 +508,7 @@ class ChatBot extends React.Component{
                         }}
                         askFeedback={data => { 
                             setTimeout( () => { $('#feedback_note').text(data.feedback_String) }, 15) 
-                            console.log(data.feedback_String, $('#feedback_note').text() );
+                            // console.log(data.feedback_String, $('#feedback_note').text() );
                             this.setState({ feedback_data: {...data, index }, show_feedback_form: true }) 
                         }  }
                     />
@@ -606,7 +606,7 @@ class ChatBot extends React.Component{
                                             let { feedback_data, msgs } = this.state 
                                             const cmt = e.target.innerText
                                             msgs[ feedback_data.index ].feedback_String = cmt.length ? cmt : null
-                                            console.log( cmt )
+                                            // console.log( cmt )
                                             this.setState({ feedback_data, msgs })
                                         }}  
                                         >
