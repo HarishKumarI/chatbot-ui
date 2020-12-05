@@ -14,6 +14,14 @@ import * as serviceWorker from './serviceWorker';
 
 document.title = 'Carwale chatbot | CogniQA'
 
+window.addEventListener("load",function() {
+  if( document.body.offsetWidth < 480 )
+    setTimeout(function(){
+        // This hides the address bar:
+        window.scrollTo(0, 1);
+    }, 0);
+});
+
 let user_data = {}
 
 const routing = (

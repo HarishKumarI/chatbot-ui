@@ -52,7 +52,7 @@ body{
 
 .chat_window {
   flex: 1 1 auto;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
@@ -72,7 +72,7 @@ body{
 
 * ::-webkit-scrollbar{
   width: 8px;
-  height: 8px;
+  height: 5px;
 }
 
 /* Handle */

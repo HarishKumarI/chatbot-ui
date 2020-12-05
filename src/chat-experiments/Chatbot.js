@@ -579,24 +579,25 @@ class ChatBot extends React.Component{
 
         return  <>
                     <div className="chat_interface">
-                        <div className="clear_session" >
-                            <div className="clear_session_btn"
-                                onClick={e => this.createSession( this.props.user_id, true )}> 
-                                Clear Session 
-                            </div>
-                        </div>
                         <div className="chat_window" >
-                                
+                            <div className="clear_session" >
+                                <div className="clear_session_btn"
+                                    onClick={e => this.createSession( this.props.user_id, true )}> 
+                                    Clear Session 
+                                </div>
+                            </div>
                             <div className="messages-container">
-                                { messages }
+                                <div className="messages">
+                                    { messages }
 
-                                { this.state.show_dots ?
-                                    <div  className="dots">
-                                        <div className="dot1"></div>
-                                        <div className="dot2"></div>
-                                        <div className="dot3"></div>
-                                    </div>
-                                : null }
+                                    { this.state.show_dots ?
+                                        <div  className="dots">
+                                            <div className="dot1"></div>
+                                            <div className="dot2"></div>
+                                            <div className="dot3"></div>
+                                        </div>
+                                    : null }
+                                </div>
                             </div>
 
                             <div className="chat_text_handler" >
