@@ -552,7 +552,7 @@
 
 @media only screen and (min-width: 320px) and (max-width: 480px){
     .messages-container{
-        max-height: 88vh;
+        max-height: 85vh;
     }
 
     .feedback_form{
@@ -582,5 +582,10 @@
 
     .card-carousel img{
         margin: 10px auto;
+    }
+
+    .card-carousel-container{
+        max-width: 80vw;
+        /* border: 1px solid black; */
     }
 }
