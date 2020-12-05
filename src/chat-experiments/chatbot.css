@@ -574,14 +574,20 @@
 
     .messages-container{
         flex: 1 1 auto;
+        margin-bottom: 65px;
     }
 
     .messages{
-        max-height: 83vh;
+        max-height: 82vh;
     }
 
     .chat_text_handler{
-        flex: 0 1 auto;    }
+        /* flex: 0 1 auto;     */
+        bottom: 0;
+        position: fixed;
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+    }
 
     .feedback_form{
         height: 380px;

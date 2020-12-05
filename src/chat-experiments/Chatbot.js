@@ -312,6 +312,7 @@ class ChatBot extends React.Component{
                 document.getElementsByClassName('messages-container')[0].scrollTop = scrollHeight
             }, 50)
         }  catch(err){}
+        window.scrollTo(0,document.body.scrollHeight);
     }
 
     handleClick(e){
