@@ -558,10 +558,10 @@
 
     .chat_text_handler{
         z-index: 50;
-        position: absolute;
+        position: fixed;
         bottom: 0;
         width: -webkit-fill-available;
-        background-color: rgba(255, 255, 255, 0.884);
+        background-color: rgba(255, 255, 255, 0.959);
     }
 
     .feedback_form{
@@ -579,10 +579,6 @@
 
     .single-card{
         width: 75vw !important;
-    }
-
-    .card, .single-card{
-        box-shadow: 0 0 8px 3px rgb(233, 231, 231) !important;
     }
 
     .card-carousel .card{

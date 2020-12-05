@@ -31,7 +31,7 @@
     --single-card-width: 70%;
     --card-title-font-weight: 600;
     --card-border: 1px solid rgb(236, 236, 236);
-    --card-box-shadow: 0 0 8px 3px rgb(226, 225, 225) !important;
+    --card-box-shadow: 0 0 8px 2px rgb(216, 215, 215) !important;
     --card-border-radius: 8px;
     --card-image-border-bottom: 1px solid rgb(228, 227, 227);
     --card-carousel-scroll-bg: rgb(228, 227, 227);
