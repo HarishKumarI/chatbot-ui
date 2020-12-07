@@ -138,9 +138,10 @@ class Debug extends React.Component{
     developer_feedback(e, idx, change){
         e.preventDefault()
         const { name, value } = e.target
-        let { sessionjson } = this.state
+        let { sessionjson, exchanges, selectedMsg } = this.state
 
         try{
+            exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback[name] = value
             sessionjson.history[ idx ].developer_feedback[ name ] = value
         }
         catch(err){
@@ -148,7 +149,9 @@ class Debug extends React.Component{
             sessionjson.history[ idx ].developer_feedback[ name ] = value
         }
 
-        this.setState({ sessionjson })
+        // sessionjson.history[ selectedMsg ].developer_feedback === undefined
+
+        this.setState({ sessionjson, exchanges })
 
         if( change === null | change === undefined )
             $.post('http://95.217.239.6:7051/api/dev_feedback', JSON.stringify({ session_id: this.state.selected_session.session_id, history: sessionjson.history }) , res => {
@@ -404,7 +407,7 @@ class Debug extends React.Component{
                                                         <div>
                                                             State: 
                                                             <select name="state" 
-                                                                value={ sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.state } 
+                                                                value={ exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback === undefined ? '' : exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback.state } 
                                                                 onChange={e => this.developer_feedback( e, selectedMsg )} >
                                                                 <option value="--select--" > --select-- </option>
                                                                 <option value="Open" > Open </option>
@@ -417,7 +420,7 @@ class Debug extends React.Component{
                                                             </select>
                                                             Issue Type: 
                                                             <input type="text" name="issue_type" placeholder="issue type" 
-                                                                value={sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.issue_type } 
+                                                                value={exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback === undefined ? '' : exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback.issue_type } 
                                                                 onBlur={e => this.developer_feedback( e, selectedMsg )}
                                                                 onChange={e => this.developer_feedback( e, selectedMsg, 'change' )}
                                                             />
@@ -428,7 +431,7 @@ class Debug extends React.Component{
                                                                 onBlur={e => {
                                                                     this.developer_feedback( { ...e, target:{ ...e.target, name: 'notes',value: e.target.innerText} }, selectedMsg )
                                                                 }}  
-                                                                >{sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.notes}
+                                                                >{exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback === undefined ? '' : exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback.notes }
                                                             </div>
                                                         </div>
                                                     </div>
