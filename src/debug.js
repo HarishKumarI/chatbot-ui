@@ -37,6 +37,7 @@ class Debug extends React.Component{
             sessions_list: [],
             loading: false,
             sessionjson: null,
+            exchanges: [],
             selectedMsg: null,
             show_model: false,
             model_content: null
@@ -101,16 +102,44 @@ class Debug extends React.Component{
         )
         .then( response => response.json() )
         .then( res=>{
-            this.setState({ sessionjson: res, loading: false, selectedMsgJson: null })
+            let exchanges = []
+            res.history.forEach( ( msg, i) =>{
+                if( msg.sender === 'USER' ){
+                    msg.exchange_idx = exchanges.length
+                    msg.response = null
+                    msg.feedback = null
+                    msg.feedback_text = null
+                    msg.developer_feedback = msg.developer_feedback === undefined ? { issue_type: '', notes:'', state:'' } : msg.developer_feedback
+                    msg.developer_feedback.index = i
+                    exchanges.push(msg)
+                }
+                else{
+                    msg.exchange_idx = exchanges.length - 1
+                    exchanges[ exchanges.length -1 ].feedback = msg.feedback
+                    exchanges[ exchanges.length -1 ].feedback_text = msg.feedback_text
+                    exchanges[ exchanges.length -1 ].response = msg
+                    exchanges[ exchanges.length -1 ].bot_developer_feedback = msg.developer_feedback === undefined ? { issue_type: '', notes:'', state:'' } : msg.developer_feedback
+                    exchanges[ exchanges.length -1 ].bot_developer_feedback.index = i
+                }
+            })
+
+            // res.history.forEach( msg=> {
+            //     console.log( msg.feedback_text, msg.exchange_idx )
+            // } )
+
+            this.setState({ sessionjson: res, loading: false, selectedMsgJson: null, exchanges })
+            
         })
         .catch(err => {
             this.setState({loading: 'error'})
         })
     }
 
-    developer_feedback(e, idx){
+    developer_feedback(e, idx, change){
+        e.preventDefault()
         const { name, value } = e.target
         let { sessionjson } = this.state
+
         try{
             sessionjson.history[ idx ].developer_feedback[ name ] = value
         }
@@ -119,10 +148,12 @@ class Debug extends React.Component{
             sessionjson.history[ idx ].developer_feedback[ name ] = value
         }
 
-        
-        $.post('http://95.217.239.6:7051/api/dev_feedback', JSON.stringify({ session_id: this.state.selected_session.session_id, history: sessionjson.history }) , res => {
-            console.log( res )
-        })
+        this.setState({ sessionjson })
+
+        if( change === null | change === undefined )
+            $.post('http://95.217.239.6:7051/api/dev_feedback', JSON.stringify({ session_id: this.state.selected_session.session_id, history: sessionjson.history }) , res => {
+                console.log( res )
+            })
         
         // console.log( this.state.selected_session.created_at, diff/(1000*60), d )
     }
@@ -271,7 +302,7 @@ class Debug extends React.Component{
     
 
     render(){
-        const { selected_session, sessionjson, selectedMsg } = this.state
+        const { selected_session, sessionjson, selectedMsg, exchanges } = this.state
 
         // console.log( selected_session, sessionjson )
 
@@ -286,6 +317,10 @@ class Debug extends React.Component{
                         <span style={{ fontSize: '12px', color: '#828080', width: '100%', textAlign: 'end' }}>Created at: { ( new Date(sessionId.created_at) ).toLocaleString() }</span>
                     </li>
         })
+
+        // if( selectedMsg !== null ){
+        //     console.log( sessionjson.history[ selectedMsg ].developer_feedback )
+        // }
 
         setTimeout(() => { this.evenCardsHeight() }, 5000)
        
@@ -357,9 +392,9 @@ class Debug extends React.Component{
                                 { selectedMsg  !== null ?
                                     <>
                                         <div style={{ margin: '5px', lineHeight: '145%' }} >
-                                            <span style={{ fontWeight: 'bolder' }} >User Feedback:</span> { sessionjson.history[ selectedMsg ].feedback !== null ?  
+                                            <span style={{ fontWeight: 'bolder' }} >User Feedback:</span> { exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].feedback !== null ?  
                                                                 sessionjson.history[ selectedMsg ].feedback ? <ThumbUpAltRounded /> :  <ThumbDownAltRounded /> : '' } <br/>
-                                            <span style={{ fontWeight: 'bolder' }} >User Comment:</span> { sessionjson.history[ selectedMsg ].feedback_text }
+                                            <span style={{ fontWeight: 'bolder' }} >User Comment:</span> { exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].feedback_text }
                                         </div>
                                         <div>
                                             {  diff > 30  ?
@@ -368,7 +403,8 @@ class Debug extends React.Component{
                                                     <div className="dev_feedback">
                                                         <div>
                                                             State: 
-                                                            <select name="state" defaultValue={ sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.state } 
+                                                            <select name="state" 
+                                                                value={ sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.state } 
                                                                 onChange={e => this.developer_feedback( e, selectedMsg )} >
                                                                 <option value="--select--" > --select-- </option>
                                                                 <option value="Open" > Open </option>
@@ -381,9 +417,10 @@ class Debug extends React.Component{
                                                             </select>
                                                             Issue Type: 
                                                             <input type="text" name="issue_type" placeholder="issue type" 
-                                                                defaultValue={sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.issue_type } 
+                                                                value={sessionjson.history[ selectedMsg ].developer_feedback === undefined ? '' : sessionjson.history[ selectedMsg ].developer_feedback.issue_type } 
                                                                 onBlur={e => this.developer_feedback( e, selectedMsg )}
-                                                                />
+                                                                onChange={e => this.developer_feedback( e, selectedMsg, 'change' )}
+                                                            />
                                                         </div>
                                                         <div>
                                                             <div>Notes:</div>

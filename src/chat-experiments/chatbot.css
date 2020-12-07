@@ -244,10 +244,6 @@
     padding-left: calc( var( --img-width ) );
 }
 
-.card-carousel ::-webkit-scrollbar{
-    height: 5px !important;
-}
-
 .card-carousel-container::-webkit-scrollbar-thumb {
     background: var( --card-carousel-scroll-bg ); 
 }
@@ -565,6 +561,10 @@
     .chat_window{
         display: flex;
         width: 100vw;
+    }
+
+    .card-carousel ::-webkit-scrollbar{
+        height: 5px !important;
     }
 
     .clear_session{
