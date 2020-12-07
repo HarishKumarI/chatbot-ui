@@ -136,7 +136,7 @@ class Debug extends React.Component{
     }
 
     developer_feedback(e, idx, change){
-        e.preventDefault()
+        // e.preventDefault()
         const { name, value } = e.target
         let { sessionjson, exchanges, selectedMsg } = this.state
 
