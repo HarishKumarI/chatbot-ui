@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Debug from './debug'
 import {FormFeilds} from './chat-experiments/FormFeilds'
+import { TextMoreTesting } from './components/TextMore'
 import { Login} from './App';
 import Experiment from './chat-experiments/'
 
@@ -35,6 +36,7 @@ const routing = (
   <Router>
       <Route exact path="/" component={props => <Login { ...props} updateData={ data => {user_data = data } } /> } />
       <Route exact path="/formElements" component={ FormFeilds } />
+      <Route exact path="/textMore" component={ TextMoreTesting } />
       <Route exact path="/debug" component={ Debug } />
       <Route exact path="/debug/:session_id" component={ Debug } />
       <Route exact path="/login/:user_id" component={props => <Experiment { ...props } user_data={ user_data } /> } />

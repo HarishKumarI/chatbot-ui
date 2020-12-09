@@ -1,0 +1,59 @@
+.output_div{
+    border: 1px solid grey;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: aliceblue;
+    overflow-y: auto;
+    max-height: 88vh;
+}
+
+.text_msg{
+    font-size: 14px !important;
+    line-height: 1.7;
+}
+
+.text_msg p{
+    margin: 0 !important;
+}
+
+.text_msg *{
+    width: fit-content !important;
+    text-align: start;
+}
+
+.text_msg ul{
+    margin: 0;
+    height: inherit;
+    /* word-break: break-all !important; */
+    word-wrap: break-word !important;
+}
+
+.view_div{
+    display: flex;
+    width: 100% !important;
+    margin-top: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: rgb(49, 47, 47);
+}
+
+.view_div > div{
+    width: 100% !important;
+    padding: 2px 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+    border-top: 1px solid rgb(228, 228, 228);
+}
+
+.view_arrow{
+    color : #44a1fd;
+    display: flex;
+    height: 14px;
+    width: 14px !important;
+    margin: auto 2px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

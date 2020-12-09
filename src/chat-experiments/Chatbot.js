@@ -29,6 +29,7 @@ import agent_image from './agent.png'
 import * as showdown from 'showdown' 
 import * as json2md from 'json2md'
 import { FormfromJSON } from './FormFeilds'
+import { TextMore } from '../components/TextMore' 
 
 var converter = new showdown.Converter({'noHeaderId':'true'})
 
@@ -307,9 +308,9 @@ class ChatBot extends React.Component{
     scrollBottom(){
         try{
             setTimeout( () => {
-                const { clientHeight, scrollHeight } = document.getElementsByClassName('messages-container')[0]
+                const { clientHeight, scrollHeight } = document.getElementsByClassName('messages')[0]
                 if( clientHeight !== scrollHeight )
-                document.getElementsByClassName('messages-container')[0].scrollTop = scrollHeight
+                document.getElementsByClassName('messages')[0].scrollTop = scrollHeight
             }, 50)
         }  catch(err){}
         window.scrollTo(0,document.body.scrollHeight);
@@ -365,14 +366,21 @@ class ChatBot extends React.Component{
                         <img src={ msg_data.user_type === 'agent' ? agent_image : uiJSON.bot_image } alt="bot_image" className="bot_image" />  
                         <div className="bot_name">{  msg_data.user_type === 'agent' ? uiJSON.agent_name : uiJSON.bot_name }</div>
                     </div>
-                )   
+                )  
 
             if( msg_data.type === 'TEXT' )
                 /* text message */
                 msgs_list.push(
+                    msg_data.user_type === 'user' ? 
                     <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` } key={index+'_1'}>   
                         <div className={`${msg_data.user_type}`} suppressContentEditableWarning 
                                                 dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
+                    </div>
+                    : 
+                    <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` } key={index+'_1'}>  
+                        <div className={`${msg_data.user_type}`}>
+                            <TextMore HTML={ msg_data.msg } />
+                        </div> 
                     </div>
                 )
 
