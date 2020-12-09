@@ -132,7 +132,7 @@ class TextMore extends React.Component{
     newDiv.className = 'removable_div'
     newDiv.innerHTML = htmlDoc.body.innerHTML
     document.body.appendChild( newDiv )
-
+    
     setTimeout( () => {
 
       const { lineHeight } = window.getComputedStyle( this.divRef.current )
@@ -143,14 +143,18 @@ class TextMore extends React.Component{
       this.heights = this.heights !== null ? this.heights : Array.from( this.divRef.current.children ).map( el => { return el.offsetHeight / linesHeight })
       
       let temp = 0
+      let remaining = 0
       this.heights.forEach( ( tag_lines, idx) => {
-          if( temp + tag_lines <= this.lines_limit ){
-            this.indices_limit = idx
-            temp += tag_lines
-          }
+        if( temp + tag_lines <= this.lines_limit ){
+          this.indices_limit = idx
+          temp += tag_lines
+        }
+        else{
+          remaining += 1
+        }
       })  
 
-      // console.log( this.heights, temp, this.indices_limit)
+      console.log( this.heights, temp, this.indices_limit)
 
       let lesstext_div = document.createElement('div')
       let moretext_div = document.createElement('div')
@@ -167,8 +171,8 @@ class TextMore extends React.Component{
 
       // console.log( lesstext_div.children.length, moretext_div.children.length,newDiv.children.length , this.divRef.current.children.length )
 
-      console.log( this.indices_limit, this.heights.length, this.divRef.current.children.length)
-      this.setState({ showMore:  this.heights.length < 2 ? false : this.indices_limit < this.heights.length })
+      console.log( this.indices_limit, this.heights.length, this.divRef.current.children.length, remaining, temp)
+      this.setState({ showMore:  remaining > 0 })
 
       // if( !isEqual( lesstext_div.innerHTML, this.state.lesstext_div ) ){
       this.setState({ lesstext_div: lesstext_div.innerHTML, moretext_div: lesstext_div.innerHTML+moretext_div.innerHTML })
