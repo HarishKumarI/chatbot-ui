@@ -29,74 +29,95 @@ function markdown2HTML( markdown ) {
 
 
 const sampleJson = {
-  "content": [
+  content: [
+    [
       [
-      [
-          {
-          "p": "Tyres details of Mahindra XUV500 W9 AT :"
-          }, 
-          {
-          "ul": [
-              {
-              "p": "Spare Wheel \\- Steel"
-              }, 
-              {
-              "p": "Wheels \\- Alloy Wheels"
-              }, 
-              {
-              "p": "Front Tyres \\- 235 / 65 R17"
-              }, 
-              {
-              "p": "Rear Tyres \\- 235 / 65 R17"
-              }
+        {
+          p: 'Tyres details of Mahindra XUV500 W9 AT :'
+        },
+        {
+          ul: [
+            {
+              p: 'Spare Wheel \\- Steel'
+            },
+            {
+              p: 'Wheels \\- Alloy Wheels'
+            },
+            {
+              p: 'Front Tyres \\- 235 / 65 R17'
+            },
+            {
+              p: 'Rear Tyres \\- 235 / 65 R17'
+            },
+            {
+              p: 'Spare Wheel \\- Steel'
+            },
+            {
+              p: 'Wheels \\- Alloy Wheels'
+            },
+            {
+              p: 'Front Tyres \\- 235 / 65 R17'
+            },
+            {
+              p: 'Rear Tyres \\- 235 / 65 R17'
+            },
+            {
+              p: 'Spare Wheel \\- Steel'
+            },
+            {
+              p: 'Wheels \\- Alloy Wheels'
+            },
+            {
+              p: 'Front Tyres \\- 235 / 65 R17'
+            }
           ]
-          }, 
-          {
-          "p": "It has steering features like :"
-          }, 
-          {
-          "ul": [
-              {
-              "p": "Minimum Turning Radius \\- 5. 6 metres"
-              }, 
-              {
-              "p": "Steering Type \\- Power assisted (Hydraulic)"
-              }
+        },
+        {
+          p: 'It has steering features like :'
+        },
+        {
+          ul: [
+            {
+              p: 'Minimum Turning Radius \\- 5. 6 metres'
+            },
+            {
+              p: 'Steering Type \\- Power assisted (Hydraulic)'
+            }
           ]
-          }, 
-          {
-          "p": "Suspension type of It :"
-          }, 
-          {
-          "ul": [
-              {
-              "p": "Front Suspension \\- McPherson type with anti-roll bar"
-              }, 
-              {
-              "p": "Rear Suspension \\- Multi-link type with anti-roll bar"
-              }
+        },
+        {
+          p: 'Suspension type of It :'
+        },
+        {
+          ul: [
+            {
+              p: 'Front Suspension \\- McPherson type with anti-roll bar'
+            },
+            {
+              p: 'Rear Suspension \\- Multi-link type with anti-roll bar'
+            }
           ]
-          }, 
-          {
-          "p": "Type of brakes in It :"
-          }, 
-          {
-          "ul": [
-              {
-              "p": "Rear Brake Type \\- Disc"
-              }, 
-              {
-              "p": "Front Brake Type \\- Ventilated Disc"
-              }
+        },
+        {
+          p: 'Type of brakes in It :'
+        },
+        {
+          ul: [
+            {
+              p: 'Rear Brake Type \\- Disc'
+            },
+            {
+              p: 'Front Brake Type \\- Ventilated Disc'
+            }
           ]
-          }
+        }
       ]
-      ]
-  ], 
-  "footer_options": [], 
-  "markdown": true, 
-  "type": "TEXT"
-  }
+    ]
+  ],
+  footer_options: [],
+  markdown: true,
+  type: 'TEXT'
+}
 
 
 class TextMore extends React.Component{
@@ -144,17 +165,22 @@ class TextMore extends React.Component{
       
       let temp = 0
       let remaining = 0
-      this.heights.forEach( ( tag_lines, idx) => {
+      this.heights.every( ( tag_lines, idx) => {
+        // console.log(  temp + tag_lines <= this.lines_limit  )
         if( temp + tag_lines <= this.lines_limit ){
           this.indices_limit = idx
           temp += tag_lines
+          return true
         }
         else{
           remaining += 1
+          this.indices_limit = idx
+          temp += tag_lines
+          return false
         }
       })  
 
-      console.log( this.heights, temp, this.indices_limit)
+      // console.log( this.heights, temp, this.indices_limit, remaining)
 
       let lesstext_div = document.createElement('div')
       let moretext_div = document.createElement('div')
@@ -171,7 +197,7 @@ class TextMore extends React.Component{
 
       // console.log( lesstext_div.children.length, moretext_div.children.length,newDiv.children.length , this.divRef.current.children.length )
 
-      console.log( this.indices_limit, this.heights.length, this.divRef.current.children.length, remaining, temp)
+      // console.log( this.indices_limit, this.heights.length, this.divRef.current.children.length, remaining, temp)
       this.setState({ showMore:  remaining > 0 })
 
       // if( !isEqual( lesstext_div.innerHTML, this.state.lesstext_div ) ){
@@ -239,9 +265,9 @@ class TextMoreTesting extends React.Component{
     }
 
     onJsonChange(e){
-        let { sampleJson, differentType } = this.state
-        sampleJson = e === undefined ? this.state.sampleJson : e.jsObject   
-        this.setState({ differentType, sampleJson })
+      let { sampleJson, differentType } = this.state
+      sampleJson = e === undefined ? this.state.sampleJson : e.jsObject   
+      this.setState({ differentType, sampleJson, jsonChanged: true })
     }
 
     render(){
@@ -256,14 +282,14 @@ class TextMoreTesting extends React.Component{
                             > Go </button>
                         </div>
                         <JSONInput 
-                            id          = "editor"
-                            placeholder = { this.state.sampleJson }
-                            colors      = { darken }
-                            locale      = { locale }
-                            height      = '90vh'
-                            width       = 'inherit'
-                            onChange    = {e => this.setState({ jsonChanged: true })}
-                            onBlur      = { this.onJsonChange }
+                          id          = "editor"
+                          placeholder = { this.state.sampleJson }
+                          colors      = { darken }
+                          locale      = { locale }
+                          height      = '90vh'
+                          width       = 'inherit'
+                          // onChange    = {e => this.setState({ jsonChanged: true })}
+                          onBlur      = { this.onJsonChange }
                         />
                     </div>
                     <div className="editor_container">

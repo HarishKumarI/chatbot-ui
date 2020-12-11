@@ -125,6 +125,7 @@
     display: flex;
     align-items: center;
     height: 15px;
+    margin: 8px 0;
 }
 
 .chat-persona img{
@@ -133,7 +134,7 @@
     border-radius: 50%;
     z-index: 5;
     position: relative;
-    transform: translateY( 10px );
+    /* transform: translateY( 10px ); */
 }
 
 .chat-persona .bot_name{
@@ -158,8 +159,8 @@
 
 .time{
     font-size: 9px;
-    margin: 2px 0;
-    margin-left: calc( var( --img-width ) + 10px );
+    margin: 2px 2px;
+    /* margin-left: calc( var( --img-width ) + 10px ); */
 }
 
 .user_text *{
@@ -167,20 +168,21 @@
     flex-direction: row-reverse;
     text-align: end;
     float: right;
-    margin-right: 20px !important;
+    margin: 0 !important;
+    /* margin-right: 20px !important; */
 }
 
 
 .agent, .bot{
     width: fit-content;
-    max-width: 85%;
+    max-width: 92%;
     border: var( --bot-border );
     background-color: var(--bot_background);
     border-radius: 10px;
     padding: 8px 10px;
     color: var( --bot-color );
     border-bottom-left-radius: 0px;
-    margin-left: calc( var( --img-width ) + 10px );
+    margin-left: 0;
     word-break: break-word;
     box-sizing: border-box;
 }
@@ -194,6 +196,7 @@
     background-color: var(--user_background);
     color: var( --user-color );
     border-bottom-right-radius: 0px;
+    margin: 0 !important;
 }
 
 
@@ -201,7 +204,7 @@
 
 .single-card{
     width: var( --single-card-width ) !important;
-    margin-left: calc( var( --img-width ) + 10px );
+    margin-left: 0;
 }
 
 .card_title{
@@ -209,8 +212,9 @@
     font-weight: var( --card-title-font-weight );   
     word-wrap: break-word !important;
     white-space: normal;
+    font-size: 15px !important;
     /* border-top: var( --card-image-border-bottom ); */
-    padding-top: 5px;
+    padding: 0px !important;
     text-align: center;
 }
 
@@ -235,7 +239,7 @@
 
 .card-carousel{
     width: 100%;
-    max-width: 550px;
+    max-width: 570px;
     position: relative;
     /* overflow-x: auto; */
     /* z-index: 100; */
@@ -244,8 +248,8 @@
 .card-carousel-container{
     overflow-x: auto;
     white-space: nowrap;
-    padding: 3px 18px;
-    padding-left: calc( var( --img-width ) );
+    padding: 3px 0px;
+    /* padding-left: calc( var( --img-width ) ); */
 }
 
 .card-carousel-container::-webkit-scrollbar-thumb {
@@ -263,11 +267,6 @@
     box-shadow: var( --card-box-shadow );
 }
 
-.card-carousel-container .single-card img{
-    display: block;
-    margin: 20px;
-    width: 90%;
-}
 
 .card-carousel-container .card{
     width: 100%;
@@ -278,8 +277,8 @@
 
 .card-carousel-container img{
     display: block;
-    margin: 20px;
-    width: 80%;
+    margin: 10px;
+    width: 90%;
 }
 
 .card-carousel-container .single-card .card-text, .card .card-text{
@@ -287,7 +286,7 @@
     padding: 10px;
     line-height: 150%;
     color: rgb(107, 106, 106);
-    font-size: 14px;
+    font-size: 13.5px !important;
     /* word-break: break-all !important; */
     height: inherit;
     word-wrap: break-word !important;
@@ -300,14 +299,20 @@
 
 .card_title p, .card-text p, .msg ul{
     margin: 0;
+    padding: 0;
     height: inherit;
     /* word-break: break-all !important; */
     word-wrap: break-word !important;
 }
 
 .card-text ul{
+    padding: 0 !important;
+    padding-left: 20px !important;
+}
+
+.msg ul{
     margin: 0;
-    padding-left: 38px;
+    padding-left: 25px;
 }
 
 .navigation-btns svg, .navigation-btns .link{
@@ -356,10 +361,11 @@
 /* suggested questions populated for every reply based on the response */
 
 .suggested_container{
-    text-align: end;
+    /* text-align: end; */
     margin: 5px 0 !important;
-    padding-left: calc( var( --img-width ) + 10px );
-    margin-right: 20px !important;
+    max-width: 560px;
+    /* padding-left: calc( var( --img-width ) + 10px ); */
+    /* margin-right: 20px !important; */
 }
 
 .suggested_que{
@@ -533,13 +539,13 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    max-width: 80%;
+    max-width: 92%;
     padding: 8px;
     background-color: var(--bot_background);
     border: 1px solid rgb(235, 234, 234);
     border-bottom-left-radius: 0px;
     margin: 5px 0;
-    margin-left: calc( var( --img-width ) + 10px );
+    margin-left: 0;
 }
 
 .clear_session{
@@ -581,6 +587,10 @@
         margin-bottom: 65px;
     }
 
+    .msg *{
+        line-height: 1.4;
+    }
+
     .messages{
         max-height: 82vh;
     }
@@ -607,11 +617,11 @@
     }        
 
     .single-card{
-        width: 75vw !important;
+        width: 80vw !important;
     }
 
     .card-carousel .card{
-        max-width: 70%;
+        max-width: 68%;
     }
 
     .card img{
@@ -619,11 +629,11 @@
     }
 
     .card-carousel img{
-        margin: 10px auto;
+        margin: 8px auto;
     }
 
     .card-carousel-container{
-        max-width: 80vw;
+        max-width: 95vw;
         /* border: 1px solid black; */
     }
 }

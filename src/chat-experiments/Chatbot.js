@@ -529,6 +529,15 @@ class ChatBot extends React.Component{
                 )
             }
 
+
+            /* time */
+            if( msgs.length - 1 === index || ( msgs[index + 1] !== undefined && msg_data.user_type !== msgs[index + 1].user_type ) )
+                msgs_list.push(
+                    <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` } key={index+'_7'}>   
+                        <div className="time">{ msg_data.time }</div> 
+                    </div>
+                )
+
             if( msg_data.show_feedback )
                 msgs_list.push(
                     <MsgFeedback  
@@ -546,13 +555,6 @@ class ChatBot extends React.Component{
                     />
                 )
 
-            /* time */
-            if( msgs.length - 1 === index || ( msgs[index + 1] !== undefined && msg_data.user_type !== msgs[index + 1].user_type ) )
-                msgs_list.push(
-                    <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` } key={index+'_7'}>   
-                        <div className="time">{ msg_data.time }</div> 
-                    </div>
-                )
 
         })
 
