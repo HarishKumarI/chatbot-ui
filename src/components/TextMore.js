@@ -165,7 +165,7 @@ class TextMore extends React.Component{
       
       let temp = 0
       let remaining = 0
-      this.heights.every( ( tag_lines, idx) => {
+      this.heights.every( ( tag_lines, idx, arr) => {
         // console.log(  temp + tag_lines <= this.lines_limit  )
         if( temp + tag_lines <= this.lines_limit ){
           this.indices_limit = idx
@@ -173,7 +173,7 @@ class TextMore extends React.Component{
           return true
         }
         else{
-          remaining += 1
+          remaining += arr.length - 1 === idx ? 0 : 1
           this.indices_limit = idx
           temp += tag_lines
           return false
