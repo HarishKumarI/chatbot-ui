@@ -27,7 +27,6 @@ function markdown2HTML( markdown ) {
     return answerElement
 }
 
-
 const sampleJson = {
   content: [
     [
@@ -202,7 +201,7 @@ class TextMore extends React.Component{
         }
       })  
 
-      // console.log( this.indices_limit, li_index )
+      // console.log( this.indices_limit, li_index)
       // console.log( this.heights, temp, this.indices_limit, remaining)
 
       let lesstext_div = document.createElement('div')
@@ -213,9 +212,8 @@ class TextMore extends React.Component{
       Array.from( newDiv.children ).slice(0, this.indices_limit + 1 ).forEach( ( el, idx) => {   
         let { children } = el
         let new_el = document.createElement( el.tagName )
-
         if( idx === this.indices_limit ){
-          Array.from( children ).slice(0, li_index ).forEach( new_li => { new_el.appendChild(new_li) })
+          Array.from( children ).slice(0, li_index === 0 ? Array.from( children ).length : li_index ).forEach( new_li => { new_el.appendChild(new_li) })
         }
         else{
           new_el.innerHTML = el.innerHTML
@@ -225,11 +223,12 @@ class TextMore extends React.Component{
         // Array.from( el.children ).forEach( new_li => { new_el.appendChild(new_li) })
       })
 
-      // console.log( lesstext_div.children.length, moretext_div.children.length, htmlDoc.body.children.length , this.divRef.current.children.length )
+      // console.log( lesstext_div.children, moretext_div.children.length, htmlDoc.body.children.length , this.divRef.current.children.length )
 
       Array.from( children ).slice( 0, this.heights.length  ).forEach( ( el, idx) => {
         if ( idx >= this.indices_limit )
           moretext_div.appendChild( el )
+        // console.log( el )
       })
 
       // console.log( lesstext_div.children.length, moretext_div.children.length,newDiv.children.length , this.divRef.current.children.length )
@@ -258,11 +257,7 @@ class TextMore extends React.Component{
   }
 
   render(){
-    // number - 1
-
-    // this.lines = this.divRef.current.offsetHeight / parseInt( lineHeight.split('px')[0] )
-    // const { lineHeight } = window.getComputedStyle( this.divRef.current )
-    // console.log( offsetHeight, style.lineHeight, htmlDoc.body.childNodes )
+    // console.log( this.state.moretext_div )
 
 
     return (
