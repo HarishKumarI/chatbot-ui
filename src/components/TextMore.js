@@ -201,29 +201,29 @@ class TextMore extends React.Component{
         }
       })  
 
-      // console.log( this.indices_limit, li_index)
-      // console.log( this.heights, temp, this.indices_limit, remaining)
+      console.log( this.indices_limit, li_index)
+      console.log( this.heights, temp, this.indices_limit, remaining)
 
       let lesstext_div = document.createElement('div')
       let moretext_div = document.createElement('div')
 
       let {children } = newDiv
 
-      Array.from( newDiv.children ).slice(0, this.indices_limit + 1 ).forEach( ( el, idx) => {   
+      Array.from( newDiv.children ).slice(0, this.indices_limit === 0 ? 2 : this.indices_limit + 1 ).forEach( ( el, idx) => {   
         let { children } = el
         let new_el = document.createElement( el.tagName )
-        if( idx === this.indices_limit ){
+        if( idx === this.indices_limit && this.indices_limit !== 0 ){
           Array.from( children ).slice(0, li_index === 0 ? Array.from( children ).length : li_index ).forEach( new_li => { new_el.appendChild(new_li) })
         }
         else{
           new_el.innerHTML = el.innerHTML
         }
-
+        console.log( el, new_el )
         lesstext_div.appendChild( new_el )
         // Array.from( el.children ).forEach( new_li => { new_el.appendChild(new_li) })
       })
 
-      // console.log( lesstext_div.children, moretext_div.children.length, htmlDoc.body.children.length , this.divRef.current.children.length )
+      // console.log( lesstext_div.innerHTML, moretext_div.children.length, htmlDoc.body.children.length , this.divRef.current.children.length )
 
       Array.from( children ).slice( 0, this.heights.length  ).forEach( ( el, idx) => {
         if ( idx >= this.indices_limit )
