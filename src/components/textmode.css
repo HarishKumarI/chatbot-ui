@@ -1,3 +1,5 @@
+@import '../chat-experiments/css-styling.css';
+
 .output_div{
     border: 1px solid grey;
     padding: 5px;
@@ -5,11 +7,15 @@
     background-color: aliceblue;
     overflow-y: auto;
     max-height: 88vh;
+    max-width: calc( 600*100 / 85 )px;
+    /* background-color: var(--bot_background); */
 }
 
 .text_msg{
     font-size: 14px !important;
     line-height: 1.7;
+    /* height: 276px;  */
+    /* 276 = 23*12, 23 ==> line height, 12 ==> no of lines */
 }
 
 .text_msg p{
@@ -36,6 +42,9 @@
     font-size: 14px;
     color: rgb(49, 47, 47);
     overflow: hidden;
+    z-index: 100;
+    display: inline-block;
+    /* background-color: var(--bot_background); */
 }
 
 .view_div > div{

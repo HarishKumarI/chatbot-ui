@@ -55,13 +55,26 @@ function Card(props){
     // console.log( card_data )
     return  <div className={ props.compare === undefined ? 'card' : '' } 
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
-                onClick={e => { if( card_data.url !== undefined ) window.open( card_data.url, '_blank' ) } }
+                onClick={e => { 
+                    console.log( e.target )
+                    // if( card_data.url !== undefined && !e.target.class_list.includes( 'card_btn') ) window.open( card_data.url, '_blank' ) 
+                }}
+                title={ card_data.url !== undefined ? `Open ${ card_data.title } page` : '' }
                 >
-                <img src={ card_data.image.length > 0 ? card_data.image : uiJSON.alt_img_link } alt="card_image" title={ card_data.image.length > 0 ? '' : 'No Image' } />
-                <div >
+                <img src={ card_data.image.length > 0 ? card_data.image : uiJSON.alt_img_link } alt="card_image" 
+                    title={ card_data.url !== undefined ? `Open ${ card_data.title } page`: '' } />
+                <div className="card_body">
                     <div className="card_title"  dangerouslySetInnerHTML={{ __html: markdown2HTML( card_data.title ) }} />
                     <div className="card-text" dangerouslySetInnerHTML={{__html: markdown2HTML( card_data.content ) }} />
                 </div>
+                {  card_data.query !== undefined ?
+                    <div className="card_btn" title={ props.submitQuery !== undefined ? `Show ${ card_data.title } Summary` : '' }
+                        onClick={e => props.submitQuery( e, card_data.query )}
+                    > View Summary</div>
+                : null }
+                {  card_data.link !== undefined ?
+                    <div className="card_link"><a href={ card_data.link }  target="_blank" rel="noopener noreferrer" >View Details</a></div>
+                : null }
             </div>
 }
 
@@ -387,7 +400,9 @@ class ChatBot extends React.Component{
             if( msg_data.type === 'CARD' ){
                 msgs_list.push(
                     <div className="single-card" key={index+'_2'}>
-                        <Card data={ msg_data.answerJson[ msg_data.index ] } />
+                        <Card data={ msg_data.answerJson[ msg_data.index ] } 
+                            submitQuery={ ( e,query) => this.handleQuery({...e, keyCode: 13, target: { value: query} }, "query")} 
+                        />
                     </div> 
                 )
             }
@@ -458,10 +473,14 @@ class ChatBot extends React.Component{
                                                             
                                             if( msg_data.msg.compare || cards.length === 2 )
                                                 return  <div className="single-card" key={idx}>
-                                                            <Card data={ card_info } compare={ msg_data.msg.compare || cards.length === 2 } />
+                                                            <Card data={ card_info } compare={ msg_data.msg.compare || cards.length === 2 } 
+                                                                submitQuery={ (e, query) => this.handleQuery({...e, keyCode: 13, target: { value: query} }, "query")}
+                                                            />
                                                         </div> 
                                             
-                                            return  <Card data={ card_info } key={idx} />
+                                            return  <Card data={ card_info } key={idx} 
+                                                        submitQuery={ (e,query) => this.handleQuery({...e, keyCode: 13, target: { value: query} }, "query")}
+                                                    />
                                         })
                                     } 
                                 </div>
@@ -572,13 +591,13 @@ class ChatBot extends React.Component{
             let max_height = 0
             // console.log( cards.length )
             cards.forEach( card => {
-                max_height = max_height < card.offsetHeight ? card.offsetHeight : max_height
+                max_height = max_height < card.getElementsByClassName('card_body')[0].offsetHeight ? card.getElementsByClassName('card_body')[0].offsetHeight : max_height
             })
             if( !Object.keys( this.carousel_heights ).includes( carousel ) )
                 this.carousel_heights[ carousel ] = max_height
-            // console.log( max_height, this.carousel_heights )
+            console.log( max_height, this.carousel_heights )
             cards.forEach( card => {
-                card.style.height = `${this.carousel_heights[ carousel ]}px`
+                card.getElementsByClassName('card_body')[0].style.height = `${this.carousel_heights[ carousel ]}px`
             })
         })
     }

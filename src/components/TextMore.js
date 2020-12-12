@@ -7,7 +7,7 @@ import { isEqual } from 'lodash'
 
 import { 
     ExpandMore,
-    ExpandLess
+    ExpandLess,
 } from '@material-ui/icons'
 
 
@@ -69,6 +69,9 @@ const sampleJson = {
             },
             {
               p: 'Front Tyres \\- 235 / 65 R17'
+            },
+            {
+              p: 'Rear Tyres \\- 235 / 65 R17'
             }
           ]
         },
@@ -161,38 +164,72 @@ class TextMore extends React.Component{
 
       this.lines = this.divRef.current.offsetHeight / linesHeight
 
-      this.heights = this.heights !== null ? this.heights : Array.from( this.divRef.current.children ).map( el => { return el.offsetHeight / linesHeight })
-      
+      this.heights = this.heights !== null ? 
+                          this.heights : 
+                          Array.from( this.divRef.current.children ).map( el => { 
+                            if (el.children.length > 0){
+                              return Array.from(el.children).map( li => { return li.offsetHeight / linesHeight} )
+                            } 
+
+                            return [el.offsetHeight / linesHeight] 
+                          })
+      // console.log( this.heights)
       let temp = 0
       let remaining = 0
+      let li_index = 0
       this.heights.every( ( tag_lines, idx, arr) => {
-        // console.log(  temp + tag_lines <= this.lines_limit  )
-        if( temp + tag_lines <= this.lines_limit ){
+        if( temp + tag_lines.length <= this.lines_limit ){
           this.indices_limit = idx
-          temp += tag_lines
+          temp += tag_lines.length
           return true
         }
         else{
           remaining += arr.length - 1 === idx ? 0 : 1
+          tag_lines.every( (li_lines, li_idx, li_list ) => {
+            if( temp + li_lines <= this.lines_limit ){
+              li_index = li_idx
+              temp += li_lines
+              return true
+            }
+            else{
+              return false
+            }
+          })
+
           this.indices_limit = idx
-          temp += tag_lines
+          // temp += tag_lines
           return false
         }
       })  
 
+      // console.log( this.indices_limit, li_index )
       // console.log( this.heights, temp, this.indices_limit, remaining)
 
       let lesstext_div = document.createElement('div')
       let moretext_div = document.createElement('div')
 
-      Array.from( newDiv.children ).slice(0, this.indices_limit + 1 ).forEach( ( el, idx) => {
-        lesstext_div.appendChild( el )
+      let {children } = newDiv
+
+      Array.from( newDiv.children ).slice(0, this.indices_limit + 1 ).forEach( ( el, idx) => {   
+        let { children } = el
+        let new_el = document.createElement( el.tagName )
+
+        if( idx === this.indices_limit ){
+          Array.from( children ).slice(0, li_index ).forEach( new_li => { new_el.appendChild(new_li) })
+        }
+        else{
+          new_el.innerHTML = el.innerHTML
+        }
+
+        lesstext_div.appendChild( new_el )
+        // Array.from( el.children ).forEach( new_li => { new_el.appendChild(new_li) })
       })
 
       // console.log( lesstext_div.children.length, moretext_div.children.length, htmlDoc.body.children.length , this.divRef.current.children.length )
 
-      Array.from( newDiv.children ).slice( 0, this.heights.length  ).forEach( el => {
-        moretext_div.appendChild( el )
+      Array.from( children ).slice( 0, this.heights.length  ).forEach( ( el, idx) => {
+        if ( idx >= this.indices_limit )
+          moretext_div.appendChild( el )
       })
 
       // console.log( lesstext_div.children.length, moretext_div.children.length,newDiv.children.length , this.divRef.current.children.length )
@@ -233,7 +270,7 @@ class TextMore extends React.Component{
             <div ref={ this.divRef } dangerouslySetInnerHTML={{ __html: this.state.viewmore ? this.state.lesstext_div : this.state.moretext_div }} className="text_msg" />
             { this.state.showMore ?
               <div className="view_div" onClick={() => {this.setState({ viewmore: !this.state.viewmore }) }}>
-                  <div > View { this.state.viewmore ? 'More' : 'Hide' } 
+                  <div > View { this.state.viewmore ? 'More' : 'Less' } 
                       <div className="view_arrow">{ this.state.viewmore ? <ExpandMore /> : <ExpandLess /> }</div> 
                   </div>
               </div>
