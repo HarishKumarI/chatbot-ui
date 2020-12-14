@@ -73,7 +73,11 @@ function Card(props){
                     > View Summary</div>
                 : null }
                 {  card_data.link !== undefined ?
-                    <div className="card_link"><a href={ card_data.link }  target="_blank" rel="noopener noreferrer" >View Details</a></div>
+                    <div className="card_link">
+                        <a href={ card_data.link }  target="_blank" rel="noopener noreferrer" >
+                            <div dangerouslySetInnerHTML={{ __html: card_data.link_text === undefined ? 'View Details' : card_data.link_text }} />
+                        </a>
+                    </div>
                 : null }
             </div>
 }

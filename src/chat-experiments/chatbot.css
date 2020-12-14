@@ -287,7 +287,7 @@
     width: 100%;
     max-width: 550px;
     position: relative;
-    margin: 0 0 0 auto;
+    margin: 0;
     /* overflow-x: auto; */
     /* z-index: 100; */
 }
@@ -352,6 +352,11 @@
 .card-carousel-container .card-text{
     width: 85%;
 }
+
+.card-carousel-container .card:first-child, .card-carousel-container .single-card:first-child{
+    margin-left: 5px;
+}
+
 
 .card_title p, .card-text p, .msg ul{
     margin: 2px 0;

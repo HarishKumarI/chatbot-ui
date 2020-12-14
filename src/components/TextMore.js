@@ -201,8 +201,8 @@ class TextMore extends React.Component{
         }
       })  
 
-      console.log( this.indices_limit, li_index)
-      console.log( this.heights, temp, this.indices_limit, remaining)
+      // console.log( this.indices_limit, li_index)
+      // console.log( this.heights, temp, this.indices_limit, remaining)
 
       let lesstext_div = document.createElement('div')
       let moretext_div = document.createElement('div')
@@ -218,7 +218,7 @@ class TextMore extends React.Component{
         else{
           new_el.innerHTML = el.innerHTML
         }
-        console.log( el, new_el )
+        // console.log( el, new_el )
         lesstext_div.appendChild( new_el )
         // Array.from( el.children ).forEach( new_li => { new_el.appendChild(new_li) })
       })
