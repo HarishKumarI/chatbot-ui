@@ -31,6 +31,7 @@ function Card(props){
     function handleImageError(e){
         e.src = uiJSON.errorImage
     }
+
     return  <div className={ `${ highlightmsg ? 'highlightmsg' : '' } ${ compare  ? '' : 'card' }` } 
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
                 onClick={e => { if( card_data.url !== undefined ) window.open( card_data.url, '_blank' ) } }
@@ -40,8 +41,24 @@ function Card(props){
                     <div className="card_title"  dangerouslySetInnerHTML={{ __html: markdown2HTML( card_data.title ) }} />
                     <div className="card-text" dangerouslySetInnerHTML={{__html: markdown2HTML( card_data.content ) }} />
                 </div>
+                {  card_data.query !== undefined ?
+                    <div className="card_btn" title={ props.submitQuery !== undefined ? `Show ${ card_data.title } Summary` : '' }
+                        onClick={e => props.submitQuery( e, card_data.query )}
+                    > View Summary</div>
+                : null }
+                {  card_data.link !== undefined ?
+                    <div className="card_link">
+                        <a href={ card_data.link }  target="_blank" rel="noopener noreferrer" >
+                            <div dangerouslySetInnerHTML={{ __html: card_data.link_text === undefined ? 'View Details' : card_data.link_text }} />
+                        </a>
+                    </div>
+                : null }
             </div>
 }
+
+
+
+
 
 function Cards( props ){
     const { Cards, highlightmsg, markdown2HTML, index } = props
