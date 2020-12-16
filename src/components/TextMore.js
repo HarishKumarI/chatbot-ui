@@ -234,7 +234,7 @@ class TextMore extends React.Component{
       // console.log( lesstext_div.children.length, moretext_div.children.length,newDiv.children.length , this.divRef.current.children.length )
 
       // console.log( this.indices_limit, this.heights.length, this.divRef.current.children.length, remaining, temp)
-      this.setState({ showMore:  remaining > 0 })
+      this.setState({ showMore:  remaining > 0 || li_index > 0 })
 
       // if( !isEqual( lesstext_div.innerHTML, this.state.lesstext_div ) ){
       this.setState({ lesstext_div: lesstext_div.innerHTML, moretext_div: lesstext_div.innerHTML+moretext_div.innerHTML })
@@ -253,6 +253,7 @@ class TextMore extends React.Component{
     if( !isEqual( this.props.HTML, this.state.HTML ) ){
       this.setState({ HTML: this.props.HTML, lesstext_div: this.props.HTML, viewmore: true })
       this.computeLines( this.props.HTML )
+      // console.log('updated')
     }
   }
 

@@ -1,0 +1,28 @@
+360&#186; View
+
+&lt;X/node_link&gt;/360-view/
+
+<p> **&lt;Y/name&gt;** </p> <br /> <ul><li> **Mileage**  &lt;Y/has_mileage/value&gt; </li><li> **Fuel** &lt;Y/has_fuel_type/value&gt; </li><li> **Avg price** &lt;Y/has_price/value&gt; </li><li> **Transmission** &lt;Y/has_transmission/value&gt; </li><ul>
+
+
+
+<ul><li> **Mileage -**  &lt;Y/has_mileage/value&gt; </li><li> **Fuel -** &lt;Y/has_fuel_type/value&gt; </li><li> **Avg price -** &lt;Y/has_price/value&gt; </li><li> **Transmission -** &lt;Y/has_transmission/value&gt; </li></ul>
+
+
+import tensorflow as tf
+print("Num of GPUs available: ", len(tf.test.gpu_device_name()))
+Num of GPUs available:  13
+
+(tf_2) $ python -c "import tensorflow as tf; x = [[2.]]; print('tensorflow version', tf.__version__); print('hello, {}'.format(tf.matmul(x, x)))"
+
+
+MATCH (n_par)<-[:is_a]-(n:cars)-[:has_version]->(v) WHERE n_par.name='model' SET n.node_360_link = n.node_link + '360-view/'
+
+
+for comparison cards:
+=> fuel types, seating capacity, body type, no of colors, no of variants, dimensions (l*b*h).
+
+
+for version cards:
+seating capacity, fuel types 
+
