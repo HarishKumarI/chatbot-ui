@@ -26,3 +26,5 @@ for comparison cards:
 for version cards:
 seating capacity, fuel types 
 
+price gettign crash 
+seating thing in filter 

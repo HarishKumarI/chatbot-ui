@@ -162,7 +162,7 @@ class ChatBot extends React.Component{
     async createSession( user_id, reset_session ){
         if( reset_session ){
 				document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
-				console.log( document.cookie )
+				// console.log( document.cookie )
 //             await await fetch('/api/drop-cookie',
 //             {
 //               method: 'POST',
@@ -599,7 +599,7 @@ class ChatBot extends React.Component{
             })
             if( !Object.keys( this.carousel_heights ).includes( carousel ) )
                 this.carousel_heights[ carousel ] = max_height
-            console.log( max_height, this.carousel_heights )
+            // console.log( max_height, this.carousel_heights )
             cards.forEach( card => {
                 card.getElementsByClassName('card_body')[0].style.height = `${this.carousel_heights[ carousel ]}px`
             })
@@ -609,7 +609,7 @@ class ChatBot extends React.Component{
     render(){
         const messages = this.getMessages( this.state.msgs ) 
 
-        setTimeout( () => { this.evenCardsHeight() }, 500 )
+        setTimeout( () => { this.evenCardsHeight() }, 100 )
 
         return  <>
                     <div className="chat_interface">

@@ -325,6 +325,9 @@ class Debug extends React.Component{
         //     console.log( sessionjson.history[ selectedMsg ].developer_feedback )
         // }
 
+        if( selectedMsg!== null )
+            console.log( exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback === undefined ? '' : exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback.issue_type )
+
         setTimeout(() => { this.evenCardsHeight() }, 5000)
        
         const d = new Date()
@@ -420,7 +423,7 @@ class Debug extends React.Component{
                                                             </select>
                                                             Issue Type: 
                                                             <input type="text" name="issue_type" placeholder="issue type" 
-                                                                value={exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback === undefined ? '' : exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback.issue_type } 
+                                                                value={exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback === undefined ? null : exchanges[ sessionjson.history[ selectedMsg ].exchange_idx ].bot_developer_feedback.issue_type } 
                                                                 onBlur={e => this.developer_feedback( e, selectedMsg )}
                                                                 onChange={e => this.developer_feedback( e, selectedMsg, 'change' )}
                                                             />
