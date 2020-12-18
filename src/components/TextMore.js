@@ -122,6 +122,7 @@ const sampleJson = {
 }
 
 
+
 class TextMore extends React.Component{
   lines = 1
   lines_limit = 11
@@ -211,8 +212,9 @@ class TextMore extends React.Component{
 
       Array.from( newDiv.children ).slice(0, this.indices_limit === 0 ? 2 : this.indices_limit + 1 ).forEach( ( el, idx) => {   
         let { children } = el
+        console.log( children )
         let new_el = document.createElement( el.tagName )
-        if( idx === this.indices_limit && this.indices_limit !== 0 ){
+        if( idx === this.indices_limit && this.indices_limit !== 0 && el.tagName === 'UL' ){
           Array.from( children ).slice(0, li_index === 0 ? Array.from( children ).length : li_index ).forEach( new_li => { new_el.appendChild(new_li) })
         }
         else{
@@ -224,6 +226,7 @@ class TextMore extends React.Component{
       })
 
       // console.log( lesstext_div.innerHTML, moretext_div.children.length, htmlDoc.body.children.length , this.divRef.current.children.length )
+
 
       Array.from( children ).slice( 0, this.heights.length  ).forEach( ( el, idx) => {
         if ( idx >= this.indices_limit )

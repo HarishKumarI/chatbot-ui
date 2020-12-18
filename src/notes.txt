@@ -74,3 +74,13 @@ Issues from feedback
 {'display_value': {'prefix': 'in', 'text': 'hyderabad'}, 'graph_id': {'prefix': 'in', 'text': 'hyderabad'}, 'id': {'prefix': 'in', 'text': 'hyderabad'}} GPE
 
 {'options': [{'prefix': ',', 'text': 'phaltan'}, {'prefix': ',', 'text': 'maharashtra'}], 'display_value': None, 'graph_id': None, 'id': None} GPE
+
+
+
+scraping
+
+photos .
+strengths and weaknesses.
++ sign in features ==> feature explanation of concept node.
+
+relations and nodes in graph.
