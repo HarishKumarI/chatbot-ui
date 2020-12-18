@@ -597,8 +597,8 @@ class ChatBot extends React.Component{
             cards.forEach( card => {
                 max_height = max_height < card.getElementsByClassName('card_body')[0].offsetHeight ? card.getElementsByClassName('card_body')[0].offsetHeight : max_height
             })
-            if( !Object.keys( this.carousel_heights ).includes( carousel ) )
-                this.carousel_heights[ carousel ] = max_height
+            // if( !Object.keys( this.carousel_heights ).includes( carousel ) )
+            this.carousel_heights[ carousel ] = max_height
             // console.log( max_height, this.carousel_heights )
             cards.forEach( card => {
                 card.getElementsByClassName('card_body')[0].style.height = `${this.carousel_heights[ carousel ]}px`
