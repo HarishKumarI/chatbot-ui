@@ -26,5 +26,51 @@ for comparison cards:
 for version cards:
 seating capacity, fuel types 
 
+
 price gettign crash 
-seating thing in filter 
+seating thing in filter ==> needs change in main code.
+UI issue for version. 
+    comparison and versions 
+
+
+try the sequence
+Are there any offers running on the cruiser?
+can i20 boot fit 3 large bags?
+what is the price
+ 
+
+( ertiga )
+Model Node ==> Image ( concept ) = has_exterior_images =>  exterior  ===> node1( node_name, node_link )
+                    || 
+                    || has_interior_images
+                    ||
+                Interior    
+                    ||
+                    ||
+                    ||
+                   node ( node_name, node_link )
+                    
+
+
+
+
+
+
+Issues from feedback
+- P1 => please show me cars between 4 to 8 lakhs ==> API resulted in giving cars from 2.89 Lakh to 6.72
+- can you please compare i20 magna with urban cruiser mid grade mt --> showing cruiser mig grade AT also 
+- Are there any offers running on the cruiser? ==> gives "Sorry. I am not currently equipped to give information about discounts and offers on cars. I can redirect you to our expert agent who can help. Would you like me to redirect now?"
+- what is the engine capacity of i20 magna 105 ==> except engine capacity gave bootspace, fuel tank capacity, no of seating rows, doors, seating capacity
+- "what is the dicky space" doesn't work  but "what is its dicky space" works
+- Can i20 boot fit 3 large bags? ==> Should be detected as feature quality.
+- UI issues reported in the sheet for verions API.
+- Show me SUV cars with price greater than 10 lakhs ==> in the inference output detected price and greater than text but not 10 lakh value.
+- Show me luxury cars more than 30 lakhs ==> showing results for less than 30 lakhs
+- what is the price of audi a6 in cikamagalur ==> exception handling in the handler function.
+
+
+## crashes for price questions 
+
+{'display_value': {'prefix': 'in', 'text': 'hyderabad'}, 'graph_id': {'prefix': 'in', 'text': 'hyderabad'}, 'id': {'prefix': 'in', 'text': 'hyderabad'}} GPE
+
+{'options': [{'prefix': ',', 'text': 'phaltan'}, {'prefix': ',', 'text': 'maharashtra'}], 'display_value': None, 'graph_id': None, 'id': None} GPE

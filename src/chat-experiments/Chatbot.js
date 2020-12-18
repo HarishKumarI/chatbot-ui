@@ -56,8 +56,8 @@ function Card(props){
     return  <div className={ props.compare === undefined ? 'card' : '' } 
                 style={{ cursor: card_data.url !== undefined? 'pointer' : 'default' }}
                 onClick={e => { 
-                    console.log( e.target )
-                    // if( card_data.url !== undefined && !e.target.class_list.includes( 'card_btn') ) window.open( card_data.url, '_blank' ) 
+                    // console.log( e.target )
+                    if( card_data.url !== undefined && !e.target.class_list.includes( 'card_btn') ) window.open( card_data.url, '_blank' ) 
                 }}
                 title={ card_data.url !== undefined ? `Open ${ card_data.title } page` : '' }
                 >
@@ -593,7 +593,7 @@ class ChatBot extends React.Component{
             // console.log( carousel )
             let cards = Array.from( document.getElementsByClassName( carousel )[0].children ).filter( x => x.className.includes( 'card' ) )
             let max_height = 0
-            // console.log( cards.length )
+            console.log( cards )
             cards.forEach( card => {
                 max_height = max_height < card.getElementsByClassName('card_body')[0].offsetHeight ? card.getElementsByClassName('card_body')[0].offsetHeight : max_height
             })

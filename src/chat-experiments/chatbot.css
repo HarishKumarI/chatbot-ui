@@ -246,6 +246,10 @@
     border-top-right-radius: var( --card-border-radius );
 }
 
+.card_body{
+    height: fit-content;
+}
+
 .card_btn{
     border-top: 1px solid lightgrey;
     text-align: center;
@@ -294,7 +298,7 @@
 
 .card-carousel-container{
     overflow-x: auto;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
     white-space: nowrap;
     padding: 3px 0px;
     /* padding-left: calc( var( --img-width ) ); */
@@ -344,13 +348,14 @@
     color: rgb(107, 106, 106);
     font-size: 13.5px !important;
     /* word-break: break-all !important; */
-    height: inherit;
+    height: fit-content !important;
     word-wrap: break-word !important;
     white-space: normal;
 }
 
 .card-carousel-container .card-text{
     width: 85%;
+    height: fit-content !important;
 }
 
 .card-carousel-container .card:first-child, .card-carousel-container .single-card:first-child{
