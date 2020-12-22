@@ -552,7 +552,7 @@ input:checked + .slider:before {
 
 
 .debug_suggested_container{
-    text-align: end;
+    /* text-align: end; */
     margin: 5px 0 !important;
     padding-left: calc( var( --img-width ) + 10px );
     margin-right: 20px !important;
