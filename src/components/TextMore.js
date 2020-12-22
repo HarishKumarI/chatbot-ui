@@ -212,7 +212,7 @@ class TextMore extends React.Component{
 
       Array.from( newDiv.children ).slice(0, this.indices_limit === 0 ? 2 : this.indices_limit + 1 ).forEach( ( el, idx) => {   
         let { children } = el
-        console.log( children )
+        // console.log( children )
         let new_el = document.createElement( el.tagName )
         if( idx === this.indices_limit && this.indices_limit !== 0 && el.tagName === 'UL' ){
           Array.from( children ).slice(0, li_index === 0 ? Array.from( children ).length : li_index ).forEach( new_li => { new_el.appendChild(new_li) })

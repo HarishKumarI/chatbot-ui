@@ -27,7 +27,7 @@ for version cards:
 seating capacity, fuel types 
 
 
-price gettign crash 
+price getting crash 
 seating thing in filter ==> needs change in main code.
 UI issue for version. 
     comparison and versions 
@@ -80,7 +80,133 @@ Issues from feedback
 scraping
 
 photos .
-strengths and weaknesses.
-+ sign in features ==> feature explanation of concept node.
+strengths and weaknesses. - done
++ sign in features ==> feature explanation of concept node. - done 
 
 relations and nodes in graph.
+
+
+Any one saying in budget should trigger filter.
+
+In general
+We need a declarative way of putting in the 'related' information to any template, which will help generate the nudges. 
+(Apart from the logic generated nudges for narrowing the long list of possible answers)
+
+
+Tasks:
+
+1) crashes - done 
+2) nudge corrections - need to access and plan
+3) compare changes - done
+4) filter changes - done
+5) graph inclusion of photos - discuss with komal and see 
+6) feature explanation - crawled
+7) the strength/weakness of model - crawled done add in the graph
+
+
+
+From Sheet 
+
+1) My budget is ---> filter intent
+2) Filter - Action node - Ask Form (with mandatory variables)
+3) Apply context variables 
+4) Develop more mappings - seating capacity, etc - DONE
+
+Nudges:
+1)  Model summary ->
+    card click -> See all versions
+
+    You may also like to :
+    2. Photos
+    3. Colors
+    4. Similar Cars
+    5. Strengths and Weaknesses ---> from carwale site
+        
+2) Above - 
+    If multiple models detected, show summary for one and other models are nudges
+    else only one model detected, do above
+
+3)  Version Summary ->
+
+    card click -> See other variants   ==> which questions answers this?
+
+    Nudges: 
+    Feature Groups
+    [Engine] - Engine Details
+    [Size] - Dimensions , Capcity
+    [Seats, Interiors] - Seats, Storage
+    [Entertainment etc]
+    [Dashboard]
+    [Safety]
+    [AC and Conveniences]
+4)  For the has_colour carousel we are showing nudges of [version summary].
+        Instead let's use
+        You may like to see :
+        [All Versions] [Photos]
+
+Compare:
+
+1)  Model to Model Compare : Need to show key specs, body type. - DONE
+    Price, Engine, Mileage, Transmission.
+    will be adding: fuel type, seating capacity, body type, no of colors, no of variants
+
+2)  Version to Version Compare : Show minimal key specs and find features which have got diff value and show some of them at least. 
+
+    Minimal  - price, transmission, fuel type, seating capacity - DONE
+     
+    Pickup concept instances which have diff value across versions being compared. To accomodate space, . Limit 5
+
+    full-width / thumbnail photo
+
+    use thumbnail photo in version to version compare card
+
+3) The ""link"" for full compaison in version to version case needs to be fully cooked. 
+
+    Ask CarWale - link to compare two models {OR}. put the entry level versions of models in compare URL of carwale" - TODO 
+
+    compare on detected features 
+
+    include the detected features in the key value pair at the top 
+
+    {DETECTED FEATURES}
+    {NORMAL}
+    {REMOVE DUPLICATE}
+
+
+
+
+
+
+
+Discuss With komal:
+
+1) Price Form Submission
+2) Pickup concept instances which have diff value across versions being compared
+3) graph inclusion of photos
+4) compare on features 
+5) Nudges 
+6) My budget is ---> filter intent
+7) Filter - Action node - Ask Form (with mandatory variables) - later 
+8) Apply context variables  
+
+
+
+
+The order of priority should be
+1. Crash handling - done 
+2. Handling budget related queries through filter intent .. in such a way that the model/version can be picked from context if not available in user query but there in context. - done
+3. Filter .. when user query hits filter with no filterable  params detected, 
+    we need to show a form of make(text entry), price start/max, body type, seating capacity .. with the make optional.   - later
+4. Nudge, card click changes for model card and version card. - 
+5. Compare implementation changes for detecting diff when in version/version comparison. Also changes in model compare display.
+6. Scrape/graph/blog/sempre/refexp update for photos, feature explanation and strength weakness in that order.
+
+
+
+
+
+Price Crashing report:
+1) after asking ertiga price for lxi version. 
+    then for "what is the price for vxi version" returns form with all ertiga versions list 
+    for "what is the price for its vxi version" returns form with list of all models with vxi in the version name 
+2) Phaltan, Maharashtra, Chikamagalur, Karnataka etc not getting price details from API but are available on site.

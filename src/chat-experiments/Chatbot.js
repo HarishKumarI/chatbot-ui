@@ -30,6 +30,7 @@ import * as showdown from 'showdown'
 import * as json2md from 'json2md'
 import { FormfromJSON } from './FormFeilds'
 import { TextMore } from '../components/TextMore' 
+import { Fragment } from 'react'
 
 var converter = new showdown.Converter({'noHeaderId':'true'})
 
@@ -59,18 +60,22 @@ function Card(props){
                     // console.log( e.target )
                     if( card_data.url !== undefined && !e.target.class_list.includes( 'card_btn') ) window.open( card_data.url, '_blank' ) 
                 }}
-                title={ card_data.url !== undefined ? `Open ${ card_data.title } page` : '' }
+                title={ card_data.url !== undefined ? `Open ${ card_data.title.replaceAll('*','') } page` : '' }
                 >
-                <img src={ card_data.image.length > 0 ? card_data.image : uiJSON.alt_img_link } alt="card_image" 
-                    title={ card_data.url !== undefined ? `Open ${ card_data.title } page`: '' } />
+                
+                {   card_data.hide_image !== undefined && card_data.hide_image ? null :
+                    <img src={ card_data.image.length > 0 ? card_data.image : uiJSON.alt_img_link } alt="card_image" 
+                        title={ card_data.url !== undefined ? `Open ${ card_data.title.replaceAll('*','') } page`: '' } />
+
+                }
                 <div className="card_body">
                     <div className="card_title"  dangerouslySetInnerHTML={{ __html: markdown2HTML( card_data.title ) }} />
                     <div className="card-text" dangerouslySetInnerHTML={{__html: markdown2HTML( card_data.content ) }} />
                 </div>
                 {  card_data.query !== undefined ?
-                    <div className="card_btn" title={ props.submitQuery !== undefined ? `Show ${ card_data.title } Summary` : '' }
+                    <div className="card_btn" title={ props.submitQuery !== undefined ? `Show ${ card_data.title.replaceAll('*','') } Summary` : '' }
                         onClick={e => props.submitQuery( e, card_data.query )}
-                    > View Summary</div>
+                    > { card_data.queryText !== undefined ? card_data.queryText : 'View Summary'}</div>
                 : null }
                 {  card_data.link !== undefined ?
                     <div className="card_link">
@@ -157,6 +162,8 @@ class ChatBot extends React.Component{
 
         this.handleClick = this.handleClick.bind( this )
         this.handleQuery = this.handleQuery.bind( this )
+        this.getMsgs = this.getMsgs.bind(this)
+        this.task = this.task.bind(this)
     }
 
     async createSession( user_id, reset_session ){
@@ -197,8 +204,8 @@ class ChatBot extends React.Component{
         )
         .then( res => res.json())
         .then( responseJson => { 
-
-            this.setState({ session_id: responseJson.session_id, msgs: this.getMsgs( responseJson ) })
+            this.getMsgs( responseJson )
+            this.setState({ session_id: responseJson.session_id})
         })
         .catch(err => { 
             console.log(err); 
@@ -238,27 +245,45 @@ class ChatBot extends React.Component{
         // })
     }
 
-    getMsgs( serverResponse , show_feedback=false){
-        let welcome_msgs = serverResponse.bot_response.map( ( msg_data, index, arr ) => {
+    async task(msgJson) { 
+        await this.timer(2000);
+        this.setState({ msgs: [ ...this.state.msgs, msgJson], show_dots: false })
+        this.scrollBottom()
+    }
+      
+    timer(ms) { return new Promise(res => setTimeout(res, ms)); }
+
+    async getMsgs( serverResponse , show_feedback=false){
+        for( const msg_data of serverResponse.bot_response){
+            const index = serverResponse.bot_response.indexOf( msg_data )
+            const arr = serverResponse.bot_response
             const answerElement = msg_data.markdown && msg_data.markdown !== undefined ? markdown2HTML(msg_data.content) : msg_data
-            return  {   user_type:  serverResponse.user_agent !== undefined ? 'agent' :  msg_data.user === undefined ? 'bot': msg_data.user, 
-                        type: msg_data.type, 
-                        msg: answerElement, ...currentTime(), 
-                        show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : show_feedback && arr.length - 1 === index ? show_feedback : false, 
-                        feedback_value: null, feedback_String: null,
-                        hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
-                        suggested: msg_data.footer_options || [], question: '', answerJson: serverResponse.bot_response,
-                        index: index,
-                        card_limit: 9,
-                        carousel_limit: 0
-                    }
-        })
+            
+            const msgJson = {  
+                                user_type:  serverResponse.user_agent !== undefined ? 'agent' :  msg_data.user === undefined ? 'bot': msg_data.user, 
+                                type: msg_data.type, 
+                                msg: answerElement, ...currentTime(), 
+                                show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : show_feedback && arr.length - 1 === index ? show_feedback : false, 
+                                feedback_value: null, feedback_String: null,
+                                hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
+                                suggested: msg_data.footer_options || [], question: '', answerJson: serverResponse.bot_response,
+                                more_suggested: msg_data.other_footer_options || [],
+                                index: index,
+                                card_limit: 9,
+                                carousel_limit: 0
+                            }
+
+            this.setState({show_dots: true})
+
+            // console.log(msgJson)
+            await   this.task( msgJson )
+        }
 
         // welcome_msgs[ welcome_msgs.length -1 ].suggested = serverResponse.footer_options
         // welcome_msgs[ welcome_msgs.length -1 ].show_feedback = show_feedback
         // welcome_msgs[ welcome_msgs.length -1 ].answerJson = serverResponse.bot_response
 
-        return welcome_msgs
+        // return welcome_msgs
     }
 
 
@@ -304,7 +329,7 @@ class ChatBot extends React.Component{
         )
         .then( res => res.json())
         .then( responseJson => {
-            this.setState({ show_dots: false, msgs: [ ...this.state.msgs, ...this.getMsgs( responseJson, true )] })
+            this.getMsgs( responseJson, true )
             document.getElementById('user_input').value = null
             this.scrollBottom()
         })
@@ -394,7 +419,7 @@ class ChatBot extends React.Component{
                                                 dangerouslySetInnerHTML={{ __html: msg_data.msg}} /> 
                     </div>
                     : 
-                    <div className={ `msg ${ msg_data.user_type === 'user' ? 'user_text' : '' }` } key={index+'_1'}>  
+                    <div className={ `msg` } key={index+'_1'}>  
                         <div className={`${msg_data.user_type}`}>
                             <TextMore HTML={ msg_data.msg } />
                         </div> 
@@ -533,6 +558,29 @@ class ChatBot extends React.Component{
                             })
                         }
                     </div>
+                )
+
+            if( msg_data.more_suggested !== undefined && msg_data.more_suggested.length > 0)
+                msgs_list.push(
+                    <Fragment  key={index+'_7'}>
+                        <div className={ `msg` } >  
+                            <div className={`${msg_data.user_type}`}> for More Options </div> 
+                        </div>
+                        <div className="msg">
+                            <select className="dropdown" 
+                                onClick={e => this.handleQuery( { ...e, keyCode: 13, target: {value: e.target.selectedOptions[0].value }}, "nudge")} 
+                                >
+                                <option>- Select - </option>
+                                {
+                                    msg_data.more_suggested.map( ( option, option_idx ) => {
+                                        return  <option key={option_idx} value={option.query} >
+                                                    { option.display_value }
+                                                </option>
+                                    })
+                                }
+                            </select>
+                        </div>
+                    </Fragment>
                 )
 
             if(msg_data.type === 'FORM'){

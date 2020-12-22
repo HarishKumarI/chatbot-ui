@@ -715,3 +715,11 @@
         max-width: 86%;
     }
 }
+
+.msg .dropdown{
+    display: block;
+    width: 80% !important;
+    margin: 5px 0;
+    padding: 5px;
+    outline: none;
+}
