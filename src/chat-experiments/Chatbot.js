@@ -246,7 +246,7 @@ class ChatBot extends React.Component{
     }
 
     async task(msgJson) { 
-        await this.timer(2000);
+        await this.timer(  this.state.msgs.length === 0 ? 0 : 2000 );
         this.setState({ msgs: [ ...this.state.msgs, msgJson], show_dots: false })
         this.scrollBottom()
     }
@@ -274,10 +274,11 @@ class ChatBot extends React.Component{
                                     carousel_limit: 0
                                 }
 
-                this.setState({show_dots: true})
 
                 // console.log(msgJson)
+                this.setState({show_dots: true})
                 await   this.task( msgJson )
+                
             }
 
         // welcome_msgs[ welcome_msgs.length -1 ].suggested = serverResponse.footer_options

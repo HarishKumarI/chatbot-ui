@@ -210,3 +210,20 @@ Price Crashing report:
     then for "what is the price for vxi version" returns form with all ertiga versions list 
     for "what is the price for its vxi version" returns form with list of all models with vxi in the version name 
 2) Phaltan, Maharashtra, Chikamagalur, Karnataka etc not getting price details from API but are available on site.
+
+
+
+ertiga LXI 
+remove the existing nudges 
+
+you may also like to see the following features </Model/Version Name>
+
+
+Engine and Transmission
+Dimensions
+Safety features
+Entertainment Features 
+Anti-Theft
+Seat Info
+Comfort Features 
+Storage and Capacity 
