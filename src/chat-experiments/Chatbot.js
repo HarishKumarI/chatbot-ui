@@ -566,7 +566,7 @@ class ChatBot extends React.Component{
                     </div>
                 )
 
-            console.log( msg_data.more_suggested )
+            // console.log( msg_data.more_suggested )
             if( msg_data.more_suggested !== undefined && msg_data.more_suggested.length > 0){
 
                 msgs_list.push(
@@ -679,7 +679,7 @@ class ChatBot extends React.Component{
                                     onClick={e => this.createSession( this.props.user_id, true )}> 
                                     Clear Session 
                                 </div>
-                                <div style={{float: 'right', marginRight: '10px'}}>
+                                <div className="spell_check">
                                     <span> Spell Check </span>
                                     <label className="switch" >
                                         <input type="checkbox" checked={ this.state.spell_check } 
