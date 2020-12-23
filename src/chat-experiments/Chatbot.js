@@ -268,7 +268,7 @@ class ChatBot extends React.Component{
                                     feedback_value: null, feedback_String: null,
                                     hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
                                     suggested: msg_data.footer_options || [], question: '', answerJson: serverResponse.bot_response,
-                                    more_suggested: msg_data.other_footer_options || [],
+                                    more_suggested: msg_data.other_footer_options === undefined ?  [] : msg_data.other_footer_options ,
                                     index: index,
                                     card_limit: 9,
                                     carousel_limit: 0
@@ -566,9 +566,11 @@ class ChatBot extends React.Component{
                     </div>
                 )
 
-            if( msg_data.more_suggested !== undefined && msg_data.more_suggested.length > 0)
+            console.log( msg_data.more_suggested )
+            if( msg_data.more_suggested !== undefined && msg_data.more_suggested.length > 0){
+
                 msgs_list.push(
-                        <div className={ `msg ${index}` } key={index+'_7'}>  
+                        <div className={ `msg ${index}` } key={index+'_9'}>  
                             <div className={`${msg_data.user_type}`}> 
                                 for More Options 
                                 <br />
@@ -591,6 +593,7 @@ class ChatBot extends React.Component{
                             </div> 
                         </div>
                 )
+            }
 
             if(msg_data.type === 'FORM'){
                 // console.log( msg_data )
