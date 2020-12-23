@@ -44,7 +44,7 @@ function Card(props){
                 {  card_data.query !== undefined ?
                     <div className="card_btn" title={ props.submitQuery !== undefined ? `Show ${ card_data.title } Summary` : '' }
                         onClick={e => props.submitQuery( e, card_data.query )}
-                    > View Summary</div>
+                    > { card_data.queryText !== undefined ? card_data.queryText : 'View Summary'}</div>
                 : null }
                 {  card_data.link !== undefined ?
                     <div className="card_link">

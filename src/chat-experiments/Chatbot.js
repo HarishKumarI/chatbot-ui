@@ -156,7 +156,8 @@ class ChatBot extends React.Component{
             feedback_data: null,
             show_feedback_form: false,
             session_id: null,
-            user_id: null
+            user_id: null,
+            spell_check: false
         }
 
         this.handleClick = this.handleClick.bind( this )
@@ -306,7 +307,11 @@ class ChatBot extends React.Component{
     }
 
     async servercall( question, type, isnudge ){
-        let body = { 'query': null, form: null,  timestamp : new Date(), channel : "cognichat", session_id: this.state.session_id, user_id: this.state.user_id, env: process.env.REACT_APP_STAGE }
+        let body = { 'query': null, form: null,  
+                        timestamp : new Date(), channel : "cognichat", 
+                        session_id: this.state.session_id, user_id: this.state.user_id, 
+                        env: process.env.REACT_APP_STAGE , spell_mode: this.state.spell_check
+                    }
 
         if( isnudge )
             body.nudge = true
@@ -670,6 +675,15 @@ class ChatBot extends React.Component{
                                 <div className="clear_session_btn"
                                     onClick={e => this.createSession( this.props.user_id, true )}> 
                                     Clear Session 
+                                </div>
+                                <div style={{float: 'right', marginRight: '10px'}}>
+                                    <span> Spell Check </span>
+                                    <label className="switch" >
+                                        <input type="checkbox" checked={ this.state.spell_check } 
+                                            onChange={e => this.setState({ spell_check: !this.state.spell_check })} 
+                                        />
+                                        <span className="slider round"></span>
+                                    </label>
                                 </div>
                             </div>
                             <div className="messages-container">

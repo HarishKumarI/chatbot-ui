@@ -618,14 +618,18 @@
 }
 
 .clear_session{
+    display: inline-block;
+    flex-direction: row;
+    align-items: center;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
 }
 
 .clear_session_btn{
+    display: inline;
     border: 1px solid rgb(143, 141, 141);
-    width: fit-content;
+    width: fit-content !important;
     padding: 5px;
     border-radius: 5px;
     cursor: pointer;
