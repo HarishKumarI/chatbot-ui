@@ -30,7 +30,6 @@ import * as showdown from 'showdown'
 import * as json2md from 'json2md'
 import { FormfromJSON } from './FormFeilds'
 import { TextMore } from '../components/TextMore' 
-import { Fragment } from 'react'
 
 var converter = new showdown.Converter({'noHeaderId':'true'})
 
@@ -254,30 +253,31 @@ class ChatBot extends React.Component{
     timer(ms) { return new Promise(res => setTimeout(res, ms)); }
 
     async getMsgs( serverResponse , show_feedback=false){
-        for( const msg_data of serverResponse.bot_response){
-            const index = serverResponse.bot_response.indexOf( msg_data )
-            const arr = serverResponse.bot_response
-            const answerElement = msg_data.markdown && msg_data.markdown !== undefined ? markdown2HTML(msg_data.content) : msg_data
-            
-            const msgJson = {  
-                                user_type:  serverResponse.user_agent !== undefined ? 'agent' :  msg_data.user === undefined ? 'bot': msg_data.user, 
-                                type: msg_data.type, 
-                                msg: answerElement, ...currentTime(), 
-                                show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : show_feedback && arr.length - 1 === index ? show_feedback : false, 
-                                feedback_value: null, feedback_String: null,
-                                hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
-                                suggested: msg_data.footer_options || [], question: '', answerJson: serverResponse.bot_response,
-                                more_suggested: msg_data.other_footer_options || [],
-                                index: index,
-                                card_limit: 9,
-                                carousel_limit: 0
-                            }
+        if ( serverResponse.bot_response !== undefined )
+            for( const msg_data of serverResponse.bot_response){
+                const index = serverResponse.bot_response.indexOf( msg_data )
+                const arr = serverResponse.bot_response
+                const answerElement = msg_data.markdown && msg_data.markdown !== undefined ? markdown2HTML(msg_data.content) : msg_data
+                
+                const msgJson = {  
+                                    user_type:  serverResponse.user_agent !== undefined ? 'agent' :  msg_data.user === undefined ? 'bot': msg_data.user, 
+                                    type: msg_data.type, 
+                                    msg: answerElement, ...currentTime(), 
+                                    show_feedback: msg_data.show_feedback !== undefined ? msg_data.show_feedback : show_feedback && arr.length - 1 === index ? show_feedback : false, 
+                                    feedback_value: null, feedback_String: null,
+                                    hyperlinks: msg_data.markdown && msg_data.markdown !== undefined ? this.getHyperlinksfromHTML( answerElement ): [] , 
+                                    suggested: msg_data.footer_options || [], question: '', answerJson: serverResponse.bot_response,
+                                    more_suggested: msg_data.other_footer_options || [],
+                                    index: index,
+                                    card_limit: 9,
+                                    carousel_limit: 0
+                                }
 
-            this.setState({show_dots: true})
+                this.setState({show_dots: true})
 
-            // console.log(msgJson)
-            await   this.task( msgJson )
-        }
+                // console.log(msgJson)
+                await   this.task( msgJson )
+            }
 
         // welcome_msgs[ welcome_msgs.length -1 ].suggested = serverResponse.footer_options
         // welcome_msgs[ welcome_msgs.length -1 ].show_feedback = show_feedback
@@ -393,6 +393,7 @@ class ChatBot extends React.Component{
             this.scrollBottom()
             await this.servercall( value, type === 'nudge' ? 'query' : type, type === 'nudge' ? true : false ) 
             this.scrollBottom()
+            this.setState({show_dots: true})
         } 
     }
 
@@ -562,25 +563,28 @@ class ChatBot extends React.Component{
 
             if( msg_data.more_suggested !== undefined && msg_data.more_suggested.length > 0)
                 msgs_list.push(
-                    <Fragment  key={index+'_7'}>
-                        <div className={ `msg` } >  
-                            <div className={`${msg_data.user_type}`}> for More Options </div> 
+                        <div className={ `msg ${index}` } key={index+'_7'}>  
+                            <div className={`${msg_data.user_type}`}> 
+                                for More Options 
+                                <br />
+                                <select className="dropdown" 
+                                    onClick={e => {
+                                                if( e.target.selectedOptions[0].value !== '- Select -' )
+                                                    this.handleQuery( { ...e, keyCode: 13, target: {value: e.target.selectedOptions[0].value }}, "nudge")
+                                            }        
+                                        }
+                                    >
+                                    <option>- Select -</option>
+                                    {
+                                        msg_data.more_suggested.map( ( option, option_idx ) => {
+                                            return  <option key={option_idx} value={option.query} >
+                                                        { option.display_text }
+                                                    </option>
+                                        })
+                                    }
+                                </select>
+                            </div> 
                         </div>
-                        <div className="msg">
-                            <select className="dropdown" 
-                                onClick={e => this.handleQuery( { ...e, keyCode: 13, target: {value: e.target.selectedOptions[0].value }}, "nudge")} 
-                                >
-                                <option>- Select - </option>
-                                {
-                                    msg_data.more_suggested.map( ( option, option_idx ) => {
-                                        return  <option key={option_idx} value={option.query} >
-                                                    { option.display_value }
-                                                </option>
-                                    })
-                                }
-                            </select>
-                        </div>
-                    </Fragment>
                 )
 
             if(msg_data.type === 'FORM'){
