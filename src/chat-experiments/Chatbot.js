@@ -204,8 +204,8 @@ class ChatBot extends React.Component{
         )
         .then( res => res.json())
         .then( responseJson => { 
-            this.getMsgs( responseJson )
             this.setState({ session_id: responseJson.session_id, msgs: []})
+            this.getMsgs( responseJson )
         })
         .catch(err => { 
             console.log(err); 

@@ -216,7 +216,7 @@ Price Crashing report:
 ertiga LXI 
 remove the existing nudges 
 
-you may also like to see the following features </Model/Version Name>
+You may also like to see </ detected string> of other versions or features of </Version Name>
 
 
 Engine and Transmission
@@ -227,3 +227,19 @@ Anti-Theft
 Seat Info
 Comfort Features 
 Storage and Capacity 
+
+
+Session Id ==> 
+a013b0fa-d960-445a-aebc-e1379a59cd6b
+c9946d5a-f22f-4fb5-ac7c-7a61e71b9e6a
+
+Clear session issue to be fixed. @Harish
+I am looking for hyundai cars followed by my budget is 10 lacs @komal @deepti
+what is the length of ertiga zxi ==> shows all ertiga versions in nudges ideally it should only show ZXI - @harish 
+tell me about tell me about innova crsyta touring ==> nudge_title => You may also like to see Summary of other versions or features of Toyota Innova Crysta 2016 2020 Touring Sport Petrol At: --> puntuation @harish 
+what are cars similar to ertiga @komal @deepti 
+what are cars similar to maruti Ertiga ==> shows for alto @komal @deepti 
+versions of marazoo => spell check ON/OFF doesn't return anything  ( of fix )  @komal @ayush
+what is the summary of Toyota Innova Crysta 2.4 ZX AT 7 STR => shows summary of innova crysta @komal @deepti 
+compare ertiga lxi to marazzo m4 plus @komal @deepti 
+populate compare link foor versions @harish 

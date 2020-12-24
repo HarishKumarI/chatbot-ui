@@ -245,7 +245,7 @@ class Debug extends React.Component{
                                 { 
                                     response.footer_options.map( ( suggested, idx ) => {
                                         return  <div key={ idx } className="suggested_que" > 
-                                                    { suggested.display_text || suggested} 
+                                                    { suggested.display_text} 
                                                 </div>
                                     })
                                 }
