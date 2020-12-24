@@ -573,7 +573,7 @@ class ChatBot extends React.Component{
                 msgs_list.push(
                         <div className={ `msg ${index}` } key={index+'_9'}>  
                             <div className={`${msg_data.user_type}`}> 
-                                for More Options 
+                                Here are some more options to choose from:
                                 <br />
                                 <select className="dropdown" 
                                     onClick={e => {
