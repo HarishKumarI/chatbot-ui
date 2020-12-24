@@ -251,13 +251,13 @@
 }
 
 .card_btn{
-    border-top: 1px solid lightgrey;
+    border-top: 1px solid var(--nudges-color);
     text-align: center;
     padding: 8px 10px;
     /* font-weight: bolder; */
     font-size: 15px;
     cursor: pointer;
-    color: grey;
+    color: var(--nudges-color);
     /* width: var(--carousel-card-max-width); */
     /* width: 200px; */
     word-wrap: break-word !important;
@@ -265,7 +265,7 @@
 }
 
 .card_btn:hover{
-    color: rgb(44, 39, 39);
+    color: #0095ff;
 }
 
 .card_link{

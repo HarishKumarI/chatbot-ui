@@ -280,7 +280,7 @@ class ChatBot extends React.Component{
                 await   this.task( msgJson )
                 
             }
-
+        this.setState({show_dots: false})
         // welcome_msgs[ welcome_msgs.length -1 ].suggested = serverResponse.footer_options
         // welcome_msgs[ welcome_msgs.length -1 ].show_feedback = show_feedback
         // welcome_msgs[ welcome_msgs.length -1 ].answerJson = serverResponse.bot_response
@@ -399,7 +399,7 @@ class ChatBot extends React.Component{
             this.scrollBottom()
             await this.servercall( value, type === 'nudge' ? 'query' : type, type === 'nudge' ? true : false ) 
             this.scrollBottom()
-            this.setState({show_dots: true})
+            this.setState({show_dots: false})
         } 
     }
 
