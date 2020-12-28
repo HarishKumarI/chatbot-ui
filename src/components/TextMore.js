@@ -229,7 +229,8 @@ class TextMore extends React.Component{
 
 
       Array.from( children ).slice( 0, this.heights.length  ).forEach( ( el, idx) => {
-        if ( idx >= this.indices_limit + 1 )
+        const delta = li_index > 0 ? 0 : 1
+        if ( idx >= this.indices_limit + delta )
           moretext_div.appendChild( el )
         // console.log( el )
       })

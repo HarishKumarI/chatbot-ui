@@ -67,7 +67,7 @@ function Card(props){
                         title={ card_data.url !== undefined ? `Open ${ card_data.title.replaceAll('*','') } page`: '' } />
 
                 }
-                <div className="card_body">
+                <div className="card_body" style={{ marginTop: card_data.hide_image !== undefined && card_data.hide_image ?  '15px' : null }}>
                     <div className="card_title"  dangerouslySetInnerHTML={{ __html: markdown2HTML( card_data.title ) }} />
                     <div className="card-text" dangerouslySetInnerHTML={{__html: markdown2HTML( card_data.content ) }} />
                 </div>
@@ -246,8 +246,8 @@ class ChatBot extends React.Component{
     }
 
     async task(msgJson) { 
-        await this.timer(  this.state.msgs.length === 0 ? 0 : 2000 );
-        this.setState({ msgs: [ ...this.state.msgs, msgJson], show_dots: false })
+        await this.timer(  this.state.msgs.length === 0 ? 0 : 1500 );
+        this.setState({ msgs: [ ...this.state.msgs, msgJson] })
         this.scrollBottom()
     }
       
@@ -276,7 +276,7 @@ class ChatBot extends React.Component{
 
 
                 // console.log(msgJson)
-                this.setState({show_dots: true})
+                // this.setState({show_dots: true})
                 await   this.task( msgJson )
                 
             }
