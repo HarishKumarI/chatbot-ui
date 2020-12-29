@@ -399,7 +399,6 @@ class ChatBot extends React.Component{
             this.scrollBottom()
             await this.servercall( value, type === 'nudge' ? 'query' : type, type === 'nudge' ? true : false ) 
             this.scrollBottom()
-            this.setState({show_dots: false})
         } 
     }
 
@@ -672,6 +671,7 @@ class ChatBot extends React.Component{
 
         setTimeout( () => { this.evenCardsHeight() }, 100 )
 
+        console.log(this.state.show_dots)
         return  <>
                     <div className="chat_interface">
                         <div className="chat_window" >
